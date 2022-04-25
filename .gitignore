@@ -1,0 +1,5 @@
+.vs/ 
+.vscode/
+.kdev4/
+build/
+*.kate-swp
