@@ -49,17 +49,23 @@ Kirigami.ApplicationWindow {
 			Layout.fillWidth: true
 
 			Controls.TextField {
+				id: repoInp
 				Kirigami.FormData.label: "Repository:"
+				onEditingFinished: Backend.repoText = text
 			}
 			Controls.TextField {
+				id: branchInp
 				Kirigami.FormData.label: "Branch Name:"
+				onEditingFinished: Backend.branchText = text
 			}
 			Controls.TextField {
+				id: folderInp
 				Kirigami.FormData.label: "Local Folder:"
+				onEditingFinished: Backend.folderText = text
 			}
 			Controls.Button {
 				text: "Clone repository data"
-        		//onClicked: showPassiveNotification("Boop!")
+				onClicked: Backend.clone
 			}
 		}
 	}
@@ -68,6 +74,7 @@ Kirigami.ApplicationWindow {
 	pageStack.initialPage: Kirigami.Page {
 		Controls.Label {
 			text: Backend.introductionText
+			anchors.centerIn: parent.top 
 		}
 	}
 }
