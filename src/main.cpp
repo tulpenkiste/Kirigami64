@@ -11,6 +11,8 @@
 #include <iostream>
 #include <algorithm>
 
+#include <backend.h>
+
 int main(int argc, char **argv)
 {
     if (argc > 1) {
@@ -30,6 +32,10 @@ int main(int argc, char **argv)
     QCoreApplication::setApplicationName(QStringLiteral("Kirigami64"));
 
     QQmlApplicationEngine engine;
+
+    Backend backend;
+
+    qmlRegisterSingletonInstance<Backend>("org.azreigh.kirigami64", 0, 1, "Backend", &backend);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

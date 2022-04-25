@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0 as Controls
 import QtQuick.Layouts 1.2
 import org.kde.kirigami 2.13 as Kirigami
 
+import org.azreigh.kirigami64 0.1
 
 // Base element, provides basic features needed for all kirigami applications
 Kirigami.ApplicationWindow {
@@ -26,42 +27,47 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: "Build"
 				icon.name: "run-build"
+				onTriggered: buildSheet.open()
 			}/*,
 			Kirigami.Action {
-                text: i18n("About")
-                icon.name: "help-about"
-                onTriggered: pageStack.layers.push(aboutPage)
-            }*/
+				text: i18n("About")
+				icon.name: "help-about"
+				onTriggered: pageStack.layers.push(aboutPage)
+			}*/
 		]
 	}
 
-	/*Component {
-        id: aboutPage
+	Kirigami.OverlaySheet {
+		id: buildSheet
 
-        Kirigami.AboutPage {
-            aboutData: AboutType.aboutData
-        }
-    }*/
+		header: Kirigami.Heading {
+        	text: "Build - Repository Information"
+    	}
+
+		Kirigami.FormLayout {
+			id: build
+			Layout.fillWidth: true
+
+			Controls.TextField {
+				Kirigami.FormData.label: "Repository:"
+			}
+			Controls.TextField {
+				Kirigami.FormData.label: "Branch Name:"
+			}
+			Controls.TextField {
+				Kirigami.FormData.label: "Local Folder:"
+			}
+			Controls.Button {
+				text: "Clone repository data"
+        		//onClicked: showPassiveNotification("Boop!")
+			}
+		}
+	}
 
 	// Initial page to be loaded on app load
 	pageStack.initialPage: Kirigami.Page {
-
-		/*actions.main: Kirigami.Action {
-			id: addAction
-			text: i18nc("@action:button", "About")
-			onTriggered: aboutSheet.open()
-		}*/
+		Controls.Label {
+			text: Backend.introductionText
+		}
 	}
-	/*Kirigami.OverlaySheet {
-		id: aboutSheet
-		header: Kirigami.Heading {
-			text: i18nc("@title:window", "About")
-		}
-		Kirigami.FormLayout {
-			Controls.Label {
-				anchors.centerIn: parent
-            	text: i18n("License goes here.")
-			}
-		}
-	}*/
 }
