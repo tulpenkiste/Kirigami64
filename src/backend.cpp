@@ -8,11 +8,6 @@ Backend::Backend(QObject *parent)
 {
 }
 
-QString Backend::introductionText() const
-{
-    return m_introductionText;
-}
-
 QString Backend::repoText()
 {
     return repo;
@@ -26,12 +21,6 @@ QString Backend::branchText()
 QString Backend::folderText()
 {
     return folder;
-}
-
-void Backend::setIntroductionText(const QString &introductionText)
-{
-    m_introductionText = introductionText;
-    Q_EMIT introductionTextChanged();
 }
 
 void Backend::setRepo(QString &repoInp)

@@ -71,10 +71,7 @@ Kirigami.ApplicationWindow {
 	}
 
 	// Initial page to be loaded on app load
-	pageStack.initialPage: playPage
-
-	Kirigami.Page {
-		id: playPage
+	pageStack.initialPage: Kirigami.Page {
 		Controls.Label {
 			text: Backend.introductionText
 			anchors.centerIn: parent
