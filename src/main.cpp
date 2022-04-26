@@ -1,6 +1,6 @@
-#define VERSION "v0.0.1 Development Alpha"
-#define LICENSE "Kirigami64 Copyright (C) 2022 Azreigh\nThis program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; type `show c' for details."
+#define VERSION "v0.1"
 
+#include <KAboutData>
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
@@ -11,38 +11,51 @@
 #include <iostream>
 #include <algorithm>
 
-#include <backend.h>
+#include "backend.h"
+#include "config-Kirigami64.h"
+#include "about.h"
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-    if (argc > 1) {
-        if (strcmp(argv[1], "--license") == 0) {
-            std::cout << LICENSE << "\n";
-        }
-        else if (strcmp(argv[1], "--version") == 0) {
-            std::cout << VERSION << "\n";
-        }
-        return 0;
-    }
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication app(argc, argv);
-    KLocalizedString::setApplicationDomain("kirigami64");
-    QCoreApplication::setOrganizationName(QStringLiteral("azreigh"));
-    QCoreApplication::setOrganizationDomain(QStringLiteral("null"));
-    QCoreApplication::setApplicationName(QStringLiteral("Kirigami64"));
+	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+	QApplication app(argc, argv);
+	
+	KAboutData aboutData(
+						 // The program name used internally.
+						 QStringLiteral("Kirigami64"),
+						 // A displayable program name string.
+						 i18nc("@title", "Kirigami64"),
+						 // The program version string.
+						 QStringLiteral(VERSION),
+						 // Short description of what the app does.
+						 i18n("A launcher for the SM64 PC Port made using Kirigami."),
+						 // The license this code is released under.
+						 KAboutLicense::GPL_V3,
+						 // Copyright Statement.
+						 i18n("(c) 2022"));
+	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral("email_invalid"), QStringLiteral("https://azreigh.github.io/"));
+	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
+	KAboutData::setApplicationData(aboutData);
 
-    QQmlApplicationEngine engine;
+	QQmlApplicationEngine engine;
 
-    Backend backend;
+	Backend backend;
 
-    qmlRegisterSingletonInstance<Backend>("org.azreigh.kirigami64", 0, 1, "Backend", &backend);
+	qmlRegisterSingletonType<AboutType>("org.azreigh.Kirigami64", 0, 1, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
+		Q_UNUSED(engine)
+		Q_UNUSED(scriptEngine)
 
-    engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+		return new AboutType();
+	});
 
-    if (engine.rootObjects().isEmpty()) {
-        return -1;
-    }
+	qmlRegisterSingletonInstance<Backend>("org.azreigh.Kirigami64", 0, 1, "Backend", &backend);
 
-    return app.exec();
+	engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
+	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+	if (engine.rootObjects().isEmpty()) {
+		return -1;
+	}
+
+	return app.exec();
 }

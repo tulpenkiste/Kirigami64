@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
-project(kirigami64)
+project(Kirigami64)
+set(PROJECT_VERSION "0.1")
 
 set(KF_MIN_VERSION "5.68.0")
 set(QT_MIN_VERSION "5.12.0")
@@ -11,6 +12,14 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
+include(ECMSetupVersion)
+include(ECMGenerateHeaders)
+include(ECMPoQmTools)
+
+ecm_setup_version(${PROJECT_VERSION}
+    VARIABLE_PREFIX KIRIGAMI64
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/config-Kirigami64.h"
+)
 
 find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Core Quick Test Gui QuickControls2 Widgets)
 find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons)

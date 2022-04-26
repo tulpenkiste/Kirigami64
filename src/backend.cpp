@@ -1,5 +1,8 @@
 #include "backend.h"
 
+#include <iostream>
+#include <string>
+
 Backend::Backend(QObject *parent)
     : QObject(parent)
 {
@@ -50,6 +53,5 @@ void Backend::setFolder(QString &folderInp)
 }
 
 int Backend::clone() {
-    system("echo A");
     return 0;
 }
