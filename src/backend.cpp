@@ -54,7 +54,7 @@ int Backend::clone() {
     std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " .";
     const char *dir = (stdFolder).c_str();
     mkdir(dir,0777);
-    std::string cmd = "cd " + stdFolder + " && " + command;
+    std::string cmd = "cd " + stdFolder + " && " + command + " &";
     char* fullCommand = new char[cmd.length() + 1];
     strcpy(fullCommand, cmd.c_str());
     system(fullCommand);
