@@ -37,9 +37,14 @@ Kirigami.ApplicationWindow {
 				onTriggered: pageStack.layers.push(aboutPage)
 			},
 			Kirigami.Action {
-				text: "Test"
+				text: "Test - Build options"
 				icon.name: "help-about"
 				onTriggered: selectedBuildSheet.open()
+			},
+			Kirigami.Action {
+				text: "Test - Download screen"
+				icon.name: "help-about"
+				onTriggered: cloneProgressSheet.open()
 			}
 		]
 	}
@@ -48,8 +53,8 @@ Kirigami.ApplicationWindow {
 		id: buildSheet
 
 		header: Kirigami.Heading {
-        	text: "Build - Repository Information"
-    	}
+			text: "Build - Repository Information"
+		}
 
 		Kirigami.FormLayout {
 			id: build
@@ -78,28 +83,39 @@ Kirigami.ApplicationWindow {
 	}
 
 	Kirigami.OverlaySheet {
-		
-		id: cloneOverlay
+		id: cloneProgressSheet
 
 		header: Kirigami.Heading {
-        	text: "Cloning repository"
-    	}
-
-		Controls.ProgressBar {
-			from: 0
-			to: 100
-			value: 0
-			indeterminate: true
+			text: "Cloning repository from " + Backend.repo + ":" + Backend.branch
 		}
 
+		Kirigami.FormLayout {
+			Controls.Label {
+				text: "Cloning data..."
+				anchors.horizontalCenter: parent.horizontalCenter
+			}
+
+			Kirigami.Separator {
+				Layout.fillWidth: true
+				visible: true
+				anchors.centerIn: parent
+			}
+
+			Controls.ProgressBar {
+				from: 0
+				to: 100
+				value: 0
+				indeterminate: Backend.downloadSizeUnknown
+			}
+		}
 	}
 
 	Kirigami.MenuDialog {
-        id: selectedBuildSheet
-        title: qsTr("Build Options")
-        
-        actions: [
-            Kirigami.Action {
+		id: selectedBuildSheet
+		title: qsTr("Build Options")
+		
+		actions: [
+			Kirigami.Action {
 				iconName: "media-playback-start"
 				text: qsTr("Play", "Play this build")
 				tooltip: qsTr("Play this build")
@@ -124,8 +140,8 @@ Kirigami.ApplicationWindow {
 				text: qsTr("Delete", "Delete the specified build")
 				tooltip: qsTr("Delete the specified build")
 			}
-        ]
-    }
+		]
+	}
 
 
 	// Initial page to be loaded on app load
@@ -133,10 +149,10 @@ Kirigami.ApplicationWindow {
 	}
 
 	Component {
-        id: aboutPage
+		id: aboutPage
 
-        Kirigami.AboutPage {
-            aboutData: AboutType.aboutData
-        }
-    }
+		Kirigami.AboutPage {
+			aboutData: AboutType.aboutData
+		}
+	}
 }

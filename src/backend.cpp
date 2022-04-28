@@ -28,6 +28,10 @@ QString Backend::folderText()
     return folder;
 }
 
+bool Backend::downloadSizeUnknownValue() {
+    return downloadSizeUnknown;
+}
+
 void Backend::setRepo(QString &repoInp)
 {
     repo = repoInp;
@@ -44,6 +48,12 @@ void Backend::setFolder(QString &folderInp)
 {
     folder = folderInp;
     Q_EMIT folderChanged();
+}
+
+void Backend::setDownloadSizeUnknown(bool &known)
+{
+    downloadSizeUnknown = known;
+    Q_EMIT downloadSizeUnknownChanged();
 }
 
 int Backend::clone() {
