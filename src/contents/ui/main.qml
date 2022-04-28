@@ -70,14 +70,14 @@ Kirigami.ApplicationWindow {
 				Kirigami.FormData.label: "Branch Name:"
 				onEditingFinished: Backend.branchText = text
 			}
-			Controls.TextField {
+			/*Controls.TextField {
 				id: folderInp
 				Kirigami.FormData.label: "Local Folder:"
 				onEditingFinished: Backend.folderText = text
-			}
+			}*/
 			Controls.Button {
 				text: "Clone repository data"
-				onClicked: Backend.clone()
+				onClicked: [Backend.clone(), buildSheet.close(), cloneProgressSheet.open()]
 			}
 		}
 	}
