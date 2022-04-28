@@ -6,56 +6,81 @@
 #include <string>
 #include <iostream>
 #include <dirent.h>
-#include <errno.h>
 
 Backend::Backend(QObject *parent)
-    : QObject(parent)
+	: QObject(parent)
 {
+}
+
+int Backend::buildCountValue() {
+	return buildCount;
 }
 
 QString Backend::repoText()
 {
-    return repo;
+	return repo;
 }
 
 QString Backend::branchText()
 {
-    return branch;
+	return branch;
 }
 
 bool Backend::downloadSizeUnknownValue() {
-    return downloadSizeUnknown;
+	return downloadSizeUnknown;
+}
+
+void Backend::buildFind(int additive) {
+	int count = 0 + additive;
+	DIR *dir;
+	struct dirent *dirEntry;
+	if ((dir = opendir ("sm64-builds")) != NULL) {
+		while ((dirEntry = readdir (dir)) != NULL) {
+			printf("%s\n", dirEntry->d_name);
+			if ()
+			count++;
+		}
+		closedir (dir);
+	} else {
+		perror ("");
+	}
+	buildCount = count;
+	Q_EMIT buildCountChanged();
 }
 
 void Backend::setRepo(QString &repoInp)
 {
-    repo = repoInp;
-    Q_EMIT repoChanged();
+	repo = repoInp;
+	Q_EMIT repoChanged();
 }
 
 void Backend::setBranch(QString &branchInp)
 {
-    branch = branchInp;
-    Q_EMIT branchChanged();
+	branch = branchInp;
+	Q_EMIT branchChanged();
 }
 
 void Backend::setDownloadSizeUnknown(bool &known)
 {
-    downloadSizeUnknown = known;
-    Q_EMIT downloadSizeUnknownChanged();
+	downloadSizeUnknown = known;
+	Q_EMIT downloadSizeUnknownChanged();
 }
 
 int Backend::clone() {
-    if (!opendir("sm64-builds/")) {
-        mkdir("sm64-builds",0777);
-    }
-    //std::string stdFolder = "sm64-builds/";
-    std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress";
-    /*const char *dir = (stdFolder).c_str();
-    mkdir(dir,0777);*/
-    std::string cmd = command + " &";
-    char* fullCommand = new char[cmd.length() + 1];
-    strcpy(fullCommand, cmd.c_str());
-    system(fullCommand);
-    return 0;
+	if (!opendir("sm64-builds/")) {
+		mkdir("sm64-builds",0777);
+	}
+	//std::string stdFolder = "sm64-builds/";
+	std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress > .out";
+	/*const char *dir = (stdFolder).c_str();
+	mkdir(dir,0777);*/
+	std::string cmd = "cd sm64-builds && " + command + " &";
+	char* fullCommand = new char[cmd.length() + 1];
+	strcpy(fullCommand, cmd.c_str());
+	system(fullCommand);
+	return 0;
 }
+
+/*int Backend::pull(QString &folder) {
+	return 0;
+}*/
