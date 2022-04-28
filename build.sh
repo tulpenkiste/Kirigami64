@@ -1,2 +1,1 @@
-cmake -B build/ . && cmake --build build/
-./build/bin/Kirigami64
+cmake -B build/ . && cmake --build build/ && ./build/bin/Kirigami64
