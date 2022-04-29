@@ -37,7 +37,7 @@ void Backend::buildFind(int additive) {
 	if ((dir = opendir ("sm64-builds")) != NULL) {
 		while ((dirEntry = readdir (dir)) != NULL) {
 			printf("%s\n", dirEntry->d_name);
-			if (dirEntry->d_type == DT_DIR)
+			if (dirEntry->d_type == DT_DIR && dirEntry->d_name[0] != '.')
 				count++;
 		}
 		closedir (dir);
