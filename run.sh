@@ -1,0 +1,1 @@
+clear && ./build/bin/Kirigami64
