@@ -16,6 +16,14 @@ int Backend::buildCountValue() {
 	return buildCount;
 }
 
+int Backend::buildSelectedValue() {
+	return buildSelected;
+}
+
+/*QString Backend::buildList(int pos = defaultInt) {
+	return builds[pos];
+}*/
+
 QString Backend::repoText()
 {
 	return repo;
@@ -34,36 +42,50 @@ void Backend::buildFind(int additive) {
 	int count = 0 + additive;
 	DIR *dir;
 	struct dirent *dirEntry;
+	//builds->clear();
 	if ((dir = opendir ("sm64-builds")) != NULL) {
 		while ((dirEntry = readdir (dir)) != NULL) {
 			printf("%s\n", dirEntry->d_name);
-			if (dirEntry->d_type == DT_DIR && dirEntry->d_name[0] != '.')
+			if (dirEntry->d_type == DT_DIR && dirEntry->d_name[0] != '.') {
+				//builds[0] = dirEntry->d_name;
 				count++;
+			}
 		}
 		closedir (dir);
 	} else {
 		perror ("");
 	}
 	buildCount = count;
-	Q_EMIT buildCountChanged();
+	Q_EMIT buildCountModified();
+	//Q_EMIT buildListModified();
 }
+
+void Backend::setBuildSelected(int target) {
+	buildSelected = target;
+	Q_EMIT buildSelectModified();
+}
+
+/*void Backend::buildListSet(QString &folder) {
+	// This does nothing. It just emits buildListModified().
+	Q_EMIT buildListModified();
+}*/
 
 void Backend::setRepo(QString &repoInp)
 {
 	repo = repoInp;
-	Q_EMIT repoChanged();
+	Q_EMIT repoModified();
 }
 
 void Backend::setBranch(QString &branchInp)
 {
 	branch = branchInp;
-	Q_EMIT branchChanged();
+	Q_EMIT branchModified();
 }
 
 void Backend::setDownloadSizeUnknown(bool &known)
 {
 	downloadSizeUnknown = known;
-	Q_EMIT downloadSizeUnknownChanged();
+	Q_EMIT downloadSizeUnknownModified();
 }
 
 int Backend::clone() {

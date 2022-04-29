@@ -86,7 +86,7 @@ Kirigami.ApplicationWindow {
 		id: cloneProgressSheet
 
 		header: Kirigami.Heading {
-			text: "Cloning repository from " + Backend.repo + ":" + Backend.branch
+			text: "Cloning repository..."
 		}
 
 		Kirigami.FormLayout {
@@ -112,7 +112,7 @@ Kirigami.ApplicationWindow {
 
 	Kirigami.MenuDialog {
 		id: selectedBuildSheet
-		title: qsTr("Build Options")
+		title: qsTr("Build Options for build ") + Backend.selectedBuildSheet
 		
 		actions: [
 			Kirigami.Action {
@@ -146,6 +146,61 @@ Kirigami.ApplicationWindow {
 
 	// Initial page to be loaded on app load
 	pageStack.initialPage: Kirigami.ScrollablePage {
+		actions.main: Kirigami.Action {
+			id: refreshButton
+			iconName: "view-refresh"
+			text: qsTr("Refresh", "Refresh list")
+			tooltip: qsTr("Refresh list")
+			onTriggered: Backend.buildFind(0)
+		}
+		Kirigami.CardsListView {
+			id: view
+			model: Backend.buildCount
+
+			delegate: Kirigami.AbstractCard {
+				contentItem: Item {
+					implicitWidth: delegateLayout.implicitWidth
+					implicitHeight: delegateLayout.implicitHeight
+					GridLayout {
+						id: delegateLayout
+						anchors {
+							left: parent.left
+							top: parent.top
+							right: parent.right
+						}
+						rowSpacing: Kirigami.Units.largeSpacing
+						columnSpacing: Kirigami.Units.largeSpacing
+						columns: width > Kirigami.Units.gridUnit * 20 ? 4 : 2
+						Kirigami.Icon {
+							source: "application-x-n64-rom"
+							Layout.fillHeight: true
+							Layout.maximumHeight: Kirigami.Units.iconSizes.huge
+							Layout.preferredWidth: height
+						}
+						ColumnLayout {
+							Kirigami.Heading {
+								level: 2
+								text: "build goes here"
+							}
+							Kirigami.Separator {
+								Layout.fillWidth: true
+							}
+							Controls.Label {
+								Layout.fillWidth: true
+								wrapMode: Text.WordWrap
+								text: qsTr("Build description invalid.")
+							}
+						}
+						Controls.Button {
+							Layout.alignment: Qt.AlignRight|Qt.AlignVCenter
+							Layout.columnSpan: 2 
+							text: qsTr("View Build Options")
+							onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
+						}
+					}
+				}
+			}
+		}
 	}
 
 	Component {
