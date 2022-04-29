@@ -10,6 +10,7 @@
 Backend::Backend(QObject *parent)
 	: QObject(parent)
 {
+	buildFind(0);
 }
 
 int Backend::buildCountValue() {
@@ -100,6 +101,7 @@ int Backend::clone() {
 	char* fullCommand = new char[cmd.length() + 1];
 	strcpy(fullCommand, cmd.c_str());
 	system(fullCommand);
+	buildFind(0);
 	return 0;
 }
 
