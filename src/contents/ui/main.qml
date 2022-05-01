@@ -121,6 +121,11 @@ Kirigami.ApplicationWindow {
 				tooltip: qsTr("Play this build")
 			},
 			Kirigami.Action {
+				iconName: "media-playback-start"
+				text: qsTr("Compile", "Compile this build")
+				tooltip: qsTr("Compile this build")
+			},
+			Kirigami.Action {
 				iconName: "update-none"
 				text: qsTr("Pull changes", "Pull changes for this repository off of the internet")
 				tooltip: qsTr("Pull changes for this repository off of the internet")
