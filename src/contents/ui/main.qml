@@ -192,7 +192,7 @@ Kirigami.ApplicationWindow {
 							Layout.alignment: Qt.AlignRight|Qt.AlignVCenter
 							Layout.columnSpan: 2 
 							text: qsTr("View Build Options")
-							onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
+							onClicked: [Backend.setBuildSelected(Backend.buildList(modelData)), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
 						}
 					}
 				}

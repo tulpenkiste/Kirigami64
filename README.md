@@ -29,7 +29,7 @@ Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somew
 # Planned Features
  - [ ] Actually working minimum features (e.g. build and run) (Required, Very Important)
  - [ ] Config file containing sources rather than having to type it out each time. (High, Important)
- - [ ] Ability to pull changes without needing to delete a specific build (High, Important)
+ - [X] Ability to pull changes without needing to delete a specific build (High, Important)
  - [ ] Option for patches (e.g. Texture Pack, DynOS) (Medium)
  - [ ] Proper way to see the progress of git clone and git pull in-app (Medium)
  - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)

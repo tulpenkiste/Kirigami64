@@ -114,6 +114,7 @@ int Backend::clone() {
 
 int Backend::pull(QString folder) {
 	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull &";
+	//printf("%s\n", string_to_char(folder.toStdString())); // Test to see if it worked.
 	system(string_to_char(cmdAsString));
 	return 0;
 }
