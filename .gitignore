@@ -5,3 +5,4 @@ build/
 *.kate-swp
 sm64-builds/
 .out
+*.z64
