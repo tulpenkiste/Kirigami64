@@ -1,7 +1,5 @@
 # Kirigami64
 [![azreigh - Kirigami64](https://img.shields.io/static/v1?label=azreigh&message=Kirigami64&color=blue&logo=github)](https://github.com/azreigh/Kirigami64 "Go to GitHub repo")
-[![stars - Kirigami64](https://img.shields.io/github/stars/azreigh/Kirigami64?style=social)](https://github.com/azreigh/Kirigami64)
-[![forks - Kirigami64](https://img.shields.io/github/forks/azreigh/Kirigami64?style=social)](https://github.com/azreigh/Kirigami64)
 [![GitHub release](https://img.shields.io/github/release/azreigh/Kirigami64?include_prereleases=&sort=semver&color=blue)](https://github.com/azreigh/Kirigami64/releases/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue)](#license)
 <br>
