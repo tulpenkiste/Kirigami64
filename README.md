@@ -27,8 +27,10 @@ Using this software is not recommended *or* supported on Windows. Check out the 
 ## Linux
 Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somewhere else) then execute the file in the terminal (`./Kirigami64`) or through a desktop file.
 # Planned Features
- - [ ] Config file containing sources rather than having to type it out each time. (High)
- - [ ] Ability to pull changes without needing to delete a specific build (High)
- - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)
+ - [ ] Actually working minimum features (e.g. build and run) (Required, Very Important)
+ - [ ] Config file containing sources rather than having to type it out each time. (High, Important)
+ - [ ] Ability to pull changes without needing to delete a specific build (High, Important)
  - [ ] Option for patches (e.g. Texture Pack, DynOS) (Medium)
- - [X] About Page that functions somewhat (Low)
+ - [ ] Proper way to see the progress of git clone and git pull in-app (Medium)
+ - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)
+ - [ ] Ability to add build as desktop shortcut (Low)
