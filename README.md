@@ -27,7 +27,8 @@ Using this software is not recommended *or* supported on Windows. Check out the 
 ## MacOS
 // TODO: Figure out if this is possible.
 ## Linux
-Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somewhere else) then execute the file in the terminal (`./Kirigami64`) or through a desktop file.
+Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somewhere else) then execute the file in the terminal (`./Kirigami64`) or through a desktop file. <br>
+Ensure you have the necessary dependencies for compiling and running your desired SM64 repository before using this.
 # Planned Features
  - [ ] Actually working minimum features (e.g. build and run) (Required, Very Important)
  - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High, Important)
