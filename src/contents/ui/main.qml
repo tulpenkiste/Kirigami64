@@ -112,7 +112,7 @@ Kirigami.ApplicationWindow {
 
 	Kirigami.MenuDialog {
 		id: selectedBuildSheet
-		title: qsTr("Build Options for build ") + Backend.selectedBuildSheet
+		title: qsTr("Build Options for build ") + Backend.buildList(Backend.buildSelected)
 		
 		actions: [
 			Kirigami.Action {
@@ -124,16 +124,13 @@ Kirigami.ApplicationWindow {
 				iconName: "document-open-folder"
 				text: qsTr("Show in folder", "Show the folder within your file manager")
 				tooltip: qsTr("Show the folder within your file manager")
-			},
-			Kirigami.Action {
-				iconName: "documentinfo"
-				text: qsTr("View details", "View build details")
-				tooltip: qsTr("View build details")
+				//onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]
 			},
 			Kirigami.Action {
 				iconName: "update-none"
 				text: qsTr("Pull changes", "Pull changes for this repository off of the internet")
 				tooltip: qsTr("Pull changes for this repository off of the internet")
+				onTriggered: [Backend.pull(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
 				iconName: "delete"
@@ -180,7 +177,7 @@ Kirigami.ApplicationWindow {
 						ColumnLayout {
 							Kirigami.Heading {
 								level: 2
-								text: "build goes here"
+								text: Backend.buildList(modelData)
 							}
 							Kirigami.Separator {
 								Layout.fillWidth: true
