@@ -7,7 +7,8 @@
 <br>
 A launcher for the SM64 PC Port made using Kirigami.
 # Notice
-The launcher does not currently give a proper way to see the progress of terminal commands (i.e git pull, git clone, make). It is recommended to use this with a terminal window shown.
+The launcher does not currently give a proper way to see the progress of terminal commands (i.e git pull, git clone, make). It is recommended to use this with a terminal window shown. <br>
+It also currently only supports US roms.
 # Compiling
 ## Dependencies
 Kirigami64 requires CMake, Extra CMake Modules, Qt development packages, Kirigami and the base developer package.
@@ -28,12 +29,14 @@ Using this software is not recommended *or* supported on Windows. Check out the 
 // TODO: Figure out if this is possible.
 ## Linux
 Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somewhere else) then execute the file in the terminal (`./Kirigami64`) or through a desktop file. <br>
+Make sure to put a US SM64 rom with the name `baserom.us.z64` in the same directory as the executable. <br>
 Ensure you have the necessary dependencies for compiling and running your desired SM64 repository before using this.
 # Planned Features
- - [ ] Actually working minimum features (e.g. build and run) (Required, Very Important)
+ - [X] Actually working minimum features (e.g. build and run) (Required, Very Important)
  - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High, Important)
  - [ ] Config file containing sources rather than having to type it out each time. (High, Important)
  - [X] Ability to pull changes without needing to delete a specific build (High, Important)
+ - [ ] Ability to use non-US roms (e.g. jp, eu) (Medium)
  - [ ] Option for patches (e.g. Texture Pack, DynOS) (Medium)
  - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)
  - [ ] Ability to add build as desktop shortcut (Low)
