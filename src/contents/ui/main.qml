@@ -17,7 +17,12 @@ Kirigami.ApplicationWindow {
 
 	globalDrawer: Kirigami.GlobalDrawer {
 		title: "Kirigami64"
-		titleIcon: "kde"
+		titleIcon: ":/icon.png"
+
+		modal: false
+		collapsible: true
+		collapsed: true
+		showHeaderWhenCollapsed: true
 		
 		bannerVisible: true
 

@@ -5,6 +5,7 @@
 #include <QQmlApplicationEngine>
 #include <QtQml>
 #include <QUrl>
+#include <QIcon>
 #include <KLocalizedContext>
 #include <KLocalizedString>
 
@@ -35,6 +36,9 @@ int main(int argc, char *argv[])
 						 i18n("(c) 2022"));
 	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral("email_invalid"), QStringLiteral("https://azreigh.github.io/"));
 	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
+	aboutData.setHomepage("https://github.com/azreigh/Kirigami64/");
+	aboutData.setOrganizationDomain("");
+	app.setWindowIcon(QIcon(":/icon.png"));
 	KAboutData::setApplicationData(aboutData);
 
 	QQmlApplicationEngine engine;

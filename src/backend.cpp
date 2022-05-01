@@ -76,11 +76,6 @@ void Backend::setBuildSelected(int target) {
 	Q_EMIT buildSelectModified();
 }
 
-void Backend::buildListSet(QString &folder) {
-	// This does nothing. It just emits buildListModified().
-	Q_EMIT buildListModified();
-}
-
 void Backend::setRepo(QString &repoInp)
 {
 	repo = repoInp;
@@ -132,10 +127,13 @@ int Backend::run(QString folder) {
 	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build/");
 	if (!opendir(dir)) {
 		build(folder); // The repository hasn't run make yet.
+		return 1;
 	}
-	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && ./sm64." + region + ".f3dex2e &";
-	system(string_to_char(cmdAsString));
-	return 0;
+	else {
+		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && ./sm64." + region + ".f3dex2e &";
+		system(string_to_char(cmdAsString));
+		return 0;
+	}
 }
 
 int Backend::rmDir(QString folder) {
