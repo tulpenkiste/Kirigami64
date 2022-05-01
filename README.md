@@ -32,10 +32,11 @@ Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somew
 Make sure to put a US SM64 rom with the name `baserom.us.z64` in the same directory as the executable. <br>
 Ensure you have the necessary dependencies for compiling and running your desired SM64 repository before using this.
 # Planned Features
- - [X] Actually working minimum features (e.g. build and run) (Required, Very Important)
- - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High, Important)
- - [ ] Config file containing sources rather than having to type it out each time. (High, Important)
- - [X] Ability to pull changes without needing to delete a specific build (High, Important)
+ - [X] Actually working minimum features (e.g. build and run) (Required)
+ - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High)
+ - [ ] Config file containing sources rather than having to type it out each time. (High)
+ - [X] Ability to pull changes without needing to delete a specific build (High)
+ - [ ] Download progress (Medium)
  - [ ] Ability to use non-US roms (e.g. jp, eu) (Medium)
  - [ ] Option for patches (e.g. Texture Pack, DynOS) (Medium)
  - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)
