@@ -1,3 +1,4 @@
+// Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
 #include "backend.h"
 
 #include <sys/types.h>
@@ -138,7 +139,7 @@ int Backend::run(QString folder) {
 }
 
 int Backend::rmDir(QString folder) {
-	char* cmd = string_to_char("rm -rf sm64-builds/" + folder.toStdString());
+	char* cmd = string_to_char("rm -rf sm64-builds/" + folder.toStdString()); // Avoid running in background to ensure that buildFind(0) works.
 	system(cmd);
 	buildFind(0);
 	return 0;
