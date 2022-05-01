@@ -113,7 +113,7 @@ Kirigami.ApplicationWindow {
 				onTriggered: [Backend.run(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
-				iconName: "media-playback-start"
+				iconName: "run-build-install"
 				text: qsTr("Compile", "Compile this build")
 				tooltip: qsTr("Compile this build")
 				onTriggered: [Backend.build(Backend.buildList(Backend.buildSelected))]
