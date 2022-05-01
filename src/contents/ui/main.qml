@@ -121,12 +121,6 @@ Kirigami.ApplicationWindow {
 				tooltip: qsTr("Play this build")
 			},
 			Kirigami.Action {
-				iconName: "document-open-folder"
-				text: qsTr("Show in folder", "Show the folder within your file manager")
-				tooltip: qsTr("Show the folder within your file manager")
-				//onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]
-			},
-			Kirigami.Action {
 				iconName: "update-none"
 				text: qsTr("Pull changes", "Pull changes for this repository off of the internet")
 				tooltip: qsTr("Pull changes for this repository off of the internet")
