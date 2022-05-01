@@ -23,10 +23,6 @@ Kirigami.ApplicationWindow {
 
 		actions: [
 			Kirigami.Action {
-				text: "View Builds"
-				icon.name: "media-playback-start"
-			},
-			Kirigami.Action {
 				text: "Clone"
 				icon.name: "run-build"
 				onTriggered: buildSheet.open()
