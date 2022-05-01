@@ -8,6 +8,7 @@
 #include <dirent.h>
 
 char* string_to_char(std::string inp) {
+	// Function to turn an std::string to a char*
 	char* charOut = new char[inp.length() + 1];
 	strcpy(charOut, inp.c_str());
 	return charOut;
@@ -16,7 +17,7 @@ char* string_to_char(std::string inp) {
 Backend::Backend(QObject *parent)
 	: QObject(parent)
 {
-	buildFind(0);
+	buildFind(0); // Instantly check for builds on load. Probably not efficient
 }
 
 int Backend::buildCountValue() {
@@ -53,14 +54,13 @@ void Backend::buildFind(int additive) {
 	builds->clear();
 	if ((dir = opendir ("sm64-builds")) != NULL) {
 		while ((dirEntry = readdir (dir)) != NULL) {
-			printf("Directory found: %s\n", dirEntry->d_name);
 			if (dirEntry->d_type == DT_DIR && dirEntry->d_name[0] != '.') {
 				builds[i] = dirEntry->d_name;
 				count++;
 				i++;
+				printf("Directory found: %s\n", dirEntry->d_name);
 			}
 		}
-		printf("builds[0] is: %s\n", builds[0]);
 		closedir (dir);
 	} else {
 		perror ("");
@@ -92,10 +92,10 @@ void Backend::setBranch(QString &branchInp)
 	Q_EMIT branchModified();
 }
 
-void Backend::setDownloadSizeUnknown(bool &known)
+void Backend::setDownloadSizeUnknownStatus(bool &known)
 {
 	downloadSizeUnknown = known;
-	Q_EMIT downloadSizeUnknownModified();
+	Q_EMIT downloadSizeUnknownStatus();
 }
 
 int Backend::clone() {
@@ -130,9 +130,16 @@ int Backend::build(QString folder) {
 int Backend::run(QString folder) {
 	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build/");
 	if (!opendir(dir)) {
-		build(folder);
+		build(folder); // The repository hasn't run make yet.
 	}
 	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && ./sm64." + region + ".f3dex2e &";
 	system(string_to_char(cmdAsString));
+	return 0;
+}
+
+int Backend::rmDir(QString folder) {
+	char* cmd = string_to_char("rm -rf sm64-builds/" + folder.toStdString());
+	system(cmd);
+	buildFind(0);
 	return 0;
 }

@@ -98,7 +98,7 @@ Kirigami.ApplicationWindow {
 
 	Kirigami.MenuDialog {
 		id: selectedBuildSheet
-		title: qsTr("Build Options for ") + Backend.buildList(Backend.buildSelected)
+		title: qsTr("Options for ") + Backend.buildList(Backend.buildSelected)
 		
 		actions: [
 			Kirigami.Action {
@@ -123,6 +123,7 @@ Kirigami.ApplicationWindow {
 				iconName: "delete"
 				text: qsTr("Delete", "Delete the specified build")
 				tooltip: qsTr("Delete the specified build")
+				onTriggered: [Backend.rmDir(Backend.buildList(Backend.buildSelected))]
 			}
 		]
 	}
@@ -172,13 +173,13 @@ Kirigami.ApplicationWindow {
 							Controls.Label {
 								Layout.fillWidth: true
 								wrapMode: Text.WordWrap
-								text: qsTr("Build description invalid.")
+								text: qsTr("Repository information has not been implemented.")
 							}
 						}
 						Controls.Button {
 							Layout.alignment: Qt.AlignRight|Qt.AlignVCenter
 							Layout.columnSpan: 2 
-							text: qsTr("View Build Options")
+							text: qsTr("View Repository Options")
 							onClicked: [Backend.setBuildSelected(Backend.buildList(modelData)), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
 						}
 					}
