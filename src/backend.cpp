@@ -76,7 +76,7 @@ void Backend::setBuildSelected(int target) {
 	Q_EMIT buildSelectModified();
 }
 
-void Backend::buildListSet() {
+void Backend::buildListSet(QString &folder) {
 	// This does nothing. It just emits buildListModified().
 	Q_EMIT buildListModified();
 }

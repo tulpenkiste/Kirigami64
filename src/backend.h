@@ -31,7 +31,7 @@ public:
 	bool downloadSizeUnknownValue();
 	Q_INVOKABLE void buildFind(int additive);
 	Q_INVOKABLE void setBuildSelected(int target);
-	void buildListSet();
+	void buildListSet(QString &folder);
 	void setRepo(QString &repoInp);
 	void setBranch(QString &branchInp);
 	void setCloneText(QString &newCloneText);
