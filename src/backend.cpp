@@ -118,3 +118,21 @@ int Backend::pull(QString folder) {
 	system(string_to_char(cmdAsString));
 	return 0;
 }
+
+int Backend::build(QString folder) {
+	std::string cmd0 = "cp baserom." + region + ".z64 sm64-builds/" + folder.toStdString() + "/baserom.us.z64";
+	std::string cmd1 = "cd sm64-builds/" + folder.toStdString() + " && make -j4 &";
+	std::string fullCmd = cmd0 + " && " + cmd1;
+	system(string_to_char(fullCmd));
+	return 0;
+}
+
+int Backend::run(QString folder) {
+	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build/");
+	if (!opendir(dir)) {
+		build(folder);
+	}
+	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && ./sm64." + region + ".f3dex2e &";
+	system(string_to_char(cmdAsString));
+	return 0;
+}

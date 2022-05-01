@@ -12,6 +12,7 @@ class Backend : public QObject
 	Q_PROPERTY(QString branchText READ branchText WRITE setBranch NOTIFY branchModified)
 	Q_PROPERTY(bool downloadSizeUnknown READ downloadSizeUnknownValue WRITE setDownloadSizeUnknown NOTIFY downloadSizeUnknownModified)
 private:
+	std::string region = "us";
 	int buildCount = 0;
 	int buildSelected = 0;
 	QString curBuild = "";
@@ -42,4 +43,6 @@ public:
 	Q_SIGNAL void downloadSizeUnknownModified();
 	Q_INVOKABLE int clone();
 	Q_INVOKABLE int pull(QString folder);
+	Q_INVOKABLE int build(QString folder);
+	Q_INVOKABLE int run(QString folder);
 };

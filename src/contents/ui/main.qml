@@ -98,18 +98,20 @@ Kirigami.ApplicationWindow {
 
 	Kirigami.MenuDialog {
 		id: selectedBuildSheet
-		title: qsTr("Build Options for build ") + Backend.buildList(Backend.buildSelected)
+		title: qsTr("Build Options for ") + Backend.buildList(Backend.buildSelected)
 		
 		actions: [
 			Kirigami.Action {
 				iconName: "media-playback-start"
 				text: qsTr("Play", "Play this build")
 				tooltip: qsTr("Play this build")
+				onTriggered: [Backend.run(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
 				iconName: "media-playback-start"
 				text: qsTr("Compile", "Compile this build")
 				tooltip: qsTr("Compile this build")
+				onTriggered: [Backend.build(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
 				iconName: "update-none"
@@ -154,7 +156,7 @@ Kirigami.ApplicationWindow {
 						columnSpacing: Kirigami.Units.largeSpacing
 						columns: width > Kirigami.Units.gridUnit * 20 ? 4 : 2
 						Kirigami.Icon {
-							source: "application-x-n64-rom"
+							source: "applications-games"
 							Layout.fillHeight: true
 							Layout.maximumHeight: Kirigami.Units.iconSizes.huge
 							Layout.preferredWidth: height
