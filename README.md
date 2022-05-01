@@ -19,7 +19,7 @@ Run `sudo dnf groupinstall "Development Tools" "Development Libraries"`<br>`sudo
 ### Other
 // TODO: Add later
 ## Instructions
-Run `build.sh` or run `cmake -B build/ . && cmake --build build/` in the terminal and execute the binary generated within the `/build/bin/` folder.
+Run `./compile` or run `cmake -B build/ . && cmake --build build/` in the terminal and execute the binary generated within the `/build/bin/` folder.
 # Running
 ## Windows
 Using this software is not recommended *or* supported on Windows. Check out the [SM64 PC Info website](https://www.sm64pc.info/) for a launcher more suited towards your operating system.
