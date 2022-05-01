@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 						 // The program name used internally.
 						 QStringLiteral("Kirigami64"),
 						 // A displayable program name string.
-						 i18nc("@title", "Kirigami64"),
+						 i18nc("@title", "Kirigami 64"),
 						 // The program version string.
 						 QStringLiteral(VERSION),
 						 // Short description of what the app does.
