@@ -1,4 +1,4 @@
-#define VERSION "v0.1"
+#define VERSION "v0.0.1"
 
 #include <KAboutData>
 #include <QApplication>
