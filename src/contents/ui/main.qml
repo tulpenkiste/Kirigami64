@@ -23,11 +23,11 @@ Kirigami.ApplicationWindow {
 
 		actions: [
 			Kirigami.Action {
-				text: "Play"
+				text: "View Builds"
 				icon.name: "media-playback-start"
 			},
 			Kirigami.Action {
-				text: "Build"
+				text: "Clone"
 				icon.name: "run-build"
 				onTriggered: buildSheet.open()
 			},
@@ -35,16 +35,6 @@ Kirigami.ApplicationWindow {
 				text: "About"
 				icon.name: "help-about"
 				onTriggered: pageStack.layers.push(aboutPage)
-			},
-			Kirigami.Action {
-				text: "Test - Build options"
-				icon.name: "help-about"
-				onTriggered: selectedBuildSheet.open()
-			},
-			Kirigami.Action {
-				text: "Test - Download screen"
-				icon.name: "help-about"
-				onTriggered: cloneProgressSheet.open()
 			}
 		]
 	}
