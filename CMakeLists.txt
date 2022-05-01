@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(Kirigami64)
-set(PROJECT_VERSION "0.0.1")
+set(PROJECT_VERSION "0.0.2")
 
 set(KF_MIN_VERSION "5.68.0")
 set(QT_MIN_VERSION "5.12.0")

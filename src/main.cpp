@@ -1,4 +1,4 @@
-#define VERSION "v0.0.1"
+#define VERSION "v0.0.2"
 
 #include <KAboutData>
 #include <QApplication>
@@ -34,10 +34,10 @@ int main(int argc, char *argv[])
 						 KAboutLicense::GPL_V3,
 						 // Copyright Statement.
 						 i18n("(c) 2022"));
+	aboutData.setDesktopFileName("Kirigami64");
 	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral("email_invalid"), QStringLiteral("https://azreigh.github.io/"));
 	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
 	aboutData.setHomepage("https://github.com/azreigh/Kirigami64/");
-	aboutData.setOrganizationDomain("");
 	app.setWindowIcon(QIcon(":/icon.png"));
 	KAboutData::setApplicationData(aboutData);
 
