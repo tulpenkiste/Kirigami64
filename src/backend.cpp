@@ -6,7 +6,9 @@
 #include <unistd.h>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <dirent.h>
+#include <pwd.h>
 
 char* string_to_char(std::string inp) {
 	// Function to turn an std::string to a char*
@@ -92,6 +94,20 @@ void Backend::setDownloadSizeUnknownStatus(bool &known)
 {
 	downloadSizeUnknown = known;
 	Q_EMIT downloadSizeUnknownStatus();
+}
+
+int Backend::addDesktop(QString folder) {
+	printf("Writing desktop file...\n");
+	struct passwd *pw = getpwuid(getuid());
+	std::string userDir = pw->pw_dir;
+	std::string folderString = folder.toStdString();
+	std::string dir = get_current_dir_name();
+	std::string desktopFileContents = "[Desktop Entry]\nName=" + folderString + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/us_pc/ && ./sm64.us.f3dex2e\"\nIcon=applications-games\nCategories=Games;";
+	std::string desktopFileName = folderString + ".desktop";
+	std::ofstream desktopFile(userDir + "/Desktop/" + folderString);
+	desktopFile << desktopFileContents;
+	desktopFile.close();
+	return 0;
 }
 
 int Backend::clone() {

@@ -181,11 +181,16 @@ Kirigami.ApplicationWindow {
 								text: qsTr("Repository information has not been implemented.")
 							}
 						}
-						Controls.Button {
-							Layout.alignment: Qt.AlignRight|Qt.AlignVCenter
-							Layout.columnSpan: 2 
-							text: qsTr("View Repository Options")
-							onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
+						ColumnLayout {
+							Controls.Button{
+								text: qsTr("Add To Desktop")
+								//icon.name: "desktop"
+								onClicked: [Backend.setBuildSelected(modelData), Backend.addDesktop(Backend.buildList(Backend.buildSelected))]// showPassiveNotification("Install for Product " + modelData + " clicked");
+							}
+							Controls.Button {
+								text: qsTr("View Repository Options")
+								onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
+							}
 						}
 					}
 				}

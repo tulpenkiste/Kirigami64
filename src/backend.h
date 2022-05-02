@@ -41,6 +41,7 @@ public:
 	Q_SIGNAL void repoModified();
 	Q_SIGNAL void branchModified();
 	Q_SIGNAL void downloadSizeUnknownStatus();
+	Q_INVOKABLE int addDesktop(QString folder);
 	Q_INVOKABLE int clone();
 	Q_INVOKABLE int pull(QString folder);
 	Q_INVOKABLE int build(QString folder);
