@@ -38,4 +38,5 @@ Ensure you have the necessary dependencies for compiling and running your desire
  - [ ] Ability to use non-US roms (e.g. jp, eu) (Medium)
  - [ ] Option for patches (e.g. Texture Pack, DynOS) (Medium)
  - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)
+ - [ ] Add desktop shortcuts to application launcher list (Low)
  - [X] Ability to add build as desktop shortcut (Low)
