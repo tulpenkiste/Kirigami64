@@ -103,7 +103,7 @@ int Backend::addDesktop(QString folder) {
 	std::string dir = get_current_dir_name();
 	std::string desktopFileContents = "[Desktop Entry]\nName=" + folderString + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/us_pc/ && ./sm64.us.f3dex2e\"\nIcon=applications-games\nCategories=Games;";
 	std::string desktopFileName = folderString + ".desktop";
-	std::ofstream desktopFile(userDir + "/Desktop/" + folderString);
+	std::ofstream desktopFile(userDir + "/Desktop/" + desktopFileName);
 	desktopFile << desktopFileContents;
 	desktopFile.close();
 	return 0;
