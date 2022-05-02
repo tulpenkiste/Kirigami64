@@ -183,9 +183,9 @@ Kirigami.ApplicationWindow {
 						}
 						ColumnLayout {
 							Controls.Button{
-								text: qsTr("Add To Desktop")
+								text: qsTr("Add To Start Menu")
 								//icon.name: "desktop"
-								onClicked: [Backend.setBuildSelected(modelData), Backend.addDesktop(Backend.buildList(Backend.buildSelected))]// showPassiveNotification("Install for Product " + modelData + " clicked");
+								onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(Backend.buildSelected))]// showPassiveNotification("Install for Product " + modelData + " clicked");
 							}
 							Controls.Button {
 								text: qsTr("View Repository Options")
