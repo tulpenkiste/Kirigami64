@@ -151,7 +151,6 @@ int Backend::run(QString folder) {
 		}
 		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./sm64." + region + ".f3dex2e &";
 		system(string_to_char(cmdAsString));
-		printf(string_to_char(cmdAsString));
 		return 0;
 	}
 }
