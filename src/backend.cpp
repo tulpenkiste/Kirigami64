@@ -145,8 +145,13 @@ int Backend::run(QString folder) {
 		return 1;
 	}
 	else {
-		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && ./sm64." + region + ".f3dex2e &";
+		std::string execPrefix = "";
+		if (useMangoHud) {
+			execPrefix = "mangohud --dlsym";
+		}
+		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./sm64." + region + ".f3dex2e &";
 		system(string_to_char(cmdAsString));
+		printf(string_to_char(cmdAsString));
 		return 0;
 	}
 }

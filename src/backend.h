@@ -21,6 +21,7 @@ private:
 	QString repo = "";
 	QString branch = "";
 	bool downloadSizeUnknown = true;
+	bool useMangoHud = true;
 public:
 	explicit Backend(QObject *parent = nullptr);
 	int buildCountValue();
