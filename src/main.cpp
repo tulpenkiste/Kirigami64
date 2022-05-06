@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 						 // The program name used internally.
 						 QStringLiteral("Kirigami64"),
 						 // A displayable program name string.
-						 i18nc("@title", "Kirigami 64"),
+						 i18nc("@title", "Kirigami64"),
 						 // The program version string.
 						 QStringLiteral(VERSION),
 						 // Short description of what the app does.
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral("email_invalid"), QStringLiteral("https://azreigh.github.io/"));
 	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
 	aboutData.setHomepage("https://github.com/azreigh/Kirigami64/");
-	app.setWindowIcon(QIcon(":/icon.png"));
+	app.setWindowIcon(QIcon("qrc:/icon.png"));
 	KAboutData::setApplicationData(aboutData);
 
 	QQmlApplicationEngine engine;
