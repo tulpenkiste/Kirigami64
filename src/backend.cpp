@@ -114,17 +114,17 @@ int Backend::clone() {
 		mkdir("sm64-builds",0777);
 	}
 	//std::string stdFolder = "sm64-builds/";
-	std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress > .out";
+	std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress";
 	/*const char *dir = (stdFolder).c_str();
 	mkdir(dir,0777);*/
-	std::string cmd = "cd sm64-builds && " + command + " &";
+	std::string cmd = "cd sm64-builds && " + command + " && echo \"Completed clone.\" &";
 	system(string_to_char(cmd));
 	buildFind(0);
 	return 0;
 }
 
 int Backend::pull(QString folder) {
-	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull &";
+	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull && echo \"Completed pull.\" &";
 	//printf("%s\n", string_to_char(folder.toStdString())); // Test to see if it worked.
 	system(string_to_char(cmdAsString));
 	return 0;
@@ -132,7 +132,7 @@ int Backend::pull(QString folder) {
 
 int Backend::build(QString folder) {
 	std::string cmd0 = "cp baserom." + region + ".z64 sm64-builds/" + folder.toStdString() + "/baserom.us.z64";
-	std::string cmd1 = "cd sm64-builds/" + folder.toStdString() + " && make -j4 &";
+	std::string cmd1 = "cd sm64-builds/" + folder.toStdString() + " && make -j4 && echo \"Completed build.\" &";
 	std::string fullCmd = cmd0 + " && " + cmd1;
 	system(string_to_char(fullCmd));
 	return 0;
