@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file alias="main.qml">contents/ui/main.qml</file>
+        <file alias="AboutSheet.qml">contents/ui/AboutSheet.qml</file>
+        <file alias="DisplaySheet.qml">contents/ui/DisplaySheet.qml</file>
         <file alias="icon.png">icon.png</file>
     </qresource>
 </RCC>

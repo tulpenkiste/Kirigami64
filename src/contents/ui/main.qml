@@ -11,6 +11,14 @@ Kirigami.ApplicationWindow {
 	// ID provides unique identifier to reference this element
 	id: root
 
+	DisplaySheet {
+		id: displaySheet
+	}
+
+	AboutSheet {
+		id: aboutSheet
+	}
+
 	// Window title
 	// i18nc is useful for adding context for translators, also lets strings be changed for different languages
 	title: i18nc("@title:window", "Kirigami64")
@@ -35,7 +43,7 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: "About"
 				icon.name: "help-about"
-				onTriggered: pageStack.layers.push(aboutPage)
+				onTriggered: pageStack.layers.push(aboutSheet)
 			}
 		]
 	}
@@ -135,74 +143,5 @@ Kirigami.ApplicationWindow {
 
 
 	// Initial page to be loaded on app load
-	pageStack.initialPage: Kirigami.ScrollablePage {
-		actions.main: Kirigami.Action {
-			id: refreshButton
-			iconName: "view-refresh"
-			text: qsTr("Refresh", "Refresh list")
-			tooltip: qsTr("Refresh list")
-			onTriggered: Backend.buildFind(0)
-		}
-		Kirigami.CardsListView {
-			id: view
-			model: Backend.buildCount
-
-			delegate: Kirigami.AbstractCard {
-				contentItem: Item {
-					implicitWidth: delegateLayout.implicitWidth
-					implicitHeight: delegateLayout.implicitHeight
-					GridLayout {
-						id: delegateLayout
-						anchors {
-							left: parent.left
-							top: parent.top
-							right: parent.right
-						}
-						rowSpacing: Kirigami.Units.largeSpacing
-						columnSpacing: Kirigami.Units.largeSpacing
-						columns: width > Kirigami.Units.gridUnit * 20 ? 4 : 2
-						Kirigami.Icon {
-							source: "applications-games"
-							Layout.fillHeight: true
-							Layout.maximumHeight: Kirigami.Units.iconSizes.huge
-							Layout.preferredWidth: height
-						}
-						ColumnLayout {
-							Kirigami.Heading {
-								level: 2
-								text: Backend.buildList(modelData)
-							}
-							Kirigami.Separator {
-								Layout.fillWidth: true
-							}
-							Controls.Label {
-								Layout.fillWidth: true
-								wrapMode: Text.WordWrap
-								text: qsTr("Repository information has not been implemented.")
-							}
-						}
-						ColumnLayout {
-							Controls.Button{
-								text: qsTr("Add To Start Menu")
-								//icon.name: "desktop"
-								onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(Backend.buildSelected))]// showPassiveNotification("Install for Product " + modelData + " clicked");
-							}
-							Controls.Button {
-								text: qsTr("View Repository Options")
-								onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	Component {
-		id: aboutPage
-
-		Kirigami.AboutPage {
-			aboutData: AboutType.aboutData
-		}
-	}
+	pageStack.initialPage: displaySheet
 }
