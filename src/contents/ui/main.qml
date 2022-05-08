@@ -23,6 +23,10 @@ Kirigami.ApplicationWindow {
 		id: aboutSheet
 	}
 
+	CloneSheet {
+		id: cloneSheet
+	}
+
 	// Window title
 	// i18nc is useful for adding context for translators, also lets strings be changed for different languages
 	title: i18nc("@title:window", "Kirigami64")
@@ -42,7 +46,7 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: "Clone"
 				icon.name: "run-build"
-				onTriggered: buildSheet.open()
+				onTriggered: pageStack.layers.push(cloneSheet)
 			},
 			Kirigami.Action {
 				text: "Settings"
@@ -55,39 +59,6 @@ Kirigami.ApplicationWindow {
 				onTriggered: pageStack.layers.push(aboutSheet)
 			}
 		]
-	}
-
-	Kirigami.OverlaySheet {
-		id: buildSheet
-
-		header: Kirigami.Heading {
-			text: "Build - Repository Information"
-		}
-
-		Kirigami.FormLayout {
-			id: build
-			Layout.fillWidth: true
-
-			Controls.TextField {
-				id: repoInp
-				Kirigami.FormData.label: "Repository:"
-				onEditingFinished: Backend.repoText = text
-			}
-			Controls.TextField {
-				id: branchInp
-				Kirigami.FormData.label: "Branch Name:"
-				onEditingFinished: Backend.branchText = text
-			}
-			/*Controls.TextField {
-				id: folderInp
-				Kirigami.FormData.label: "Local Folder:"
-				onEditingFinished: Backend.folderText = text
-			}*/
-			Controls.Button {
-				text: "Clone repository data"
-				onClicked: [Backend.clone(), buildSheet.close(), cloneProgressSheet.open()]
-			}
-		}
 	}
 
 	Kirigami.OverlaySheet {

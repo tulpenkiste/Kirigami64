@@ -32,7 +32,7 @@ Ensure you have the necessary dependencies for compiling and running your desire
 # Planned Features
  - [X] Actually working minimum features (e.g. build and run) (Required)
  - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High)
- - [ ] Config file containing sources rather than having to type it out each time. (High)
+ - [X] Config file containing sources rather than having to type it out each time. (High)
  - [X] Ability to pull changes without needing to delete a specific build (High)
  - [ ] Download progress (Medium)
  - [ ] Ability to use non-US roms (e.g. jp, eu) (Medium)

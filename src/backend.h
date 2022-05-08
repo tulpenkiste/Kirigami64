@@ -2,11 +2,12 @@
 #pragma once
 
 #include <QObject>
-#include <map>
+#include <QSettings>
 
 class Backend : public QObject
 {
 	Q_OBJECT
+	Q_PROPERTY(QSettings* sources READ sourceList NOTIFY sourceListModified)
 	Q_PROPERTY(int buildCount READ buildCountValue WRITE buildFind NOTIFY buildCountModified)
 	Q_PROPERTY(int buildSelected READ buildSelectedValue WRITE setBuildSelected NOTIFY buildSelectModified)
 	Q_PROPERTY(QString curBuild READ buildList NOTIFY buildListModified)
@@ -15,7 +16,7 @@ class Backend : public QObject
 	Q_PROPERTY(bool downloadSizeUnknown READ downloadSizeUnknownValue WRITE setDownloadSizeUnknownStatus NOTIFY downloadSizeUnknownStatus)
 	Q_PROPERTY(bool useMangoHud READ usingMangoHud WRITE setUseMangoHud NOTIFY useMangoHudModified)
 private:
-	std::map<std::string,std::string> sources;
+	QSettings* sources;
 	std::string region = "us";
 	int buildCount = 0;
 	int buildSelected = 0;
@@ -27,6 +28,8 @@ private:
 	bool useMangoHud = false;
 public:
 	explicit Backend(QObject *parent = nullptr);
+	QSettings* sourceList();
+	Q_INVOKABLE QStringList sourceGroups();
 	int buildCountValue();
 	int buildSelectedValue();
 	Q_INVOKABLE QString buildList(int pos = 0);
@@ -41,6 +44,7 @@ public:
 	void setCloneText(QString newCloneText);
 	void setDownloadSizeUnknownStatus(bool known);
 	void setUseMangoHud(bool usingMangoHud);
+	Q_SIGNAL void sourceListModified();
 	Q_SIGNAL void buildCountModified();
 	Q_SIGNAL void buildSelectModified();
 	Q_SIGNAL void buildListModified();
@@ -49,10 +53,11 @@ public:
 	Q_SIGNAL void downloadSizeUnknownStatus();
 	Q_SIGNAL void useMangoHudModified();
 	Q_INVOKABLE int addShortcut(QString folder);
-	Q_INVOKABLE int clone();
+	Q_INVOKABLE int clone(QString repoSel);
 	Q_INVOKABLE int pull(QString folder);
 	Q_INVOKABLE int build(QString folder);
 	Q_INVOKABLE int run(QString folder);
 	Q_INVOKABLE int rmDir(QString folder);
 	Q_INVOKABLE int openSources();
+	Q_INVOKABLE int handleSources();
 };

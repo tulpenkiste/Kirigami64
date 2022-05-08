@@ -10,7 +10,7 @@
 #include <fstream>
 #include <dirent.h>
 #include <pwd.h>
-#include <iniparser.h>
+#include <INIReader.h>
 #include <filesystem>
 #include <QFile>
 
@@ -25,6 +25,15 @@ Backend::Backend(QObject *parent)
 	: QObject(parent)
 {
 	buildFind(0); // Instantly check for builds on load. Probably not efficient
+	handleSources();
+}
+
+QSettings* Backend::sourceList() {
+	return sources;
+}
+
+QStringList Backend::sourceGroups() {
+	return sources->childGroups();
 }
 
 int Backend::buildCountValue() {
@@ -129,10 +138,19 @@ int Backend::addShortcut(QString folder) {
 	return 0;
 }
 
-int Backend::clone() {
+int Backend::clone(QString repoSel) {
 	if (!opendir("sm64-builds/")) {
 		mkdir("sm64-builds",0777);
 	}
+	sources->beginGroup(repoSel);
+	QStringList data = sources->childKeys();
+	foreach (QString value, data) {
+		std::cout << value.toStdString() << "\n";
+	}
+	repo = sources->value(data[1]).toString();
+	branch = sources->value(data[0]).toString();
+	std::cout << "Repository: " << repo.toStdString() << "\nBranch: " << branch.toStdString() << "\n";
+	sources->endGroup();
 	//std::string stdFolder = "sm64-builds/";
 	std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress";
 	/*const char *dir = (stdFolder).c_str();
@@ -186,5 +204,17 @@ int Backend::openSources() {
 	//std::filesystem::copy_file("base_sources.conf", "sources.conf");
 	
 	system("kate sources.conf &");
+	return 0;
+}
+
+int Backend::handleSources() {
+	sources = new QSettings("sources.conf", QSettings::IniFormat);
+	std::cout << "Sources in file: " << sources->allKeys().count() << "\n";
+	foreach (QString key, sources->allKeys()) {
+		std::cout << "Key: " << key.toStdString() << "\n";
+	}
+	foreach (QString group, sources->childGroups()) {
+		std::cout << "Group: " << group.toStdString() << "\n";
+	}
 	return 0;
 }

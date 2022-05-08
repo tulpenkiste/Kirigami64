@@ -4,6 +4,7 @@
         <file alias="AboutSheet.qml">contents/ui/AboutSheet.qml</file>
         <file alias="DisplaySheet.qml">contents/ui/DisplaySheet.qml</file>
         <file alias="ConfigSheet.qml">contents/ui/ConfigSheet.qml</file>
+        <file alias="CloneSheet.qml">contents/ui/CloneSheet.qml</file>
         <file alias="base_sources.conf">base_sources.conf</file>
         <file alias="icon.png">icon.png</file>
     </qresource>
