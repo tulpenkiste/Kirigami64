@@ -34,7 +34,6 @@ Ensure you have the necessary dependencies for compiling and running your desire
  - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High)
  - [X] Config file containing sources rather than having to type it out each time. (High)
  - [X] Ability to pull changes without needing to delete a specific build (High)
- - [ ] Download progress (Medium)
  - [ ] Ability to use non-US roms (e.g. jp, eu) (Medium)
  - [ ] Option for patches (e.g. Texture Pack, DynOS) (Medium)
  - [X] Option to run games using MangoHud (Low)
