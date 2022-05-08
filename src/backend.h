@@ -2,6 +2,7 @@
 #pragma once
 
 #include <QObject>
+#include <map>
 
 class Backend : public QObject
 {
@@ -14,6 +15,7 @@ class Backend : public QObject
 	Q_PROPERTY(bool downloadSizeUnknown READ downloadSizeUnknownValue WRITE setDownloadSizeUnknownStatus NOTIFY downloadSizeUnknownStatus)
 	Q_PROPERTY(bool useMangoHud READ usingMangoHud WRITE setUseMangoHud NOTIFY useMangoHudModified)
 private:
+	std::map<std::string,std::string> sources;
 	std::string region = "us";
 	int buildCount = 0;
 	int buildSelected = 0;
@@ -52,4 +54,5 @@ public:
 	Q_INVOKABLE int build(QString folder);
 	Q_INVOKABLE int run(QString folder);
 	Q_INVOKABLE int rmDir(QString folder);
+	Q_INVOKABLE int openSources();
 };

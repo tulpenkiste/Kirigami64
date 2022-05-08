@@ -1,4 +1,5 @@
 // Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
+// Also I need to go back through this and make it use C++ more.
 #include "backend.h"
 
 #include <sys/types.h>
@@ -9,6 +10,9 @@
 #include <fstream>
 #include <dirent.h>
 #include <pwd.h>
+#include <iniparser.h>
+#include <filesystem>
+#include <QFile>
 
 char* string_to_char(std::string inp) {
 	// Function to turn an std::string to a char*
@@ -59,6 +63,12 @@ void Backend::buildFind(int additive) {
 	DIR *dir;
 	struct dirent *dirEntry;
 	builds->clear();
+	namespace fs = std::filesystem;
+	fs::path f{ "sources.conf" };
+	if (!fs::exists(f)) {
+		QFile base_sources = QFile(":/base_sources.conf");
+		base_sources.copy("sources.conf");
+	}
 	if ((dir = opendir ("sm64-builds")) != NULL) {
 		while ((dirEntry = readdir (dir)) != NULL) {
 			if (dirEntry->d_type == DT_DIR && dirEntry->d_name[0] != '.') {
@@ -157,7 +167,7 @@ int Backend::run(QString folder) {
 	else {
 		std::string execPrefix = "";
 		if (useMangoHud) {
-			execPrefix = "mangohud --dlsym";
+			execPrefix += "mangohud --dlsym";
 		}
 		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./sm64." + region + ".f3dex2e &";
 		system(string_to_char(cmdAsString));
@@ -169,5 +179,12 @@ int Backend::rmDir(QString folder) {
 	char* cmd = string_to_char("rm -rf sm64-builds/" + folder.toStdString()); // Avoid running in background to ensure that buildFind(0) works.
 	system(cmd);
 	buildFind(0);
+	return 0;
+}
+
+int Backend::openSources() {
+	//std::filesystem::copy_file("base_sources.conf", "sources.conf");
+	
+	system("kate sources.conf &");
 	return 0;
 }

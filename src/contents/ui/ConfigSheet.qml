@@ -29,7 +29,8 @@ Kirigami.ScrollablePage {
 			Controls.Button {
 				Layout.alignment: Qt.AlignLeft
 				Layout.columnSpan: 2
-				text: i18n("bruh")
+				text: i18n("Modify sources in Kate")
+				onClicked: Backend.openSources()
 			}
 
 			Kirigami.Heading {
