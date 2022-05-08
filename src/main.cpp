@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral("email_invalid"), QStringLiteral("https://azreigh.github.io/"));
 	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
 	aboutData.setHomepage("https://github.com/azreigh/Kirigami64/");
-	app.setWindowIcon(QIcon("qrc:/icon.png"));
+	app.setWindowIcon(QIcon(":/icon.png"));
 	KAboutData::setApplicationData(aboutData);
 
 	QQmlApplicationEngine engine;
