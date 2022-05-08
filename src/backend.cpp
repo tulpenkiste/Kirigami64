@@ -187,6 +187,7 @@ int Backend::run(QString folder) {
 		if (useMangoHud) {
 			execPrefix += "mangohud --dlsym";
 		}
+		// Might add more exec prefixes later later
 		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./sm64." + region + ".f3dex2e &";
 		system(string_to_char(cmdAsString));
 		return 0;
