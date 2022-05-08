@@ -45,14 +45,14 @@ Kirigami.ApplicationWindow {
 				onTriggered: buildSheet.open()
 			},
 			Kirigami.Action {
-				text: "About"
-				icon.name: "help-about"
-				onTriggered: pageStack.layers.push(aboutSheet)
-			},
-			Kirigami.Action {
 				text: "Settings"
 				icon.name: "settings-configure"
 				onTriggered: pageStack.layers.push(configSheet)
+			},
+			Kirigami.Action {
+				text: "About"
+				icon.name: "help-about"
+				onTriggered: pageStack.layers.push(aboutSheet)
 			}
 		]
 	}
