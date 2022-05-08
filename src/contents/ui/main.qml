@@ -11,6 +11,10 @@ Kirigami.ApplicationWindow {
 	// ID provides unique identifier to reference this element
 	id: root
 
+	ConfigSheet {
+		id: configSheet
+	}
+
 	DisplaySheet {
 		id: displaySheet
 	}
@@ -44,6 +48,11 @@ Kirigami.ApplicationWindow {
 				text: "About"
 				icon.name: "help-about"
 				onTriggered: pageStack.layers.push(aboutSheet)
+			},
+			Kirigami.Action {
+				text: "Settings"
+				icon.name: "settings-configure"
+				onTriggered: pageStack.layers.push(configSheet)
 			}
 		]
 	}

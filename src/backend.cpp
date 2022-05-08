@@ -49,6 +49,10 @@ bool Backend::downloadSizeUnknownValue() {
 	return downloadSizeUnknown;
 }
 
+bool Backend::usingMangoHud() {
+	return useMangoHud;
+}
+
 void Backend::buildFind(int additive) {
 	int count = 0 + additive;
 	int i = 0;
@@ -78,22 +82,28 @@ void Backend::setBuildSelected(int target) {
 	Q_EMIT buildSelectModified();
 }
 
-void Backend::setRepo(QString &repoInp)
+void Backend::setRepo(QString repoInp)
 {
 	repo = repoInp;
 	Q_EMIT repoModified();
 }
 
-void Backend::setBranch(QString &branchInp)
+void Backend::setBranch(QString branchInp)
 {
 	branch = branchInp;
 	Q_EMIT branchModified();
 }
 
-void Backend::setDownloadSizeUnknownStatus(bool &known)
+void Backend::setDownloadSizeUnknownStatus(bool known)
 {
 	downloadSizeUnknown = known;
 	Q_EMIT downloadSizeUnknownStatus();
+}
+
+void Backend::setUseMangoHud(bool usingMangoHud)
+{
+	useMangoHud = usingMangoHud;
+	Q_EMIT useMangoHudModified();
 }
 
 int Backend::addShortcut(QString folder) {
