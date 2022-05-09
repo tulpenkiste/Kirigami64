@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "This script will install some required packages to run and build SM64 on Linux."
+echo "Package Manager [APT/DNF/PACMAN/XBPS]: "
+read PACMAN
+PACMAN=${PACMAN^^}
+if [ "$PACMAN" == "APT" ]; then
+    sudo apt install build-essential git python3 libglew-dev libsdl2-dev
+elif [ "$PACMAN" == "DNF" ]; then
+    sudo dnf install make gcc python3 glew-devel SDL2-devel
+elif [ "$PACMAN" == "PACMAN" ]; then
+    sudo pacman -S base-devel python sdl2 glew
+elif [ "$PACMAN" == "XBPS" ]; then
+    sudo xbps-install -S base-devel python3 SDL2-devel glew-devel
+fi
