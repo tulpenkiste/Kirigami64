@@ -24,7 +24,7 @@ Kirigami.ScrollablePage {
 
 				Controls.Button {
 					text: "Clone repository data"
-					onClicked: [Backend.clone(repoSel.currentText)/*, cloneProgressSheet.open()*/, showPassiveNotification("Please check the terminal to view cloning progress.")]
+					onClicked: [Backend.clone(repoSel.currentText)/*, cloneProgressSheet.open()*/, showPassiveNotification("Please check the terminal to view cloning progress."), Backend.buildFind(0)]
 				}
 			}
 		}

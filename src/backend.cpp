@@ -157,7 +157,6 @@ int Backend::clone(QString repoSel) {
 	mkdir(dir,0777);*/
 	std::string cmd = "cd sm64-builds && " + command + " && echo \"Completed clone.\" &";
 	system(string_to_char(cmd));
-	buildFind(0);
 	return 0;
 }
 
