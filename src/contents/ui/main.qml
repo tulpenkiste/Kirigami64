@@ -116,7 +116,7 @@ Kirigami.ApplicationWindow {
 				iconName: "delete"
 				text: qsTr("Delete", "Delete the specified build")
 				tooltip: qsTr("Delete the specified build")
-				onTriggered: [Backend.rmDir(Backend.buildList(Backend.buildSelected))]
+				onTriggered: [Backend.rmDir(Backend.buildList(Backend.buildSelected)), selectedBuildSheet.close()]
 			}
 		]
 	}
