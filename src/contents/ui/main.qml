@@ -121,7 +121,6 @@ Kirigami.ApplicationWindow {
 		]
 	}
 
-
 	// Initial page to be loaded on app load
 	pageStack.initialPage: displaySheet
 }
