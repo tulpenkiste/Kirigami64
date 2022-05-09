@@ -144,12 +144,12 @@ int Backend::clone(QString repoSel) {
 	}
 	sources->beginGroup(repoSel);
 	QStringList data = sources->childKeys();
-	foreach (QString value, data) {
+	/*foreach (QString value, data) {
 		std::cout << value.toStdString() << "\n";
-	}
+	}*/
 	repo = sources->value(data[1]).toString();
 	branch = sources->value(data[0]).toString();
-	std::cout << "Repository: " << repo.toStdString() << "\nBranch: " << branch.toStdString() << "\n";
+	//std::cout << "Repository: " << repo.toStdString() << "\nBranch: " << branch.toStdString() << "\n";
 	sources->endGroup();
 	//std::string stdFolder = "sm64-builds/";
 	std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress";
@@ -209,12 +209,12 @@ int Backend::openSources() {
 
 int Backend::handleSources() {
 	sources = new QSettings("sources.conf", QSettings::IniFormat);
-	std::cout << "Sources in file: " << sources->allKeys().count() << "\n";
+	/*std::cout << "Sources in file: " << sources->allKeys().count() << "\n";
 	foreach (QString key, sources->allKeys()) {
 		std::cout << "Key: " << key.toStdString() << "\n";
 	}
 	foreach (QString group, sources->childGroups()) {
 		std::cout << "Group: " << group.toStdString() << "\n";
-	}
+	}*/
 	return 0;
 }
