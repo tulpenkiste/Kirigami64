@@ -73,8 +73,8 @@ void Backend::buildFind(int additive) {
 	struct dirent *dirEntry;
 	builds->clear();
 	namespace fs = std::filesystem;
-	fs::path f{ "sources.conf" };
-	if (!fs::exists(f)) {
+	fs::path sources{ "sources.conf" };
+	if (!fs::exists(sources)) {
 		QFile base_sources = QFile(":/base_sources.conf");
 		base_sources.copy("sources.conf");
 	}
