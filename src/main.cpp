@@ -45,14 +45,14 @@ int main(int argc, char *argv[])
 
 	Backend backend;
 
-	qmlRegisterSingletonType<AboutType>("org.azreigh.Kirigami64", 0, 1, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
+	qmlRegisterSingletonType<AboutType>("org.azreigh.Kirigami64", 0, 2, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
 		Q_UNUSED(engine)
 		Q_UNUSED(scriptEngine)
 
 		return new AboutType();
 	});
 
-	qmlRegisterSingletonInstance<Backend>("org.azreigh.Kirigami64", 0, 1, "Backend", &backend);
+	qmlRegisterSingletonInstance<Backend>("org.azreigh.Kirigami64", 0, 2, "Backend", &backend);
 
 	engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
