@@ -17,6 +17,27 @@ char* string_to_char(std::string inp) {
 	return charOut;
 }
 
+std::string getExecutableName(QString folder, std::string region) {
+	std::string folderString = folder.toStdString();
+	fs::path buildDir{"sm64-builds/"+folderString+"/build/" + region + "_pc/"};
+	for (const auto& dirEntry: fs::directory_iterator(buildDir)) {
+		std::string pathString = dirEntry.path().extension().string();
+		if (pathString == ".f3dex2e") {
+			return dirEntry.path().filename().string();
+		}
+		/*if (dirEntry.is_directory()) {
+			std::string pathString = dirEntry.path().filename().string();
+			if (pathString[0] != '.' && pathString[0] != ' ') {
+				builds[i] = QString::fromStdString(pathString);
+				count++;
+				i++;
+				std::cout << "Direcory found: " << pathString << "\n";
+			}
+		}*/
+	}
+	return "";
+}
+
 Backend::Backend(QObject *parent)
 	: QObject(parent)
 {
@@ -80,7 +101,6 @@ void Backend::buildFind(int additive) {
 					builds[i] = QString::fromStdString(pathString);
 					count++;
 					i++;
-					//printf("Directory found: %s\n", pathString);
 					std::cout << "Direcory found: " << pathString << "\n";
 				}
 			}
@@ -89,19 +109,6 @@ void Backend::buildFind(int additive) {
 	else {
 		std::cout << "Error when opening directory \"sm64-builds\". The directory requested does not exist.";
 	}
-	/*if ((dir = opendir ("sm64-builds")) != NULL) {
-		while ((dirEntry = readdir (dir)) != NULL) {
-			if (dirEntry->d_type == DT_DIR && dirEntry->d_name[0] != '.') {
-				builds[i] = dirEntry->d_name;
-				count++;
-				i++;
-				printf("Directory found: %s\n", dirEntry->d_name);
-			}
-		}
-		closedir (dir);
-	} else {
-		perror ("");
-	}*/
 	buildCount = count;
 	Q_EMIT buildCountModified();
 	Q_EMIT buildListModified();
@@ -141,7 +148,7 @@ int Backend::addShortcut(QString folder) {
 	std::string userDir = getenv("HOME");
 	std::string folderString = folder.toStdString();
 	std::string dir = getenv("PWD");
-	std::string desktopFileContents = "[Desktop Entry]\nName=" + folderString + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./sm64." + region + ".f3dex2e\"\nIcon=applications-games\nCategories=Game;";
+	std::string desktopFileContents = "[Desktop Entry]\nName=" + folderString + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder,region) + "\"\nIcon=applications-games\nCategories=Game;";
 	std::string desktopFileName = folderString + ".desktop";
 	std::ofstream desktopFile(userDir + "/.local/share/applications/" + desktopFileName);
 	desktopFile << desktopFileContents;
@@ -201,7 +208,7 @@ int Backend::run(QString folder) {
 			execPrefix += "mangohud --dlsym";
 		}
 		// Might add more exec prefixes later later
-		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./sm64." + region + ".f3dex2e &";
+		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder,region) + " &";
 		system(string_to_char(cmdAsString));
 		return 0;
 	}
