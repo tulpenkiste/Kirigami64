@@ -1,18 +1,14 @@
 // Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
-// Also I need to go back through this and make it use C++ more.
+// Also I need to go back through this and make it use good C++ more.
 #include "backend.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <string>
+#include <filesystem>
 #include <iostream>
 #include <fstream>
-#include <dirent.h>
-#include <pwd.h>
-#include <INIReader.h>
-#include <filesystem>
+#include <string>
 #include <QFile>
+
+namespace fs = std::filesystem;
 
 char* string_to_char(std::string inp) {
 	// Function to turn an std::string to a char*
@@ -69,16 +65,31 @@ bool Backend::usingMangoHud() {
 void Backend::buildFind(int additive) {
 	int count = 0 + additive;
 	int i = 0;
-	DIR *dir;
-	struct dirent *dirEntry;
 	builds->clear();
-	namespace fs = std::filesystem;
-	fs::path sources{ "sources.conf" };
+	fs::path sources{"sources.conf"};
 	if (!fs::exists(sources)) {
 		QFile base_sources = QFile(":/base_sources.conf");
 		base_sources.copy("sources.conf");
 	}
-	if ((dir = opendir ("sm64-builds")) != NULL) {
+	fs::path buildDir{"sm64-builds/"};
+	if (fs::exists(buildDir)) {
+		for (const auto& dirEntry: fs::directory_iterator(buildDir)) {
+			if (dirEntry.is_directory()) {
+				std::string pathString = dirEntry.path().filename().string();
+				if (pathString[0] != '.' && pathString[0] != ' ') {
+					builds[i] = QString::fromStdString(pathString);
+					count++;
+					i++;
+					//printf("Directory found: %s\n", pathString);
+					std::cout << "Direcory found: " << pathString << "\n";
+				}
+			}
+		}
+	}
+	else {
+		std::cout << "Error when opening directory \"sm64-builds\". The directory requested does not exist.";
+	}
+	/*if ((dir = opendir ("sm64-builds")) != NULL) {
 		while ((dirEntry = readdir (dir)) != NULL) {
 			if (dirEntry->d_type == DT_DIR && dirEntry->d_name[0] != '.') {
 				builds[i] = dirEntry->d_name;
@@ -90,7 +101,7 @@ void Backend::buildFind(int additive) {
 		closedir (dir);
 	} else {
 		perror ("");
-	}
+	}*/
 	buildCount = count;
 	Q_EMIT buildCountModified();
 	Q_EMIT buildListModified();
@@ -129,7 +140,7 @@ int Backend::addShortcut(QString folder) {
 	printf("Writing desktop file...\n");
 	std::string userDir = getenv("HOME");
 	std::string folderString = folder.toStdString();
-	std::string dir = get_current_dir_name();
+	std::string dir = getenv("PWD");
 	std::string desktopFileContents = "[Desktop Entry]\nName=" + folderString + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./sm64." + region + ".f3dex2e\"\nIcon=applications-games\nCategories=Game;";
 	std::string desktopFileName = folderString + ".desktop";
 	std::ofstream desktopFile(userDir + "/.local/share/applications/" + desktopFileName);
@@ -139,8 +150,9 @@ int Backend::addShortcut(QString folder) {
 }
 
 int Backend::clone(QString repoSel) {
-	if (!opendir("sm64-builds/")) {
-		mkdir("sm64-builds",0777);
+	fs::path builds{"sm64-builds/"};
+	if (!fs::exists(builds)) {
+		fs::create_directory(builds);
 	}
 	sources->beginGroup(repoSel);
 	QStringList data = sources->childKeys();
@@ -177,7 +189,9 @@ int Backend::build(QString folder) {
 
 int Backend::run(QString folder) {
 	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build/");
-	if (!opendir(dir)) {
+	fs::path builds{dir};
+	if (!fs::exists(builds)) {
+		std::cout << "This build has not been compiled. Building it now.\n";
 		build(folder); // The repository hasn't run make yet.
 		return 1;
 	}
@@ -201,8 +215,6 @@ int Backend::rmDir(QString folder) {
 }
 
 int Backend::openSources() {
-	//std::filesystem::copy_file("base_sources.conf", "sources.conf");
-	
 	system("kate sources.conf &");
 	return 0;
 }
