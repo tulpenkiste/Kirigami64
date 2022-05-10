@@ -1,4 +1,4 @@
-#define VERSION "v0.1.0 - Bob-omb Battlefield"
+#define VERSION "v0.2.0 - Whomp's Fortress"
 
 #include <KAboutData>
 #include <QApplication>
