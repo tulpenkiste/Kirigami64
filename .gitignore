@@ -7,3 +7,4 @@ sm64-builds/
 .out
 *.z64
 sources.conf
+*.kdev4
