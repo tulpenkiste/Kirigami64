@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 						 // Copyright Statement.
 						 i18n("(c) 2022"));
 	aboutData.setDesktopFileName("Kirigami64");
-	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral("email_invalid"), QStringLiteral("https://azreigh.github.io/"));
+	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral(""), QStringLiteral("https://azreigh.github.io/"));
 	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
 	aboutData.setHomepage("https://github.com/azreigh/Kirigami64/");
 	app.setWindowIcon(QIcon(":/icon.png"));
