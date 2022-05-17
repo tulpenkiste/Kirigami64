@@ -222,7 +222,7 @@ int Backend::rmDir(QString folder) {
 }
 
 int Backend::openSources() {
-	system("kate sources.conf &");
+	system("$VISUAL sources.conf &");
 	return 0;
 }
 
