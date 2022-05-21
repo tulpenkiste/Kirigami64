@@ -91,7 +91,7 @@ Kirigami.ApplicationWindow {
 
 	Kirigami.MenuDialog {
 		id: selectedBuildSheet
-		title: qsTr("Options for ") + Backend.buildList(Backend.buildSelected)
+		title: qsTr("Options for ") + Backend.buildConfigSpecificDataGet(Backend.buildSelected, "name")
 		
 		actions: [
 			Kirigami.Action {
