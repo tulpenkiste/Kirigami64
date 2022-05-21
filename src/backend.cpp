@@ -170,15 +170,16 @@ void Backend::setUseMangoHud(bool usingMangoHud)
 }
 
 int Backend::addShortcut(QString folder) {
-	printf("Writing desktop file...\n");
+	std::cout << "Writing shortcut file...\n";
 	std::string userDir = getenv("HOME");
 	std::string folderString = folder.toStdString();
 	std::string dir = getenv("PWD");
-	std::string desktopFileContents = "[Desktop Entry]\nName=" + folderString + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder,region) + "\"\nIcon=applications-games\nCategories=Game;";
+	std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, "description").toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder,region) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, "icon").toStdString() + "\nCategories=Game;";
 	std::string desktopFileName = folderString + ".desktop";
 	std::ofstream desktopFile(userDir + "/.local/share/applications/" + desktopFileName);
 	desktopFile << desktopFileContents;
 	desktopFile.close();
+	std::cout << "Wrote shortcut file to " + (userDir + "/.local/share/applications/" + desktopFileName) + ".\n";
 	return 0;
 }
 
