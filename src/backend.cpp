@@ -252,8 +252,6 @@ int Backend::run(QString folder) {
 }
 
 int Backend::rmDir(QString folder) {
-	//char* cmd = string_to_char("rm -rf sm64-builds/" + folder.toStdString()); // Avoid running in background to ensure that buildFind(0) works.
-	//system(cmd);
 	fs::path folderToRemove{"sm64-builds/" + folder.toStdString()};
 	fs::remove(folderToRemove);
 	buildFind(0);
