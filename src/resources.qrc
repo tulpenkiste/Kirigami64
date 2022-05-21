@@ -6,6 +6,7 @@
         <file alias="ConfigSheet.qml">contents/ui/ConfigSheet.qml</file>
         <file alias="CloneSheet.qml">contents/ui/CloneSheet.qml</file>
         <file alias="base_sources.conf">base_sources.conf</file>
+        <file alias="base_build_config.conf">base_build_config.conf</file>
         <file alias="icon.png">icon.png</file>
     </qresource>
 </RCC>

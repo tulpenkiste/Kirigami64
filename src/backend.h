@@ -9,6 +9,7 @@ class Backend : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QSettings* sources READ sourceList NOTIFY sourceListModified)
+	Q_PROPERTY(std::vector<QSettings*> buildConfig READ buildConfigDataGet NOTIFY buildConfigListModified)
 	Q_PROPERTY(int buildCount READ buildCountValue WRITE buildFind NOTIFY buildCountModified)
 	Q_PROPERTY(int buildSelected READ buildSelectedValue WRITE setBuildSelected NOTIFY buildSelectModified)
 	Q_PROPERTY(QString curBuild READ buildList NOTIFY buildListModified)
@@ -23,6 +24,7 @@ private:
 	int buildSelected = 0;
 	QString curBuild = "";
 	std::vector<QString> builds = {""};
+	std::vector<QSettings*> buildConfig = {};
 	QString repo = "";
 	QString branch = "";
 	bool downloadSizeUnknown = true;
@@ -30,6 +32,8 @@ private:
 public:
 	explicit Backend(QObject *parent = nullptr);
 	QSettings* sourceList();
+	std::vector<QSettings*> buildConfigDataGet();
+	Q_INVOKABLE QString buildConfigSpecificDataGet(int build = 0, QString type = "name");
 	Q_INVOKABLE QStringList sourceGroups();
 	int buildCountValue();
 	int buildSelectedValue();
@@ -46,6 +50,7 @@ public:
 	void setDownloadSizeUnknownStatus(bool known);
 	void setUseMangoHud(bool usingMangoHud);
 	Q_SIGNAL void sourceListModified();
+	Q_SIGNAL void buildConfigListModified();
 	Q_SIGNAL void buildCountModified();
 	Q_SIGNAL void buildSelectModified();
 	Q_SIGNAL void buildListModified();

@@ -49,6 +49,23 @@ QSettings* Backend::sourceList() {
 	return sources;
 }
 
+std::vector<QSettings*> Backend::buildConfigDataGet() {
+	return buildConfig;
+}
+
+QString Backend::buildConfigSpecificDataGet(int build, QString type) {
+	QString returnedData = "";
+	QSettings* tmp = buildConfig[build];
+	if (tmp != nullptr)
+		returnedData = tmp->value(type).toString();
+	else {
+		if (type == "name") returnedData = builds[build];
+		else if (type == "description") returnedData = "No description has been set for this build.";
+		else if (type == "icon") returnedData = "application-x-n64-rom";
+	}
+	return returnedData;
+}
+
 QStringList Backend::sourceGroups() {
 	return sources->childGroups();
 }
@@ -86,6 +103,7 @@ bool Backend::usingMangoHud() {
 void Backend::buildFind(int additive) {
 	int count = 0 + additive;
 	builds.clear();
+	buildConfig.clear();
 	fs::path sources{"sources.conf"};
 	if (!fs::exists(sources)) {
 		QFile base_sources = QFile(":/base_sources.conf");
@@ -100,6 +118,15 @@ void Backend::buildFind(int additive) {
 					builds.push_back(QString::fromStdString(pathString));
 					count++;
 					std::cout << "Direcory found: " << pathString << "\n";
+					std::string cfgString = "sm64-builds/" + pathString + ".conf";
+					fs::path configCheck {cfgString};
+					if (fs::exists(configCheck)) {
+						std::cout << "Build configuration found: " << cfgString << "\n";
+						buildConfig.push_back(new QSettings(string_to_char(cfgString), QSettings::IniFormat));
+					}
+					else {
+						buildConfig.push_back(nullptr);
+					}
 				}
 			}
 		}
@@ -110,6 +137,7 @@ void Backend::buildFind(int additive) {
 	buildCount = count;
 	Q_EMIT buildCountModified();
 	Q_EMIT buildListModified();
+	Q_EMIT buildConfigListModified();
 }
 
 void Backend::setBuildSelected(int target) {
