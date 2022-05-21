@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "This script will install some required packages to run and build SM64 on Linux."
+echo "This script will install some required packages to compile Kirigami64 on Linux."
 echo "Package Manager [APT/DNF/PACMAN]: "
 read PACMAN
 PACMAN=${PACMAN^^}
