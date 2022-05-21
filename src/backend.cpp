@@ -85,8 +85,7 @@ bool Backend::usingMangoHud() {
 
 void Backend::buildFind(int additive) {
 	int count = 0 + additive;
-	int i = 0;
-	builds->clear();
+	builds.clear();
 	fs::path sources{"sources.conf"};
 	if (!fs::exists(sources)) {
 		QFile base_sources = QFile(":/base_sources.conf");
@@ -98,9 +97,8 @@ void Backend::buildFind(int additive) {
 			if (dirEntry.is_directory()) {
 				std::string pathString = dirEntry.path().filename().string();
 				if (pathString[0] != '.' && pathString[0] != ' ') {
-					builds[i] = QString::fromStdString(pathString);
+					builds.push_back(QString::fromStdString(pathString));
 					count++;
-					i++;
 					std::cout << "Direcory found: " << pathString << "\n";
 				}
 			}

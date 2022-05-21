@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSettings>
+#include <vector>
 
 class Backend : public QObject
 {
@@ -21,7 +22,7 @@ private:
 	int buildCount = 0;
 	int buildSelected = 0;
 	QString curBuild = "";
-	QString builds[255] = {};
+	std::vector<QString> builds = {""};
 	QString repo = "";
 	QString branch = "";
 	bool downloadSizeUnknown = true;
