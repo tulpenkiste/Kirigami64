@@ -7,6 +7,7 @@ A launcher for the SM64 PC Port made using Kirigami.
 # Notice
 The launcher does not currently give a proper way to see the progress of terminal commands (i.e git pull, git clone, make). It is recommended to use this with a terminal window shown. <br>
 It also currently only supports US roms.
+You can join our community discord server [here](https://discord.gg/r7bAjQqCYp).
 # Compiling
 ## Dependencies
 Kirigami64 requires CMake, Extra CMake Modules, Qt development packages, Kirigami and the base developer package.
