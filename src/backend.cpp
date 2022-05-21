@@ -183,10 +183,12 @@ int Backend::addShortcut(QString folder) {
 	return 0;
 }
 
-void modifyConfig(QString folder, QString name, QString description, QString icon) {
+void Backend::modifyConfig(QString name, QString description, QString icon) {
+	QString folder = buildList(buildSelected);
 	std::string dir = getenv("PWD");
 	std::string conf = "name = " + name.toStdString() + "\ndescription = " + description.toStdString() + "\nicon = " + icon.toStdString();
-	std::ofstream desktopFile(dir + "/" + folder.toStdString() + ".conf");
+	std::cout << (dir + "/" + folder.toStdString() + ".conf") << "\n";
+	std::ofstream desktopFile(dir + "/sm64-builds/" + folder.toStdString() + ".conf");
 	desktopFile << conf;
 	desktopFile.close();
 }

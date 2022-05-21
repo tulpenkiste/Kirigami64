@@ -30,12 +30,12 @@ Kirigami.ScrollablePage {
 
 				Controls.TextField {
 					id: iconInp
-					Kirigami.FormData.label: "Icon:"
+					Kirigami.FormData.label: "Icon (name or direct path):"
 				}
 
 				Controls.Button {
-					text: "Clone repository data"
-					onClicked: [Backend.buildList(Backend.buildSelected, nameInp.currentText, descInp.currentText, iconInp.currentText),/*, cloneProgressSheet.open()*/, showPassiveNotification("Updated config for " + Backend.buildList(Backend.buildSelected) + "."), Backend.buildFind(0)]
+					text: "Set build configuration"
+					onClicked: [Backend.modifyConfig(nameInp.text, descInp.text, iconInp.text),/*, cloneProgressSheet.open()*/, showPassiveNotification("Updated config for " + Backend.buildList(Backend.buildSelected) + "."), Backend.buildFind(0)]
 				}
 			}
 		}
