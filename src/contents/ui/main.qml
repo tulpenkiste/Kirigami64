@@ -15,6 +15,10 @@ Kirigami.ApplicationWindow {
 		id: configSheet
 	}
 
+	ConfigureBuildSheet {
+		id: configureBuildSheet
+	}
+
 	DisplaySheet {
 		id: displaySheet
 	}
@@ -111,6 +115,12 @@ Kirigami.ApplicationWindow {
 				text: qsTr("Pull changes", "Pull changes for this repository off of the internet")
 				tooltip: qsTr("Pull changes for this repository off of the internet")
 				onTriggered: [Backend.pull(Backend.buildList(Backend.buildSelected))]
+			},
+			Kirigami.Action {
+				iconName: "configure"
+				text: qsTr("Configure", "Configure this build")
+				tooltip: qsTr("Configure this build")
+				onTriggered: [selectedBuildSheet.close(), pageStack.layers.push(configureBuildSheet)]
 			},
 			Kirigami.Action {
 				iconName: "delete"

@@ -59,6 +59,7 @@ public:
 	Q_SIGNAL void downloadSizeUnknownStatus();
 	Q_SIGNAL void useMangoHudModified();
 	Q_INVOKABLE int addShortcut(QString folder);
+	Q_INVOKABLE void modifyConfig(QString folder, QString name, QString description, QString icon);
 	Q_INVOKABLE int clone(QString repoSel);
 	Q_INVOKABLE int pull(QString folder);
 	Q_INVOKABLE int build(QString folder);

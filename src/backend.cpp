@@ -183,6 +183,14 @@ int Backend::addShortcut(QString folder) {
 	return 0;
 }
 
+void modifyConfig(QString folder, QString name, QString description, QString icon) {
+	std::string dir = getenv("PWD");
+	std::string conf = "name = " + name.toStdString() + "\ndescription = " + description.toStdString() + "\nicon = " + icon.toStdString();
+	std::ofstream desktopFile(dir + "/" + folder.toStdString() + ".conf");
+	desktopFile << conf;
+	desktopFile.close();
+}
+
 int Backend::clone(QString repoSel) {
 	fs::path builds{"sm64-builds/"};
 	if (!fs::exists(builds)) {
