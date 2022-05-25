@@ -1,6 +1,7 @@
 // It may be best to ignore this.
 #pragma once
 
+#include <git2.h>
 #include <QObject>
 #include <QSettings>
 #include <vector>
@@ -25,7 +26,7 @@ private:
 	QString curBuild = "";
 	std::vector<QString> builds = {""};
 	std::vector<QSettings*> buildConfig = {};
-	QString repo = "";
+	QString link = "";
 	QString branch = "";
 	bool downloadSizeUnknown = true;
 	bool useMangoHud = false;

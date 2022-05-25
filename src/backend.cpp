@@ -2,6 +2,7 @@
 // Also I need to go back through this and make it use good C++ more.
 #include "backend.h"
 
+#include <git2.h>
 #include <filesystem>
 #include <iostream>
 #include <fstream>
@@ -84,7 +85,7 @@ QString Backend::buildList(int pos) {
 
 QString Backend::repoText()
 {
-	return repo;
+	return link;
 }
 
 QString Backend::branchText()
@@ -147,7 +148,7 @@ void Backend::setBuildSelected(int target) {
 
 void Backend::setRepo(QString repoInp)
 {
-	repo = repoInp;
+	link = repoInp;
 	Q_EMIT repoModified();
 }
 
@@ -194,6 +195,7 @@ void Backend::modifyConfig(QString name, QString description, QString icon) {
 }
 
 int Backend::clone(QString repoSel) {
+	git_libgit2_init();
 	fs::path builds{"sm64-builds/"};
 	if (!fs::exists(builds)) {
 		fs::create_directory(builds);
@@ -203,23 +205,34 @@ int Backend::clone(QString repoSel) {
 	/*foreach (QString value, data) {
 		std::cout << value.toStdString() << "\n";
 	}*/
-	repo = sources->value(data[1]).toString();
+	link = sources->value(data[1]).toString();
 	branch = sources->value(data[0]).toString();
 	//std::cout << "Repository: " << repo.toStdString() << "\nBranch: " << branch.toStdString() << "\n";
 	sources->endGroup();
 	//std::string stdFolder = "sm64-builds/";
-	std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress";
+	//std::string command = "git clone --branch " + branch.toStdString() + " " + repo.toStdString() + " --progress";
 	/*const char *dir = (stdFolder).c_str();
 	mkdir(dir,0777);*/
-	std::string cmd = "cd sm64-builds && " + command + " && echo \"Completed clone.\" &";
-	system(string_to_char(cmd));
-	return 0;
+	//std::string cmd = "cd sm64-builds && " + command + " && echo \"Completed clone.\" &";
+	//system(string_to_char(cmd));
+
+	/*git_repository* repo = NULL;
+
+	git_clone_options clone_options = GIT_CLONE_OPTIONS_INIT;
+	clone_options.checkout_branch = string_to_char(branch.toStdString());
+	clone_options.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;*/
+
+	int error = 0; // git_clone(&repo, string_to_char(link.toStdString()), string_to_char("sm64-builds/"), &clone_options);
+	git_libgit2_shutdown();
+	return error;
 }
 
 int Backend::pull(QString folder) {
+	git_libgit2_init();
 	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull && echo \"Completed pull.\" &";
 	//printf("%s\n", string_to_char(folder.toStdString())); // Test to see if it worked.
 	system(string_to_char(cmdAsString));
+	git_libgit2_shutdown();
 	return 0;
 }
 
@@ -253,7 +266,7 @@ int Backend::run(QString folder) {
 
 int Backend::rmDir(QString folder) {
 	fs::path folderToRemove{"sm64-builds/" + folder.toStdString()};
-	fs::remove(folderToRemove);
+	fs::remove_all(folderToRemove);
 	buildFind(0);
 	return 0;
 }
