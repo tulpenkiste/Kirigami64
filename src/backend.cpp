@@ -42,6 +42,7 @@ std::string getExecutableName(QString folder, std::string region) {
 Backend::Backend(QObject *parent)
 	: QObject(parent)
 {
+	git_libgit2_init();
 	buildFind(0); // Instantly check for builds on load. Probably not efficient
 	handleSources();
 }
@@ -195,7 +196,6 @@ void Backend::modifyConfig(QString name, QString description, QString icon) {
 }
 
 int Backend::clone(QString repoSel) {
-	git_libgit2_init();
 	fs::path builds{"sm64-builds/"};
 	if (!fs::exists(builds)) {
 		fs::create_directory(builds);
@@ -216,24 +216,42 @@ int Backend::clone(QString repoSel) {
 	//std::string cmd = "cd sm64-builds && " + command + " && echo \"Completed clone.\" &";
 	//system(string_to_char(cmd));
 
-	/*git_repository* repo = NULL;
+	std::cout << link.toStdString() << "\n" << branch.toStdString() << "\n";
+
+	char* path = string_to_char("sm64-builds/" + repoSel.toStdString());
+
+	fs::path buildCloneDir{path};
+	fs::create_directory(buildCloneDir);
+
+	git_repository* repo = NULL;
 
 	git_clone_options clone_options = GIT_CLONE_OPTIONS_INIT;
 	clone_options.checkout_branch = string_to_char(branch.toStdString());
-	clone_options.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;*/
+	clone_options.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
 
-	int error = 0; // git_clone(&repo, string_to_char(link.toStdString()), string_to_char("sm64-builds/"), &clone_options);
-	git_libgit2_shutdown();
+	int error = git_clone(&repo, string_to_char(link.toStdString()), path, &clone_options);
+	std::cout << "Clone Result: " << error << "\n";
+	git_repository_free(repo);
 	return error;
 }
 
 int Backend::pull(QString folder) {
-	git_libgit2_init();
-	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull && echo \"Completed pull.\" &";
+	git_repository *repo = NULL;
+	git_remote *remote;
+
+	char* repoFolder = string_to_char("./sm64-builds/" + folder.toStdString());
+
+	git_repository_open(&repo, repoFolder);
+
+	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
+
+	int error = git_remote_lookup(&remote, repo, "origin");
+	git_remote_fetch(remote, NULL, &fetch_opts, "pull");
+
+	//std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull && echo \"Completed pull.\" &";
 	//printf("%s\n", string_to_char(folder.toStdString())); // Test to see if it worked.
-	system(string_to_char(cmdAsString));
-	git_libgit2_shutdown();
-	return 0;
+	//system(string_to_char(cmdAsString));
+	return error;
 }
 
 int Backend::build(QString folder) {
