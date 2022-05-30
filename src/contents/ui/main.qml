@@ -35,6 +35,9 @@ Kirigami.ApplicationWindow {
 	// i18nc is useful for adding context for translators, also lets strings be changed for different languages
 	title: i18nc("@title:window", "Kirigami64")
 
+	minimumWidth: Kirigami.Units.gridUnit * 35
+	minimumHeight: Kirigami.Units.gridUnit * 25
+
 	globalDrawer: Kirigami.GlobalDrawer {
 		title: "Kirigami64"
 		titleIcon: ":/icon.png"
