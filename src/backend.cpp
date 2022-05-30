@@ -240,22 +240,12 @@ int Backend::clone(QString repoSel) {
 }
 
 int Backend::pull(QString folder) {
-	git_repository *repo = NULL;
-	git_remote *remote;
-
 	char* repoFolder = string_to_char("./sm64-builds/" + folder.toStdString());
 
-	git_repository_open(&repo, repoFolder);
-
-	git_fetch_options fetch_opts = GIT_FETCH_OPTIONS_INIT;
-
-	int error = git_remote_lookup(&remote, repo, "origin");
-	git_remote_fetch(remote, NULL, &fetch_opts, "pull");
-
-	//std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull && echo \"Completed pull.\" &";
-	//printf("%s\n", string_to_char(folder.toStdString())); // Test to see if it worked.
-	//system(string_to_char(cmdAsString));
-	return error;
+	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull && echo \"Completed pull.\" &";
+	printf("%s\n", string_to_char(folder.toStdString())); // Test to see if it worked.
+	system(string_to_char(cmdAsString));
+	return 0;
 }
 
 int Backend::build(QString folder) {
