@@ -104,8 +104,12 @@ bool Backend::usingMangoHud() {
 
 void Backend::buildFind(int additive) {
 	int count = 0 + additive;
+	buildCount = 0;
 	builds.clear();
 	buildConfig.clear();
+	Q_EMIT buildCountModified();
+	Q_EMIT buildListModified();
+	Q_EMIT buildConfigListModified();
 	fs::path sources{"sources.conf"};
 	if (!fs::exists(sources)) {
 		QFile base_sources = QFile(":/base_sources.conf");
