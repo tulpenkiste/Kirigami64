@@ -18,9 +18,6 @@
 
 int main(int argc, char *argv[])
 {
-	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-	QApplication app(argc, argv);
-	
 	KAboutData aboutData(
 						 // The program name used internally.
 						 QStringLiteral("Kirigami64"),
@@ -38,6 +35,9 @@ int main(int argc, char *argv[])
 	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral(""), QStringLiteral("https://azreigh.github.io/"));
 	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
 	aboutData.setHomepage("https://github.com/azreigh/Kirigami64/");
+
+	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+	QApplication app(argc, argv);
 	app.setWindowIcon(QIcon(":/icon.png"));
 	KAboutData::setApplicationData(aboutData);
 
