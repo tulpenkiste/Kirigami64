@@ -9,3 +9,4 @@ sm64-builds/
 sources.conf
 *.kdev4
 .cache/
+src/config.h

@@ -15,16 +15,20 @@
 #include "backend.h"
 #include "config-Kirigami64.h"
 #include "about.h"
+#include "config.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+	// I have no idea if this will be efficient.
+	std::string versionFull = PROJECT_VER;
+	versionFull.append(" - ");
+	versionFull.append(PROJECT_VER_SUBTITLE);
 	KAboutData aboutData(
 						 // The program name used internally.
 						 QStringLiteral("Kirigami64"),
 						 // A displayable program name string.
 						 i18nc("@title", "Kirigami64"),
 						 // The program version string.
-						 QStringLiteral(VERSION),
+						 QString::fromStdString(versionFull),
 						 // Short description of what the app does.
 						 i18n("A launcher for the SM64 PC Port made using Kirigami."),
 						 // The license this code is released under.

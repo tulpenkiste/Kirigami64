@@ -9,6 +9,9 @@
 #include <string>
 #include <QFile>
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
+
 namespace fs = std::filesystem;
 
 char* string_to_char(std::string inp) {
@@ -49,22 +52,24 @@ QSettings* Backend::sourceList() {
 	return sources;
 }
 
-std::vector<QSettings*> Backend::buildConfigDataGet() {
-	return buildConfig;
+std::vector<QString> Backend::buildNamesDataGet() {
+	return buildNames;
 }
 
-QString Backend::buildConfigSpecificDataGet(int build, QString type) {
-	QString returnedData = "";
-	if (buildCount > 0 && false) {
-		QSettings* tmp = buildConfig[build];
-		if (tmp != nullptr) returnedData = tmp->value(type).toString();
-	}
-	else {
-		if (type == "name") returnedData = builds[build];
-		else if (type == "description") returnedData = "No description has been set for this build.";
-		else if (type == "icon") returnedData = "application-x-n64-rom";
-	}
-	return returnedData;
+std::vector<QString> Backend::buildDescriptionsDataGet() {
+	return buildDescriptions;
+}
+
+std::vector<QString> Backend::buildIconsDataGet() {
+	return buildIcons;
+}
+
+QString Backend::buildConfigSpecificDataGet(int build, int type) {
+	if (buildCount == 0) return "";
+	if (type == 0) return buildNames[build];
+	else if (type == 1) return buildDescriptions[build];
+	return buildIcons[build];
+	//return buildConfig[build][type];
 }
 
 QStringList Backend::sourceGroups() {
@@ -105,7 +110,9 @@ void Backend::buildFind(int additive) {
 	int count = 0 + additive;
 	buildCount = 0;
 	builds.clear();
-	buildConfig.clear();
+	buildNames.clear();
+	buildDescriptions.clear();
+	buildIcons.clear();
 	Q_EMIT buildCountModified();
 	Q_EMIT buildListModified();
 	Q_EMIT buildConfigListModified();
@@ -127,10 +134,15 @@ void Backend::buildFind(int additive) {
 				fs::path configCheck {cfgString};
 				if (fs::exists(configCheck)) {
 					std::cout << "Build configuration found: " << cfgString << "\n";
-					buildConfig.push_back(new QSettings(string_to_char(cfgString), QSettings::IniFormat));
+					QSettings my_settings(QString::fromStdString(cfgString), QSettings::IniFormat);
+					buildNames.push_back(my_settings.value("build/name").toString());
+					buildDescriptions.push_back(my_settings.value("build/description").toString());
+					buildIcons.push_back(my_settings.value("build/icon").toString());
 				}
 				else {
-					buildConfig.push_back(nullptr);
+					buildNames.push_back(QString::fromStdString(pathString));
+					buildDescriptions.push_back("No description has been set for this build.");
+					buildIcons.push_back("application-x-n64-rom");
 				}
 			}
 		}
@@ -175,7 +187,7 @@ int Backend::addShortcut(QString folder) {
 	std::string userDir = getenv("HOME");
 	std::string folderString = folder.toStdString();
 	std::string dir = getenv("PWD");
-	std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, "description").toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder,region) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, "icon").toStdString() + "\nCategories=Game;";
+	std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder,region) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
 	std::string desktopFileName = folderString + ".desktop";
 	std::ofstream desktopFile(userDir + "/.local/share/applications/" + desktopFileName);
 	desktopFile << desktopFileContents;
@@ -186,10 +198,9 @@ int Backend::addShortcut(QString folder) {
 
 void Backend::modifyConfig(QString name, QString description, QString icon) {
 	QString folder = buildList(buildSelected);
-	std::string dir = getenv("PWD");
-	std::string conf = "name = " + name.toStdString() + "\ndescription = " + description.toStdString() + "\nicon = " + icon.toStdString();
-	std::cout << (dir + "/" + folder.toStdString() + ".conf") << "\n";
-	std::ofstream desktopFile(dir + "/sm64-builds/" + folder.toStdString() + ".conf");
+	std::string conf = "[build]\nname = " + name.toStdString() + "\ndescription = " + description.toStdString() + "\nicon = " + icon.toStdString();
+	std::cout << (folder.toStdString() + ".conf") << "\n";
+	std::ofstream desktopFile("sm64-builds/" + folder.toStdString() + ".conf");
 	desktopFile << conf;
 	desktopFile.close();
 }

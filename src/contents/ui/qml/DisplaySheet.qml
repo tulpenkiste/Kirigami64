@@ -32,7 +32,7 @@ Kirigami.ScrollablePage {
 					columnSpacing: Kirigami.Units.largeSpacing
 					columns: width > Kirigami.Units.gridUnit * 20 ? 4 : 2
 					Kirigami.Icon {
-						source: Backend.buildConfigSpecificDataGet(modelData, "icon")
+                        source: Backend.buildConfigSpecificDataGet(modelData, 2)
 						Layout.fillHeight: true
 						Layout.maximumHeight: Kirigami.Units.iconSizes.huge
 						Layout.preferredWidth: height
@@ -40,7 +40,7 @@ Kirigami.ScrollablePage {
 					ColumnLayout {
 						Kirigami.Heading {
 							level: 2
-							text: Backend.buildConfigSpecificDataGet(modelData, "name")
+                            text: Backend.buildConfigSpecificDataGet(modelData, 0)
 						}
 						Kirigami.Separator {
 							Layout.fillWidth: true
@@ -48,7 +48,7 @@ Kirigami.ScrollablePage {
 						Controls.Label {
 							Layout.fillWidth: true
 							wrapMode: Text.WordWrap
-							text: Backend.buildConfigSpecificDataGet(modelData, "description")
+                            text: Backend.buildConfigSpecificDataGet(modelData, 1)
 						}
 					}
 					ColumnLayout {

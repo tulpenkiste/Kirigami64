@@ -5,12 +5,17 @@
 #include <QObject>
 #include <QSettings>
 #include <vector>
+#include <map>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
 
 class Backend : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QSettings* sources READ sourceList NOTIFY sourceListModified)
-	Q_PROPERTY(std::vector<QSettings*> buildConfig READ buildConfigDataGet NOTIFY buildConfigListModified)
+	Q_PROPERTY(std::vector<QString> buildNames READ buildNamesDataGet NOTIFY buildConfigListModified)
+	Q_PROPERTY(std::vector<QString> buildDescriptions READ buildDescriptionsDataGet NOTIFY buildConfigListModified)
+	Q_PROPERTY(std::vector<QString> buildIcons READ buildIconsDataGet NOTIFY buildConfigListModified)
 	Q_PROPERTY(int buildCount READ buildCountValue WRITE buildFind NOTIFY buildCountModified)
 	Q_PROPERTY(int buildSelected READ buildSelectedValue WRITE setBuildSelected NOTIFY buildSelectModified)
 	Q_PROPERTY(QString curBuild READ buildList NOTIFY buildListModified)
@@ -19,13 +24,15 @@ class Backend : public QObject
 	Q_PROPERTY(bool downloadSizeUnknown READ downloadSizeUnknownValue WRITE setDownloadSizeUnknownStatus NOTIFY downloadSizeUnknownStatus)
 	Q_PROPERTY(bool useMangoHud READ usingMangoHud WRITE setUseMangoHud NOTIFY useMangoHudModified)
 private:
-	QSettings* sources = new QSettings{};
+	QSettings* sources;
 	std::string region = "us";
 	int buildCount = 0;
 	int buildSelected = 0;
 	QString curBuild = "";
 	std::vector<QString> builds = {""};
-	std::vector<QSettings*> buildConfig = {};
+	std::vector<QString> buildNames;
+	std::vector<QString> buildDescriptions;
+	std::vector<QString> buildIcons;
 	QString link = "";
 	QString branch = "";
 	bool downloadSizeUnknown = true;
@@ -33,8 +40,10 @@ private:
 public:
 	explicit Backend(QObject *parent = nullptr);
 	QSettings* sourceList();
-	std::vector<QSettings*> buildConfigDataGet();
-	Q_INVOKABLE QString buildConfigSpecificDataGet(int build = 0, QString type = "name");
+	std::vector<QString> buildNamesDataGet();
+	std::vector<QString> buildDescriptionsDataGet();
+	std::vector<QString> buildIconsDataGet();
+	Q_INVOKABLE QString buildConfigSpecificDataGet(int build = 0, int type = 0);
 	Q_INVOKABLE QStringList sourceGroups();
 	int buildCountValue();
 	int buildSelectedValue();
