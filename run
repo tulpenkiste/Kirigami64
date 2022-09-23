@@ -1,2 +1,2 @@
 #!/bin/bash
-clear && ./build/bin/Kirigami64
+clear && cd ./build/bin && ./Kirigami64

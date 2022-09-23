@@ -19,7 +19,7 @@ class Backend : public QObject
 	Q_PROPERTY(bool downloadSizeUnknown READ downloadSizeUnknownValue WRITE setDownloadSizeUnknownStatus NOTIFY downloadSizeUnknownStatus)
 	Q_PROPERTY(bool useMangoHud READ usingMangoHud WRITE setUseMangoHud NOTIFY useMangoHudModified)
 private:
-	QSettings* sources;
+	QSettings* sources = new QSettings{};
 	std::string region = "us";
 	int buildCount = 0;
 	int buildSelected = 0;

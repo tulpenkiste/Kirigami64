@@ -43,8 +43,6 @@ Backend::Backend(QObject *parent)
 	: QObject(parent)
 {
 	git_libgit2_init();
-	buildFind(0); // Instantly check for builds on load. Probably not efficient
-	handleSources();
 }
 
 QSettings* Backend::sourceList() {
@@ -57,9 +55,10 @@ std::vector<QSettings*> Backend::buildConfigDataGet() {
 
 QString Backend::buildConfigSpecificDataGet(int build, QString type) {
 	QString returnedData = "";
-	QSettings* tmp = buildConfig[build];
-	if (tmp != nullptr)
-		returnedData = tmp->value(type).toString();
+	if (buildCount > 0 && false) {
+		QSettings* tmp = buildConfig[build];
+		if (tmp != nullptr) returnedData = tmp->value(type).toString();
+	}
 	else {
 		if (type == "name") returnedData = builds[build];
 		else if (type == "description") returnedData = "No description has been set for this build.";
@@ -116,29 +115,25 @@ void Backend::buildFind(int additive) {
 		base_sources.copy("sources.conf");
 	}
 	fs::path buildDir{"sm64-builds/"};
-	if (fs::exists(buildDir)) {
-		for (const auto& dirEntry: fs::directory_iterator(buildDir)) {
-			if (dirEntry.is_directory()) {
-				std::string pathString = dirEntry.path().filename().string();
-				if (pathString[0] != '.' && pathString[0] != ' ') {
-					builds.push_back(QString::fromStdString(pathString));
-					count++;
-					std::cout << "Direcory found: " << pathString << "\n";
-					std::string cfgString = "sm64-builds/" + pathString + ".conf";
-					fs::path configCheck {cfgString};
-					if (fs::exists(configCheck)) {
-						std::cout << "Build configuration found: " << cfgString << "\n";
-						buildConfig.push_back(new QSettings(string_to_char(cfgString), QSettings::IniFormat));
-					}
-					else {
-						buildConfig.push_back(nullptr);
-					}
+	if (!fs::exists(buildDir)) fs::create_directory(buildDir);
+	for (const auto& dirEntry: fs::directory_iterator(buildDir)) {
+		if (dirEntry.is_directory()) {
+			std::string pathString = dirEntry.path().filename().string();
+			if (pathString[0] != '.' && pathString[0] != ' ') {
+				builds.push_back(QString::fromStdString(pathString));
+				count++;
+				std::cout << "Direcory found: " << pathString << "\n";
+				std::string cfgString = "sm64-builds/" + pathString + ".conf";
+				fs::path configCheck {cfgString};
+				if (fs::exists(configCheck)) {
+					std::cout << "Build configuration found: " << cfgString << "\n";
+					buildConfig.push_back(new QSettings(string_to_char(cfgString), QSettings::IniFormat));
+				}
+				else {
+					buildConfig.push_back(nullptr);
 				}
 			}
 		}
-	}
-	else {
-		std::cout << "Error when opening directory \"sm64-builds\". The directory requested does not exist.";
 	}
 	buildCount = count;
 	Q_EMIT buildCountModified();
@@ -240,11 +235,7 @@ int Backend::clone(QString repoSel) {
 }
 
 int Backend::pull(QString folder) {
-	char* repoFolder = string_to_char("./sm64-builds/" + folder.toStdString());
-
-	std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + " && git pull && echo \"Completed pull.\" &";
-	printf("%s\n", string_to_char(folder.toStdString())); // Test to see if it worked.
-	system(string_to_char(cmdAsString));
+	system(string_to_char("cd sm64-builds/" + folder.toStdString()));
 	return 0;
 }
 
@@ -290,12 +281,5 @@ int Backend::openSources() {
 
 int Backend::handleSources() {
 	sources = new QSettings("sources.conf", QSettings::IniFormat);
-	/*std::cout << "Sources in file: " << sources->allKeys().count() << "\n";
-	foreach (QString key, sources->allKeys()) {
-		std::cout << "Key: " << key.toStdString() << "\n";
-	}
-	foreach (QString group, sources->childGroups()) {
-		std::cout << "Group: " << group.toStdString() << "\n";
-	}*/
 	return 0;
 }

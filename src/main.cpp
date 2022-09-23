@@ -44,6 +44,8 @@ int main(int argc, char *argv[])
 	QQmlApplicationEngine engine;
 
 	Backend backend;
+	backend.buildFind(0);
+	backend.handleSources();
 
 	qmlRegisterSingletonType<AboutType>("org.azreigh.Kirigami64", 0, 2, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
 		Q_UNUSED(engine)
@@ -61,5 +63,5 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	return app.exec();
+	app.exec();
 }
