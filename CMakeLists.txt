@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(Kirigami64)
 set(PROJECT_VERSION "0.2.1")
 set(PROJECT_VERSION_SUBTITLE "Whomp's (Patched) Fortress")
+set(PROJECT_VERSION_FULL "0.2.1 - Whomp's (Patched) Fortress")
 
 configure_file("src/config.h.in" "src/config.h")
 

@@ -1,5 +1,5 @@
 # Kirigami64
-[![azreigh - Kirigami64](https://img.shields.io/static/v1?label=azreigh&message=Kirigami64&color=blue&logo=github)](https://github.com/azreigh/Kirigami64 "Go to GitHub repo")
+[![tulip-sudo - Kirigami64](https://img.shields.io/static/v1?label=azreigh&message=Kirigami64&color=blue&logo=github)](https://github.com/tulip-sudo/Kirigami64 "Go to GitHub repo")
 [![GitHub release](https://img.shields.io/github/release/azreigh/Kirigami64?include_prereleases=&sort=semver&color=blue)](https://github.com/azreigh/Kirigami64/releases/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue)](#license)
 <br>
@@ -7,7 +7,7 @@ A launcher for the SM64 PC Port made using Kirigami.
 # Notice
 The launcher does not currently give a proper way to see the progress of terminal commands (i.e git pull, git clone, make). It is recommended to use this with a terminal window shown. <br>
 It also currently only supports US roms.
-You can join our community discord server [here](https://discord.gg/r7bAjQqCYp).
+You can join our community discord server [here](https://discord.gg/Vptbbp59vQ).
 # Compiling
 ## Dependencies
 Kirigami64 requires CMake, Extra CMake Modules, Qt development packages, Kirigami and the base developer package.

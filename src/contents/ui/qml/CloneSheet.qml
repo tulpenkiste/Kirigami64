@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15 as Controls
 import QtQuick.Layouts 1.2
 import org.kde.kirigami 2.19 as Kirigami
 
-import org.azreigh.Kirigami64 0.2
+import org.tulip.Kirigami64 0.2
 
 Kirigami.ScrollablePage {
 	id: configSheet

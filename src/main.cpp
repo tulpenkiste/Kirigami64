@@ -1,5 +1,3 @@
-#define VERSION "v0.2.0 - Whomp's Fortress"
-
 #include <KAboutData>
 #include <QApplication>
 #include <QQmlApplicationEngine>
@@ -36,9 +34,9 @@ int main(int argc, char *argv[]) {
 						 // Copyright Statement.
 						 i18n("(c) 2022"));
 	aboutData.setDesktopFileName("Kirigami64");
-	aboutData.addAuthor(i18nc("@info:credit", "Azreigh"), i18nc("@info:credit", "Creator"), QStringLiteral(""), QStringLiteral("https://azreigh.github.io/"));
-	aboutData.setBugAddress("https://github.com/azreigh/Kirigami64/issues");
-	aboutData.setHomepage("https://github.com/azreigh/Kirigami64/");
+	aboutData.addAuthor(i18nc("@info:credit", "Tulip"), i18nc("@info:credit", "Creator"), QStringLiteral(""), QStringLiteral("https://tulip-sudo.github.io/"));
+	aboutData.setBugAddress("https://github.com/tulip-sudo/Kirigami64/issues");
+	aboutData.setHomepage("https://github.com/tulip-sudo/Kirigami64/");
 
 	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication app(argc, argv);
@@ -51,14 +49,14 @@ int main(int argc, char *argv[]) {
 	backend.buildFind(0);
 	backend.handleSources();
 
-	qmlRegisterSingletonType<AboutType>("org.azreigh.Kirigami64", 0, 2, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
+	qmlRegisterSingletonType<AboutType>("org.tulip.Kirigami64", 0, 2, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
 		Q_UNUSED(engine)
 		Q_UNUSED(scriptEngine)
 
 		return new AboutType();
 	});
 
-	qmlRegisterSingletonInstance<Backend>("org.azreigh.Kirigami64", 0, 2, "Backend", &backend);
+	qmlRegisterSingletonInstance<Backend>("org.tulip.Kirigami64", 0, 2, "Backend", &backend);
 
 	engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
