@@ -7,7 +7,7 @@ set(PROJECT_VERSION_FULL "0.2.1 - Whomp's (Patched) Fortress")
 configure_file("src/config.h.in" "src/config.h")
 
 set(KF_MIN_VERSION "5.68.0")
-set(QT_MIN_VERSION "5.12.0")
+set(QT_MIN_VERSION "5.14.0")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 
