@@ -252,7 +252,7 @@ int Backend::pull(QString folder) {
 
 int Backend::build(QString folder) {
 	std::string cmd0 = "cp baserom." + region + ".z64 sm64-builds/" + folder.toStdString() + "/baserom.us.z64";
-	std::string cmd1 = "cd sm64-builds/" + folder.toStdString() + " && make -j4 && echo \"Completed build.\" &";
+	std::string cmd1 = "cd sm64-builds/" + folder.toStdString() + " && make TARGET_BITS=64 -j $(nproc) && echo \"Completed build.\" &";
 	std::string fullCmd = cmd0 + " && " + cmd1;
 	system(string_to_char(fullCmd));
 	return 0;
