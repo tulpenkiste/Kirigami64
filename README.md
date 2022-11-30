@@ -12,15 +12,21 @@ You can join our community discord server [here](https://discord.gg/Vptbbp59vQ).
 ## Dependencies
 Kirigami64 requires CMake, Extra CMake Modules, Qt development packages, Kirigami and the base developer package.
 ### APT
-Run `sudo apt install build-essential extra-cmake-modules cmake qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qtquickcontrols2-5-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf5i18n-dev gettext libkf5coreaddons-dev qml-module-qtquick-layouts` to obtain the dependencies.
+Run `sudo apt install build-essential extra-cmake-modules cmake qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qtquickcontrols2-5-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf5i18n-dev gettext libkf5coreaddons-dev qml-module-qtquick-layouts libgit2-dev` to obtain the dependencies.
 ### Pacman
-Run `sudo pacman -S base-devel extra-cmake-modules cmake kirigami2 kde-sdk-meta gettext` to obtain the dependencies.
+Run `sudo pacman -S base-devel extra-cmake-modules cmake kirigami2 kde-sdk-meta gettext libgit2` to obtain the dependencies.
 ### DNF
-Run `sudo dnf groupinstall "Development Tools" "Development Libraries"`<br>`sudo dnf install extra-cmake-modules cmake qt5-qtbase-devel qt5-qtdeclarative-devel qt5-qtquickcontrols2-devel kf5-kirigami2 kf5-kirigami2-devel kf5-ki18n-devel kf5-kcoreaddons-devel gettext` to obtain the dependencies.
+Run `sudo dnf groupinstall "Development Tools" "Development Libraries"`<br>`sudo dnf install extra-cmake-modules cmake qt5-qtbase-devel qt5-qtdeclarative-devel qt5-qtquickcontrols2-devel kf5-kirigami2 kf5-kirigami2-devel kf5-ki18n-devel kf5-kcoreaddons-devel gettext libgit2 libgit2-devel` to obtain the dependencies.
 ### Other
 // TODO: Add later
 ## Instructions
-Run `./compile` or run `cmake -B build/ . && cmake --build build/` in the terminal and execute the binary generated within the `/build/bin/` folder.
+Install the required dependencies using the commands above, or use the included commands `./install_sm64_dependencies` and `./install_compile_dependencies`<br>
+<br> Run
+`git clone https://github.com/tulip-sudo/Kirigami64.git`<br> 
+`git submodule update --init`<br>
+`./compile`<br>
+`./run`<br>
+<br>If you want to skip the compile command, you may instead run `cmake -B build/ . && cmake --build build/` in the terminal and execute the binary generated within the `/build/bin/` folder.
 # Running
 ## Windows
 Using this software is not recommended *or* supported on Windows. Check out the [SM64 PC Info website](https://www.sm64pc.info/) for a launcher more suited towards your operating system.
