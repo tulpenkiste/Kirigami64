@@ -1,6 +1,7 @@
 # Kirigami64
-[![tulip-sudo - Kirigami64](https://img.shields.io/static/v1?label=azreigh&message=Kirigami64&color=blue&logo=github)](https://github.com/tulip-sudo/Kirigami64 "Go to GitHub repo")
-[![GitHub release](https://img.shields.io/github/release/azreigh/Kirigami64?include_prereleases=&sort=semver&color=blue)](https://github.com/azreigh/Kirigami64/releases/)
+Hosted on [Codeberg](https://codeberg.org/tulip-sudo/Kirigami64). <br>
+[![tulip-sudo - Kirigami64 GitHub Mirror](https://img.shields.io/static/v1?label=azreigh&message=Kirigami64&color=blue&logo=github)](https://github.com/tulip-sudo/Kirigami64 "Go to GitHub mirror")
+[![GitHub Mirror releases](https://img.shields.io/github/release/azreigh/Kirigami64?include_prereleases=&sort=semver&color=blue)](https://github.com/azreigh/Kirigami64/releases/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue)](#license)
 <br>
 A launcher for the SM64 PC Port made using Kirigami.
