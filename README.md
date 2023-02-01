@@ -1,5 +1,5 @@
 # Kirigami64
-Hosted on [Codeberg](https://codeberg.org/tulip-sudo/Kirigami64). <br>
+Hosted on [Codeberg](https://codeberg.org/tulip-sudo/Kirigami64) with a [GitHub Mirror](https://github.com/azreigh/Kirigami64). <br>
 [![tulip-sudo - Kirigami64 GitHub Mirror](https://img.shields.io/static/v1?label=azreigh&message=Kirigami64&color=blue&logo=github)](https://github.com/tulip-sudo/Kirigami64 "Go to GitHub mirror")
 [![GitHub Mirror releases](https://img.shields.io/github/release/azreigh/Kirigami64?include_prereleases=&sort=semver&color=blue)](https://github.com/azreigh/Kirigami64/releases/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue)](#license)
