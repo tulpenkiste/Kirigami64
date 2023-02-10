@@ -28,15 +28,15 @@ int main(int argc, char *argv[]) {
 						 // The program version string.
 						 QString::fromStdString(versionFull),
 						 // Short description of what the app does.
-						 i18n("A launcher for the SM64 PC Port made using Kirigami."),
+						 i18n("Launcher for the Super Mario 64 PC Port made using QtQuick and Kirigami2."),
 						 // The license this code is released under.
 						 KAboutLicense::GPL_V3,
 						 // Copyright Statement.
 						 i18n("(c) 2022"));
 	aboutData.setDesktopFileName("Kirigami64");
 	aboutData.addAuthor(i18nc("@info:credit", "Tulip"), i18nc("@info:credit", "Creator"), QStringLiteral(""), QStringLiteral("https://tulip-sudo.github.io/"));
-	aboutData.setBugAddress("https://github.com/tulip-sudo/Kirigami64/issues");
-	aboutData.setHomepage("https://github.com/tulip-sudo/Kirigami64/");
+	aboutData.setBugAddress("https://codeberg.org/tulip-sudo/Kirigami64/issues");
+	aboutData.setHomepage("https://codeberg.org/tulip-sudo/Kirigami64");
 
 	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication app(argc, argv);
