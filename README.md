@@ -32,7 +32,7 @@ Install the required dependencies using the commands above, or use the included 
 ## Windows
 Using this software is not recommended *or* supported on Windows. Check out the [SM64 PC Info website](https://www.sm64pc.info/) for a launcher more suited towards your operating system.
 ## MacOS
-// TODO: Figure out if this is possible.
+// TODO: Figure out if this is possible. It should be possible?
 ## Linux
 Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somewhere else) then execute the file in the terminal (`./Kirigami64`) or through a desktop file. <br>
 Make sure to put a US SM64 rom with the name `baserom.us.z64` in the same directory as the executable. <br>
@@ -40,7 +40,8 @@ Ensure you have the necessary dependencies for compiling and running your desire
 # Todo
 ## 0.3.0
  - [ ] Change paths used to `$HOME/.local/share/Kirigami64` rather than the current working directory
- - [ ] Meson build system support
+ - [ ] Meson build system support (as primary build system)
+ - [ ] (Optional) PhysicsFS support to prevent writing where it shouldn't.
  - [ ] Proper settings menu (with settings being saved into `$HOME/.local/share/Kirigami64/conf`)
  - [ ] Update info on www.sm64pc.info to link to Codeberg rather than GitHub.
 ## No Version Target
