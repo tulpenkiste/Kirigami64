@@ -5,14 +5,12 @@
 #include <git2.h>
 #include <filesystem>
 #include <iostream>
-#include <fstream>
+#include <filesystem>
 #include <string>
 #include <QFile>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-
-namespace fs = std::filesystem;
 
 char* string_to_char(std::string inp) {
 	// Function to turn an std::string to a char*
@@ -23,8 +21,8 @@ char* string_to_char(std::string inp) {
 
 std::string getExecutableName(QString folder, std::string region) {
 	std::string folderString = folder.toStdString();
-	fs::path buildDir{"sm64-builds/"+folderString+"/build/" + region + "_pc/"};
-	for (const auto& dirEntry: fs::directory_iterator(buildDir)) {
+	std::filesystem::path buildDir{"sm64-builds/"+folderString+"/build/" + region + "_pc/"};
+	for (const auto& dirEntry: std::filesystem::directory_iterator(buildDir)) {
 		std::string pathString = dirEntry.path().extension().string();
 		if (pathString == ".f3dex2e") {
 			return dirEntry.path().filename().string();
@@ -42,10 +40,12 @@ std::string getExecutableName(QString folder, std::string region) {
 	return "";
 }
 
-Backend::Backend(QObject *parent)
-	: QObject(parent)
-{
+Backend::Backend(QObject *parent) : QObject(parent) {
 	git_libgit2_init();
+}
+
+Backend::~Backend() {
+	git_libgit2_shutdown();
 }
 
 QSettings* Backend::sourceList() {
@@ -116,14 +116,14 @@ void Backend::buildFind(int additive) {
 	Q_EMIT buildCountModified();
 	Q_EMIT buildListModified();
 	Q_EMIT buildConfigListModified();
-	fs::path sources{"sources.conf"};
-	if (!fs::exists(sources)) {
-		QFile base_sources = QFile(":/base_sources.conf");
-		base_sources.copy("sources.conf");
+	std::filesystem::path sources{"sources.conf"};
+	if (!std::filesystem::exists(sources)) {
+		QFile base_sources(":/base_sources.conf");
+		//base_sources.copy("sources.conf");
 	}
-	fs::path buildDir{"sm64-builds/"};
-	if (!fs::exists(buildDir)) fs::create_directory(buildDir);
-	for (const auto& dirEntry: fs::directory_iterator(buildDir)) {
+	std::filesystem::path buildDir{"sm64-builds/"};
+	if (!std::filesystem::exists(buildDir)) std::filesystem::create_directory(buildDir);
+	for (const auto& dirEntry: std::filesystem::directory_iterator(buildDir)) {
 		if (dirEntry.is_directory()) {
 			std::string pathString = dirEntry.path().filename().string();
 			if (pathString[0] != '.' && pathString[0] != ' ') {
@@ -131,8 +131,8 @@ void Backend::buildFind(int additive) {
 				count++;
 				std::cout << "Direcory found: " << pathString << "\n";
 				std::string cfgString = "sm64-builds/" + pathString + ".conf";
-				fs::path configCheck {cfgString};
-				if (fs::exists(configCheck)) {
+				std::filesystem::path configCheck {cfgString};
+				if (std::filesystem::exists(configCheck)) {
 					std::cout << "Build configuration found: " << cfgString << "\n";
 					QSettings my_settings(QString::fromStdString(cfgString), QSettings::IniFormat);
 					buildNames.push_back(my_settings.value("build/name").toString());
@@ -206,9 +206,9 @@ void Backend::modifyConfig(QString name, QString description, QString icon) {
 }
 
 int Backend::clone(QString repoSel) {
-	fs::path builds{"sm64-builds/"};
-	if (!fs::exists(builds)) {
-		fs::create_directory(builds);
+	std::filesystem::path builds{"sm64-builds/"};
+	if (!std::filesystem::exists(builds)) {
+		std::filesystem::create_directory(builds);
 	}
 	sources->beginGroup(repoSel);
 	QStringList data = sources->childKeys();
@@ -230,8 +230,8 @@ int Backend::clone(QString repoSel) {
 
 	char* path = string_to_char("sm64-builds/" + repoSel.toStdString());
 
-	fs::path buildCloneDir{path};
-	fs::create_directory(buildCloneDir);
+	std::filesystem::path buildCloneDir{path};
+	std::filesystem::create_directory(buildCloneDir);
 
 	git_repository* repo = NULL;
 
@@ -260,8 +260,8 @@ int Backend::build(QString folder) {
 
 int Backend::run(QString folder) {
 	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build/");
-	fs::path builds{dir};
-	if (!fs::exists(builds)) {
+	std::filesystem::path builds{dir};
+	if (!std::filesystem::exists(builds)) {
 		std::cout << "This build has not been compiled. Building it now.\n";
 		build(folder); // The repository hasn't run make yet.
 		return 1;
@@ -279,14 +279,14 @@ int Backend::run(QString folder) {
 }
 
 int Backend::rmDir(QString folder) {
-	fs::path folderToRemove{"sm64-builds/" + folder.toStdString()};
-	fs::remove_all(folderToRemove);
+	std::filesystem::path folderToRemove{"sm64-builds/" + folder.toStdString()};
+	std::filesystem::remove_all(folderToRemove);
 	buildFind(0);
 	return 0;
 }
 
 int Backend::openSources() {
-	system("$VISUAL sources.conf &");
+	system("xdg-open sources.conf &");
 	return 0;
 }
 

@@ -8,8 +8,7 @@ class AboutType : public QObject
     Q_OBJECT
     Q_PROPERTY(KAboutData aboutData READ aboutData CONSTANT)
 public:
-    [[nodiscard]] KAboutData aboutData() const
-    {
+    [[nodiscard]] KAboutData aboutData() const {
         return KAboutData::applicationData();
     }
 };

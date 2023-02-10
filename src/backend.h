@@ -39,6 +39,7 @@ private:
 	bool useMangoHud = false;
 public:
 	explicit Backend(QObject *parent = nullptr);
+	~Backend();
 	QSettings* sourceList();
 	std::vector<QString> buildNamesDataGet();
 	std::vector<QString> buildDescriptionsDataGet();

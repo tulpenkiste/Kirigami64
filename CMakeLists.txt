@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 project(Kirigami64)
 set(PROJECT_VERSION "0.2.1")
 set(PROJECT_VERSION_SUBTITLE "Whomp's (Patched) Fortress")
-set(PROJECT_VERSION_FULL "0.2.1 - Whomp's (Patched) Fortress")
 
 configure_file("src/config.h.in" "src/config.h")
 
@@ -25,7 +24,7 @@ ecm_setup_version(${PROJECT_VERSION}
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/config-Kirigami64.h"
 )
 
-find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Core Quick Test Gui QuickControls2 Widgets)
+find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Core Quick Gui QuickControls2 Widgets)
 find_package(KF5 ${KF_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 I18n CoreAddons)
 find_library(git2 NAME git2 REQUIRED)
 

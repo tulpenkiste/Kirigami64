@@ -11,7 +11,6 @@
 #include <algorithm>
 
 #include "backend.h"
-#include "config-Kirigami64.h"
 #include "about.h"
 #include "config.h"
 

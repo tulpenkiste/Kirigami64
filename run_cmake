@@ -1,0 +1,2 @@
+#!/bin/bash
+clear && cd ./build_cmake/bin && ./Kirigami64
