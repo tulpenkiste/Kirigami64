@@ -9,6 +9,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 
+char* string_to_char(std::string inp);
+
 class Backend : public QObject
 {
 	Q_OBJECT

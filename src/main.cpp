@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <filesystem>
 
 #include "backend.h"
 #include "about.h"
@@ -45,6 +46,11 @@ int main(int argc, char *argv[]) {
 	QQmlApplicationEngine engine;
 
 	Backend backend;
+
+	chdir(string_to_char(getenv("HOME") + (std::string)"/.local/share/Kirigami64"));
+
+	std::cout << std::filesystem::current_path() << std::endl;
+
 	backend.buildFind(0);
 	backend.handleSources();
 
