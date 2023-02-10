@@ -47,9 +47,12 @@ int main(int argc, char *argv[]) {
 
 	Backend backend;
 
+	std::filesystem::path shareDir{getenv("HOME") + (std::string)"/.local/share/Kirigami64"};
+	if (!std::filesystem::exists(shareDir)) std::filesystem::create_directory(shareDir);
+
 	chdir(string_to_char(getenv("HOME") + (std::string)"/.local/share/Kirigami64"));
 
-	std::cout << std::filesystem::current_path() << std::endl;
+	//std::cout << std::filesystem::current_path() << std::endl;
 
 	backend.buildFind(0);
 	backend.handleSources();

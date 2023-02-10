@@ -29,8 +29,8 @@ Kirigami.ScrollablePage {
 			Controls.Button {
 				Layout.alignment: Qt.AlignLeft
 				Layout.columnSpan: 2
-				text: i18n("Modify sources in visual editor")
-				onClicked: [showPassiveNotification("Opening Kate..."), Backend.openSources()]
+				text: i18n("Modify sources in text editor")
+				onClicked: [showPassiveNotification("Opening editor..."), Backend.openSources()]
 			}
 
 			Kirigami.Heading {
