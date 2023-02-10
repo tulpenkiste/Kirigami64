@@ -2,6 +2,7 @@
 .vscode/
 .kdev4/
 build/
+build_cmake/
 *.kate-swp
 sm64-builds/
 .out
