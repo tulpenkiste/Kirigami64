@@ -26,10 +26,12 @@ Kirigami.ScrollablePage {
 				text: "This section is to modify application sources."
 			}
 
-			Controls.Button {
+			Controls.ToolButton {
 				Layout.alignment: Qt.AlignLeft
 				Layout.columnSpan: 2
 				text: i18n("Modify sources in text editor")
+				icon.name: "document-edit"
+				flat: false
 				onClicked: [showPassiveNotification("Opening editor..."), Backend.openSources()]
 			}
 
@@ -49,7 +51,7 @@ Kirigami.ScrollablePage {
 				text: "Configure visual settings"
 			}
 
-			Controls.Button {
+			Controls.Switch {
 				Layout.alignment: Qt.AlignLeft
 				Layout.columnSpan: 2
 				checkable: true
@@ -71,7 +73,7 @@ Kirigami.ScrollablePage {
 			Controls.Label {
 				Layout.fillWidth: true
 				wrapMode: Text.WordWrap
-				text: "Configure build settings here"
+				text: "Configure build settings here (STILL TODO)"
 			}
 		}
 	}
