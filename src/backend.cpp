@@ -129,7 +129,7 @@ void Backend::buildFind(int additive) {
 			if (pathString[0] != '.' && pathString[0] != ' ') {
 				builds.push_back(QString::fromStdString(pathString));
 				count++;
-				std::cout << "Direcory found: " << pathString << "\n";
+				std::cout << "Directory found: " << pathString << "\n";
 				std::string cfgString = "sm64-builds/" + pathString + ".conf";
 				std::filesystem::path configCheck {cfgString};
 				if (std::filesystem::exists(configCheck)) {
