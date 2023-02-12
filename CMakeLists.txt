@@ -3,7 +3,7 @@ project(Kirigami64)
 set(PROJECT_VERSION "0.2.1")
 set(PROJECT_VERSION_SUBTITLE "Whomp's (Patched) Fortress")
 
-configure_file("src/config.h.in" "src/config.h")
+configure_file("src/config.hpp.in" "src/config.hpp")
 
 set(KF_MIN_VERSION "5.68.0")
 set(QT_MIN_VERSION "5.14.0")
@@ -21,7 +21,7 @@ include(ECMPoQmTools)
 
 ecm_setup_version(${PROJECT_VERSION}
     VARIABLE_PREFIX KIRIGAMI64
-    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/config-Kirigami64.h"
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/config-Kirigami64.hpp"
 )
 
 find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Core Quick Gui QuickControls2 Widgets)

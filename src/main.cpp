@@ -11,9 +11,9 @@
 #include <algorithm>
 #include <filesystem>
 
-#include "backend.h"
-#include "about.h"
-#include "config.h"
+#include "backend.hpp"
+#include "about.hpp"
+#include "config.hpp"
 
 int main(int argc, char *argv[]) {
 	// I have no idea if this will be efficient.

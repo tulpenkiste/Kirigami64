@@ -6,7 +6,7 @@ config_dat.set('PROJECT_NAME', 'Kirigami64')
 config_dat.set('PROJECT_VERSION', meson.project_version())
 config_dat.set('PROJECT_VERSION_SUBTITLE', 'Whomp\'s (Patched) Fortress')
 
-configure_file(input: 'src/config.h.in', output: 'config.h', configuration: config_dat)
+configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: config_dat)
 
 # Setup: library dependencies
 qt5dep = dependency('qt5', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickControls2', 'Widgets'], version : '>=5.14.0')
@@ -22,7 +22,7 @@ qt5 = import('qt5')
 
 # Files
 sources = files('src/about.cpp', 'src/backend.cpp', 'src/main.cpp')
-headers = files('src/about.h', 'src/backend.h')
+headers = files('src/about.hpp', 'src/backend.hpp')
 
 # Qt shenanigans
 resources = qt5.preprocess(

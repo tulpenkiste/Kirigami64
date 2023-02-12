@@ -8,8 +8,9 @@ import org.tulip.Kirigami64 0.2
 Kirigami.ScrollablePage {
 	id: configSheet
 
-	GridLayout {
+	RowLayout {
 		ColumnLayout {
+			Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 			Kirigami.Heading {
 				Layout.fillWidth: true
 				level: 2

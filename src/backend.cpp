@@ -1,6 +1,6 @@
 // Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
 // Also I need to go back through this and make it use good C++ more.
-#include "backend.h"
+#include "backend.hpp"
 
 #include <git2.h>
 #include <filesystem>
@@ -246,7 +246,7 @@ int Backend::clone(QString repoSel) {
 }
 
 int Backend::pull(QString folder) {
-	system(string_to_char("cd sm64-builds/" + folder.toStdString()));
+	system(string_to_char("cd sm64-builds/" + folder.toStdString() + " && git pull"));
 	return 0;
 }
 
