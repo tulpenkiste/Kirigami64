@@ -22,7 +22,7 @@ char* string_to_char(std::string inp) {
 std::string getExecutableName(QString folder, std::string region) {
 	std::string folderString = folder.toStdString();
 	std::filesystem::path buildDir{"sm64-builds/"+folderString+"/build/" + region + "_pc/"};
-	for (const auto& dirEntry: std::filesystem::directory_iterator(buildDir)) {
+	for (const std::filesystem::directory_entry& dirEntry: std::filesystem::directory_iterator(buildDir)) {
 		std::string pathString = dirEntry.path().extension().string();
 		if (pathString == ".f3dex2e") {
 			return dirEntry.path().filename().string();
@@ -123,7 +123,7 @@ void Backend::buildFind(int additive) {
 	}
 	std::filesystem::path buildDir{"sm64-builds/"};
 	if (!std::filesystem::exists(buildDir)) std::filesystem::create_directory(buildDir);
-	for (const auto& dirEntry: std::filesystem::directory_iterator(buildDir)) {
+	for (const std::filesystem::directory_entry& dirEntry: std::filesystem::directory_iterator(buildDir)) {
 		if (dirEntry.is_directory()) {
 			std::string pathString = dirEntry.path().filename().string();
 			if (pathString[0] != '.' && pathString[0] != ' ') {
