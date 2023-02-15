@@ -21,21 +21,12 @@ char* string_to_char(std::string inp) {
 
 std::string getExecutableName(QString folder, std::string region) {
 	std::string folderString = folder.toStdString();
-	std::filesystem::path buildDir{"sm64-builds/"+folderString+"/build/" + region + "_pc/"};
+	std::filesystem::path buildDir{"sm64-builds/" + folderString + "/build/" + region + "_pc/"};
 	for (const std::filesystem::directory_entry& dirEntry: std::filesystem::directory_iterator(buildDir)) {
-		std::string pathString = dirEntry.path().extension().string();
-		if (pathString == ".f3dex2e") {
+		std::string filenameExtension = dirEntry.path().extension().string();
+		if (filenameExtension == ".f3dex2e") {
 			return dirEntry.path().filename().string();
 		}
-		/*if (dirEntry.is_directory()) {
-			std::string pathString = dirEntry.path().filename().string();
-			if (pathString[0] != '.' && pathString[0] != ' ') {
-				builds[i] = QString::fromStdString(pathString);
-				count++;
-				i++;
-				std::cout << "Direcory found: " << pathString << "\n";
-			}
-		}*/
 	}
 	return "";
 }
