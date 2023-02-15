@@ -11,10 +11,16 @@ Kirigami.ScrollablePage {
 	RowLayout {
 		ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+			Layout.maximumWidth: 450.0
+
 			Kirigami.Heading {
 				Layout.fillWidth: true
 				level: 2
+				type: Kirigami.Heading.Type.Primary
 				text: "Sources"
+
+				horizontalAlignment: Text.AlignHCenter
 			}
 
 			Kirigami.Separator {
@@ -39,7 +45,9 @@ Kirigami.ScrollablePage {
 			Kirigami.Heading {
 				Layout.fillWidth: true
 				level: 2
+				type: Kirigami.Heading.Type.Primary
 				text: "Visual"
+				horizontalAlignment: Text.AlignHCenter
 			}
 
 			Kirigami.Separator {
@@ -64,7 +72,9 @@ Kirigami.ScrollablePage {
 			Kirigami.Heading {
 				Layout.fillWidth: true
 				level: 2
+				type: Kirigami.Heading.Type.Primary
 				text: "Build"
+				horizontalAlignment: Text.AlignHCenter
 			}
 
 			Kirigami.Separator {
