@@ -183,16 +183,21 @@ void Backend::setUseMangoHud(bool usingMangoHud)
 }
 
 int Backend::addShortcut(QString folder) {
+	// Handle desktop menu shenanigans
 	std::cout << "Writing shortcut file...\n";
 	std::string userDir = getenv("HOME");
 	std::string folderString = folder.toStdString();
-	std::string dir = getenv("PWD");
+	std::string dir = std::filesystem::current_path();
 	std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder,region) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
 	std::string desktopFileName = folderString + ".desktop";
 	std::ofstream desktopFile(userDir + "/.local/share/applications/" + desktopFileName);
 	desktopFile << desktopFileContents;
 	desktopFile.close();
 	std::cout << "Wrote shortcut file to " + (userDir + "/.local/share/applications/" + desktopFileName) + ".\n";
+
+	// Symlink shortcut to desktop
+	symlink(string_to_char(userDir + "/.local/share/applications/" + desktopFileName), string_to_char(userDir + "/Desktop/" + desktopFileName));
+
 	return 0;
 }
 
