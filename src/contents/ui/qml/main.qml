@@ -123,7 +123,7 @@ Kirigami.ApplicationWindow {
 				iconName: "configure"
 				text: qsTr("Configure", "Configure this build")
 				tooltip: qsTr("Configure this build")
-				onTriggered: [selectedBuildSheet.close(), pageStack.layers.push(configureBuildSheet)]
+				onTriggered: [selectedBuildSheet.close(), pageStack.layers.push(configureBuildSheet), configureBuildSheet.updateValues()]
 			},
 			Kirigami.Action {
 				iconName: "delete"
