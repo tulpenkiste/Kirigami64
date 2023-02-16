@@ -6,7 +6,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-          version: 1.0
       - name: Compile launcher
         run: |
           sudo apt-get update && sudo apt-get install patchelf build-essential git python3 libglew-dev libsdl2-dev libboost-all-dev extra-cmake-modules cmake qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qtquickcontrols2-5-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf5i18n-dev gettext libkf5coreaddons-dev qml-module-qtquick-layouts libgit2-dev meson
