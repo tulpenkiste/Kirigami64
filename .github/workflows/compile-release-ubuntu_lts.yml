@@ -1,5 +1,5 @@
-name: Compile on Ubuntu LTS
-run-name: Ubuntu LTS Compilation Workflow
+name: Compile on Ubuntu LTS (Release Build)
+run-name: Ubuntu LTS Release Compilation Workflow
 on: workflow_dispatch
 jobs:
   compile:
