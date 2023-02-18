@@ -46,7 +46,7 @@ Kirigami.ScrollablePage {
 				Layout.fillWidth: true
 				level: 2
 				type: Kirigami.Heading.Type.Primary
-				text: "Visual"
+				text: "Launch Options"
 				horizontalAlignment: Text.AlignHCenter
 			}
 
@@ -57,7 +57,7 @@ Kirigami.ScrollablePage {
 			Controls.Label {
 				Layout.fillWidth: true
 				wrapMode: Text.WordWrap
-				text: "Configure visual settings"
+				text: "Configure launch settings"
 			}
 
 			Controls.Switch {

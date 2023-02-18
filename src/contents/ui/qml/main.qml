@@ -126,6 +126,12 @@ Kirigami.ApplicationWindow {
 				onTriggered: [selectedBuildSheet.close(), pageStack.layers.push(configureBuildSheet), configureBuildSheet.updateValues()]
 			},
 			Kirigami.Action {
+				iconName: "configure"
+				text: qsTr("Open repo data directory", "View local data (e.g saves)")
+				tooltip: qsTr("Opens a directory within your selected file manager")
+				onTriggered: [selectedBuildSheet.close(), Backend.openRepoDataDir()]
+			},
+			Kirigami.Action {
 				iconName: "delete"
 				text: qsTr("Delete", "Delete the specified build")
 				tooltip: qsTr("Delete the specified build")

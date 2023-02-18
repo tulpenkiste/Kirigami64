@@ -13,10 +13,11 @@ qt5dep = dependency('qt5', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickContr
 kf5dep = dependency('KF5CoreAddons', version : '>=5.68.0')
 kf5kirigamidep = dependency('KF5Kirigami2', version : '>=5.68.0')
 kf5translatedep = dependency('KF5I18n', version : '>=5.68.0')
+kf5configdep = meson.get_compiler('cpp').find_library('KF5ConfigCore') # dependency('KF5ConfigCore', version : '>=5.68.0')
 lgit2 = dependency('libgit2', version : '>=1.1.0')
 #lgit2 = meson.get_compiler('cpp').find_library('git2')
 
-libs = [qt5dep, kf5dep, kf5kirigamidep, kf5translatedep, lgit2]
+libs = [qt5dep, kf5dep, kf5kirigamidep, kf5translatedep, kf5configdep, lgit2]
 
 # Setup: Qt Module
 qt5 = import('qt5')
@@ -32,4 +33,4 @@ resources = qt5.preprocess(
 							dependencies: libs)
 
 # The application
-launcher = executable('Kirigami64', sources, resources, dependencies: libs)
+launcher = executable('Kirigami64', sources, resources, include_directories: ['/usr/include/KF5/KConfigCore'] , dependencies: libs)

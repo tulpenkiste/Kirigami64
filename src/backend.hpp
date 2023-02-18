@@ -9,6 +9,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 
+#include <KConfigCore/KSharedConfig>
+
 char* string_to_char(std::string inp);
 
 class Backend : public QObject
@@ -39,6 +41,8 @@ private:
 	QString branch = "";
 	bool downloadSizeUnknown = true;
 	bool useMangoHud = false;
+
+	KSharedConfigPtr launcherConfig;
 public:
 	explicit Backend(QObject *parent = nullptr);
 	~Backend();
@@ -80,4 +84,5 @@ public:
 	Q_INVOKABLE int rmDir(QString folder);
 	Q_INVOKABLE int openSources();
 	Q_INVOKABLE int handleSources();
+	Q_INVOKABLE void openRepoDataDir();
 };

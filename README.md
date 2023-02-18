@@ -43,7 +43,6 @@ Ensure you have the necessary dependencies for compiling and running your desire
 ## 0.3.0
  - [X] Change paths used to `$HOME/.local/share/Kirigami64` rather than the current working directory
  - [X] Meson build system support (as primary build system)
- - [ ] (Optional) PhysicsFS support to prevent writing where it shouldn't.
  - [ ] Proper settings menu (with settings being saved into `$HOME/.local/share/Kirigami64/conf`)
  - [X] Update info on www.sm64pc.info to link to Codeberg rather than GitHub.
 ## No Version Target

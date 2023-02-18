@@ -33,6 +33,7 @@ std::string getExecutableName(QString folder, std::string region) {
 
 Backend::Backend(QObject *parent) : QObject(parent) {
 	git_libgit2_init();
+	launcherConfig = KSharedConfig::openConfig("kirigami64rc", KSharedConfig::FullConfig, QStandardPaths::AppDataLocation);
 }
 
 Backend::~Backend() {
@@ -289,4 +290,18 @@ int Backend::openSources() {
 int Backend::handleSources() {
 	sources = new QSettings("sources.conf", QSettings::IniFormat);
 	return 0;
+}
+
+void Backend::openRepoDataDir() {
+	QString targetDir = getenv("HOME") + ("/.local/share/" + builds[buildSelected]);
+	std::filesystem::path existenceCheck(targetDir.toStdString());
+	if (targetDir.contains("-") && !(std::filesystem::exists(existenceCheck) && std::filesystem::is_directory(existenceCheck))) {
+		targetDir = targetDir.split("-").first();
+		existenceCheck = std::filesystem::path(targetDir.toStdString());
+	}
+	if (std::filesystem::exists(existenceCheck) && std::filesystem::is_directory(existenceCheck)) {
+		system(string_to_char("xdg-open " + targetDir.toStdString()));
+	} else {
+		std::cout << builds[buildSelected].toStdString() << " uses a non-standard save location." << std::endl;
+	}
 }
