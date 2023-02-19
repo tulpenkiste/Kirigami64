@@ -1,10 +1,10 @@
-project('Kirigami64', 'cpp', version: '0.2.1', default_options: ['cpp_std=c++17'])
+project('Kirigami64', 'cpp', version: '0.3.0', default_options: ['cpp_std=c++17'])
 
 # Setup: configure file
 config_dat = configuration_data()
 config_dat.set('PROJECT_NAME', 'Kirigami64')
 config_dat.set('PROJECT_VERSION', meson.project_version())
-config_dat.set('PROJECT_VERSION_SUBTITLE', 'Whomp\'s (Patched) Fortress')
+config_dat.set('PROJECT_VERSION_SUBTITLE', 'idk')
 
 configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: config_dat)
 

@@ -10,6 +10,7 @@
 #include <boost/property_tree/ini_parser.hpp>
 
 #include <KConfigCore/KSharedConfig>
+#include <KConfigCore/KConfigGroup>
 
 char* string_to_char(std::string inp);
 
@@ -43,6 +44,7 @@ private:
 	bool useMangoHud = false;
 
 	KSharedConfigPtr launcherConfig;
+	KConfigGroup launcherRepoDefaults;
 public:
 	explicit Backend(QObject *parent = nullptr);
 	~Backend();

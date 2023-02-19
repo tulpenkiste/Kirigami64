@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(Kirigami64)
-set(PROJECT_VERSION "0.2.1")
-set(PROJECT_VERSION_SUBTITLE "Whomp's (Patched) Fortress")
+set(PROJECT_VERSION "0.3.0")
+set(PROJECT_VERSION_SUBTITLE "idk")
 
 configure_file("src/config.hpp.in" "src/config.hpp")
 

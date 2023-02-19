@@ -34,6 +34,8 @@ std::string getExecutableName(QString folder, std::string region) {
 Backend::Backend(QObject *parent) : QObject(parent) {
 	git_libgit2_init();
 	launcherConfig = KSharedConfig::openConfig("kirigami64rc", KSharedConfig::FullConfig, QStandardPaths::AppDataLocation);
+	launcherRepoDefaults = launcherConfig->group("Defaults");
+	useMangoHud = launcherRepoDefaults.readEntry("useMangoHud", false);
 }
 
 Backend::~Backend() {
@@ -171,6 +173,7 @@ void Backend::setDownloadSizeUnknownStatus(bool known)
 void Backend::setUseMangoHud(bool usingMangoHud)
 {
 	useMangoHud = usingMangoHud;
+	launcherRepoDefaults.writeEntry("useMangoHud", useMangoHud);
 	Q_EMIT useMangoHudModified();
 }
 
@@ -266,7 +269,8 @@ int Backend::run(QString folder) {
 	else {
 		std::string execPrefix = "";
 		if (useMangoHud) {
-			execPrefix += "mangohud --dlsym";
+			if (!system("which mangohud > /dev/null 2>&1")) execPrefix += "mangohud --dlsym";
+			else std::cout << "Error: Mangohud isn't installed! Continuing without mangohud..." << std::endl;
 		}
 		// Might add more exec prefixes later later
 		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder,region) + " &";
