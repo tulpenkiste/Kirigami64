@@ -11,13 +11,14 @@ It also currently only supports US roms.
 You can join our community discord server [here](https://discord.gg/Vptbbp59vQ).
 # Compiling
 ## Dependencies
-Kirigami64 requires CMake, Extra CMake Modules, Qt development packages, Kirigami and the base developer package.
+Kirigami64 requires CMake, Extra CMake Modules, Qt development packages, Kirigami and the base developer package. <br>
+Meson is also recommended as an alternative to CMake (all releases are compiled using Meson).
 ### APT
-Run `sudo apt install build-essential extra-cmake-modules cmake qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qtquickcontrols2-5-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf5i18n-dev gettext libkf5coreaddons-dev qml-module-qtquick-layouts libgit2-dev` to obtain the dependencies.
+Run `sudo apt install build-essential extra-cmake-modules cmake qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qtquickcontrols2-5-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf5i18n-dev gettext libkf5coreaddons-dev qml-module-qtquick-layouts libgit2-dev meson` to obtain the dependencies.
 ### Pacman
-Run `sudo pacman -S base-devel extra-cmake-modules cmake kirigami2 kde-sdk-meta gettext libgit2` to obtain the dependencies.
+Run `sudo pacman -S base-devel extra-cmake-modules cmake kirigami2 kde-sdk-meta gettext libgit2 meson` to obtain the dependencies.
 ### DNF
-Run `sudo dnf groupinstall "Development Tools" "Development Libraries"`<br>`sudo dnf install extra-cmake-modules cmake qt5-qtbase-devel qt5-qtdeclarative-devel qt5-qtquickcontrols2-devel kf5-kirigami2 kf5-kirigami2-devel kf5-ki18n-devel kf5-kcoreaddons-devel gettext libgit2 libgit2-devel` to obtain the dependencies.
+Run `sudo dnf groupinstall "Development Tools" "Development Libraries"`<br>`sudo dnf install extra-cmake-modules cmake qt5-qtbase-devel qt5-qtdeclarative-devel qt5-qtquickcontrols2-devel kf5-kirigami2 kf5-kirigami2-devel kf5-ki18n-devel kf5-kcoreaddons-devel gettext libgit2 libgit2-devel meson` to obtain the dependencies.
 ### Other
 // TODO: Add later
 ## Instructions
@@ -28,23 +29,24 @@ git clone https://codeberg.org/tulip-sudo/Kirigami64.git
 ./compile
 ./run
 ```
-<br>If you want to skip the compile command, you may instead run `meson build && cd build && meson compile` in the terminal and execute the binary generated within the `build` folder.
+<br>If you want to skip the compile script (e.g. for configuring the build), you may instead run `meson build && cd build && meson compile` in the terminal and execute the binary generated within the `build` folder.
 # Running
 ## Windows
-Using this software is not recommended *or* supported on Windows. Check out the [SM64 PC Info website](https://www.sm64pc.info/) for a launcher more suited towards your operating system.
-If you do not care about the above notice in the slightest, follow the Linux steps using WSL2 + WSLg.
+Using this software is not recommended *or* supported on Windows. Check out the [SM64 PC Info website](https://www.sm64pc.info/) for a launcher more suited towards your operating system. <br>
+If you do not care about the above notice in the slightest, follow the Linux steps using WSL2 + WSLg or figure out how to compile the necessary libraries using MinGW.
 ## MacOS
 // TODO: Figure out if this is possible. It should be possible but Apple OSes are a bit quirky.
 ## Linux
 Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somewhere else) then execute the file in the terminal (`./Kirigami64`) or through a desktop file. <br>
-Make sure to put an SM64 rom with the name `baserom.region.z64` in `~/.local/share/Kirigami64`. <br>
+Make sure to put an SM64 rom with the name `baserom.{region}.z64` in `~/.local/share/Kirigami64`. <br>
 Ensure you have the necessary dependencies for compiling and running your desired SM64 repository before using this.
 # Todo
 ## 0.3.0
  - [X] Change paths used to `$HOME/.local/share/Kirigami64` rather than the current working directory
  - [X] Meson build system support (as primary build system)
- - [ ] Proper settings menu (with settings being saved into `$HOME/.local/share/Kirigami64/conf`)
+ - [ ] Proper settings menu (with settings being saved into `$HOME/.local/share/Kirigami64/kirigami64rc`)
  - [X] Update info on www.sm64pc.info to link to Codeberg rather than GitHub.
+ - [ ] ROM Region selecting
 ## No Version Target
  - [X] Actually working minimum features (e.g. build and run) (Required)
  - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High)
