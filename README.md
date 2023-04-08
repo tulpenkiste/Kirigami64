@@ -1,7 +1,7 @@
 # Kirigami64
-Hosted on [Codeberg](https://codeberg.org/tulip-sudo/Kirigami64) with a [GitHub Mirror](https://github.com/azreigh/Kirigami64). <br>
-[![tulip-sudo - Kirigami64 GitHub Mirror](https://img.shields.io/static/v1?label=azreigh&message=Kirigami64&color=blue&logo=github)](https://github.com/tulip-sudo/Kirigami64 "Go to GitHub mirror")
-[![GitHub Mirror releases](https://img.shields.io/github/release/azreigh/Kirigami64?include_prereleases=&sort=semver&color=blue)](https://github.com/azreigh/Kirigami64/releases/)
+Hosted on [Codeberg](https://codeberg.org/tulpenkiste/Kirigami64) with a [GitHub Mirror](https://github.com/tulpenkiste/Kirigami64). <br>
+[![tulpenkiste - Kirigami64 GitHub Mirror](https://img.shields.io/static/v1?label=tulpenkiste&message=Kirigami64&color=blue&logo=github)](https://github.com/tulpenkiste/Kirigami64 "Go to GitHub mirror")
+[![GitHub Mirror releases](https://img.shields.io/github/release/tulpenkiste/Kirigami64?include_prereleases=&sort=semver&color=blue)](https://github.com/tulpenkiste/Kirigami64/releases/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue)](#license)
 <br>
 A launcher for the SM64 PC Port made using Kirigami.
@@ -25,7 +25,7 @@ Run `sudo dnf groupinstall "Development Tools" "Development Libraries"`<br>`sudo
 Install the required dependencies using the commands above, or use the included commands `./install_sm64_dependencies` and `./install_compile_dependencies`<br>
 <br> Run
 ```bash
-git clone https://codeberg.org/tulip-sudo/Kirigami64.git
+git clone https://codeberg.org/tulpenkiste/Kirigami64.git
 ./compile
 ./run
 ```
