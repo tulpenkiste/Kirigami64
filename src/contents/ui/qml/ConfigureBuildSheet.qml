@@ -86,6 +86,31 @@ Kirigami.ScrollablePage {
 				}
 			}
 
+			RowLayout {
+				id: romLayout
+				property int currentRegion: 0
+				Kirigami.Label {
+					text: "ROM Region: "
+				}
+				Controls.RadioButton {
+					text: "Default"
+					checked: true
+					onCheckedChanged: romLayout.currentRegion = 0
+				}
+				Controls.RadioButton {
+					text: "US"
+					onCheckedChanged: romLayout.currentRegion = 1
+				}
+				Controls.RadioButton {
+					text: "EU"
+					onCheckedChanged: romLayout.currentRegion = 2
+				}
+				Controls.RadioButton {
+					text: "JP"
+					onCheckedChanged: romLayout.currentRegion = 3
+				}
+			}
+
 			Kirigami.Heading {
 				Layout.fillWidth: true
 				level: 3
@@ -100,7 +125,7 @@ Kirigami.ScrollablePage {
 
 			Controls.Button {
 				text: "Set repository configuration"
-				onClicked: [Backend.modifyConfig(nameInp.text, descInp.text, iconInp.text), showPassiveNotification("Updated config for " + Backend.buildList(Backend.buildSelected) + "."), Backend.buildFind(0)]
+				onClicked: [Backend.modifyConfig(nameInp.text, descInp.text, iconInp.text, romLayout.currentRegion), showPassiveNotification("Updated config for " + Backend.buildList(Backend.buildSelected) + "."), Backend.buildFind(0)]
 			}
 		}
 	}

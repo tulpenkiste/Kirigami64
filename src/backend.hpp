@@ -87,7 +87,7 @@ public:
 	Q_SIGNAL void useMangoHudModified();
 	Q_SIGNAL void useGameModeModified();
 	Q_INVOKABLE int addShortcut(QString folder);
-	Q_INVOKABLE void modifyConfig(QString name, QString description, QString icon);
+	Q_INVOKABLE void modifyConfig(QString name, QString description, QString icon, int region);
 	Q_INVOKABLE int clone(QString repoSel);
 	Q_INVOKABLE int pull(QString folder);
 	Q_INVOKABLE int build(QString folder);

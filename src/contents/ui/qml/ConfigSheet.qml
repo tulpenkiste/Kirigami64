@@ -82,7 +82,7 @@ Kirigami.ScrollablePage {
 				Layout.fillWidth: true
 				level: 2
 				type: Kirigami.Heading.Type.Primary
-				text: "Build"
+				text: "Roms"
 				horizontalAlignment: Text.AlignHCenter
 			}
 

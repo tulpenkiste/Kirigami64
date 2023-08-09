@@ -140,7 +140,7 @@ void Backend::buildFind(int additive) {
 				builds.push_back(QString::fromStdString(pathString));
 				count++;
 				std::cout << "Directory found: " << pathString << "\n";
-				std::string cfgString = "sm64-builds/" + pathString + ".conf";
+				std::string cfgString = "sm64-builds/" + pathString + ".k64.conf";
 				std::filesystem::path configCheck {cfgString};
 				if (std::filesystem::exists(configCheck)) {
 					std::cout << "Build configuration found: " << cfgString << "\n";
@@ -155,7 +155,7 @@ void Backend::buildFind(int additive) {
 					buildIcons.push_back("application-x-n64-rom");
 				}
 			}
-		} else {
+		} else if (!QString::fromStdString(dirEntry.path().filename().string()).endsWith(".k64.conf")) {
 			QMessageBox::information(nullptr, "Unexpected File",
 						QString::fromStdString("When scanning the directory sm64-builds, an unexpected file called '" + dirEntry.path().filename().string() + "' was found.\nPlease move the file out of the folder."));
 		}
@@ -222,11 +222,11 @@ int Backend::addShortcut(QString folder) {
 	return 0;
 }
 
-void Backend::modifyConfig(QString name, QString description, QString icon) {
+void Backend::modifyConfig(QString name, QString description, QString icon, int region) {
 	QString folder = buildList(buildSelected);
-	std::string conf = "[build]\nname = " + name.toStdString() + "\ndescription = " + description.toStdString() + "\nicon = " + icon.toStdString();
+	std::string conf = "[build]\nname = " + name.toStdString() + "\ndescription = " + description.toStdString() + "\nicon = " + icon.toStdString() + "\nregion = " + std::to_string(region);
 	std::cout << (folder.toStdString() + ".conf") << "\n";
-	std::ofstream desktopFile("sm64-builds/" + folder.toStdString() + ".conf");
+	std::ofstream desktopFile("sm64-builds/" + folder.toStdString() + ".k64.conf");
 	desktopFile << conf;
 	desktopFile.close();
 }
@@ -272,6 +272,7 @@ int Backend::clone(QString repoSel) {
 }
 
 int Backend::pull(QString folder) {
+	// TODO: Fast forward with libgit2
 	system(string_to_char("cd sm64-builds/" + folder.toStdString() + " && git pull"));
 	return 0;
 }
@@ -288,7 +289,7 @@ int Backend::run(QString folder) {
 	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build/");
 	std::filesystem::path builds{dir};
 	if (!std::filesystem::exists(builds)) {
-		std::cout << "This build has not been compiled. Building it now.\n";
+		std::cout << "This build has not been compiled. Building it now." << std::endl;
 		build(folder); // The repository hasn't run make yet.
 		return 1;
 	}
@@ -301,7 +302,7 @@ int Backend::run(QString folder) {
 
 		if (useGameMode) {
 			if (!system("which gamemoderun > /dev/null 2>&1")) execPrefix += "gamemoderun ";
-			else std::cout << "Error: GameMode isn't installed! Continuing without gamemode..." << std::endl;
+			else std::cout << "Error: Feral GameMode isn't installed! Continuing without gamemode..." << std::endl;
 		}
 		// Might add more exec prefixes later later
 		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder,region) + " &";
