@@ -69,6 +69,15 @@ Kirigami.ScrollablePage {
 				text: i18n("Use MangoHud")
 			}
 
+			Controls.Switch {
+				Layout.alignment: Qt.AlignLeft
+				Layout.columnSpan: 2
+				checkable: true
+				checked: Backend.useGameMode
+				onCheckedChanged: Backend.useGameMode = checked
+				text: i18n("Use GameMode")
+			}
+
 			Kirigami.Heading {
 				Layout.fillWidth: true
 				level: 2

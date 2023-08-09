@@ -27,6 +27,7 @@ class Backend : public QObject
 	Q_PROPERTY(QString repoText READ repoText WRITE setRepo NOTIFY repoModified)
 	Q_PROPERTY(QString branchText READ branchText WRITE setBranch NOTIFY branchModified)
 	Q_PROPERTY(bool downloadSizeUnknown READ downloadSizeUnknownValue WRITE setDownloadSizeUnknownStatus NOTIFY downloadSizeUnknownStatus)
+	Q_PROPERTY(bool useGameMode READ usingGameMode WRITE setUseGameMode NOTIFY useGameModeModified)
 	Q_PROPERTY(bool useMangoHud READ usingMangoHud WRITE setUseMangoHud NOTIFY useMangoHudModified)
 private:
 	QSettings* sources;
@@ -42,9 +43,14 @@ private:
 	QString branch = "";
 	bool downloadSizeUnknown = true;
 	bool useMangoHud = false;
+	bool useGameMode = false;
+
+	// Key is region (us, eu, jp) and value is system path
+	std::map<std::string, std::string> roms;
 
 	KSharedConfigPtr launcherConfig;
 	KConfigGroup launcherRepoDefaults;
+	KConfigGroup launcherRoms;
 public:
 	explicit Backend(QObject *parent = nullptr);
 	~Backend();
@@ -61,6 +67,7 @@ public:
 	QString branchText();
 	bool downloadSizeUnknownValue();
 	bool usingMangoHud();
+	bool usingGameMode();
 	Q_INVOKABLE void buildFind(int additive);
 	Q_INVOKABLE void setBuildSelected(int target);
 	void setRepo(QString repoInp);
@@ -68,6 +75,7 @@ public:
 	void setCloneText(QString newCloneText);
 	void setDownloadSizeUnknownStatus(bool known);
 	void setUseMangoHud(bool usingMangoHud);
+	void setUseGameMode(bool newGameModeVal);
 	Q_SIGNAL void sourceListModified();
 	Q_SIGNAL void buildConfigListModified();
 	Q_SIGNAL void buildCountModified();
@@ -77,6 +85,7 @@ public:
 	Q_SIGNAL void branchModified();
 	Q_SIGNAL void downloadSizeUnknownStatus();
 	Q_SIGNAL void useMangoHudModified();
+	Q_SIGNAL void useGameModeModified();
 	Q_INVOKABLE int addShortcut(QString folder);
 	Q_INVOKABLE void modifyConfig(QString name, QString description, QString icon);
 	Q_INVOKABLE int clone(QString repoSel);

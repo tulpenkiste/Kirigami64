@@ -51,17 +51,17 @@ Kirigami.ApplicationWindow {
 
 		actions: [
 			Kirigami.Action {
-				text: "Clone"
+				text: i18n("Clone")
 				icon.name: "run-build"
 				onTriggered: pageStack.layers.push(cloneSheet)
 			},
 			Kirigami.Action {
-				text: "Settings"
+				text: i18n("Settings")
 				icon.name: "settings-configure"
 				onTriggered: pageStack.layers.push(configSheet)
 			},
 			Kirigami.Action {
-				text: "About"
+				text: i18n("About")
 				icon.name: "help-about"
 				onTriggered: pageStack.layers.push(aboutSheet)
 			}
@@ -72,12 +72,12 @@ Kirigami.ApplicationWindow {
 		id: cloneProgressSheet
 
 		header: Kirigami.Heading {
-			text: "Cloning repository..."
+			text: i18n("Cloning repository...")
 		}
 
 		Kirigami.FormLayout {
 			Controls.Label {
-				text: "Cloning data..."
+				text: i18n("Cloning...")
 				anchors.horizontalCenter: parent.horizontalCenter
 			}
 
@@ -98,43 +98,43 @@ Kirigami.ApplicationWindow {
 
 	Kirigami.MenuDialog {
 		id: selectedBuildSheet
-		title: qsTr("Options for ") + Backend.buildConfigSpecificDataGet(Backend.buildSelected, "name")
+		title: i18n("Options for ") + Backend.buildConfigSpecificDataGet(Backend.buildSelected, "name")
 		
 		actions: [
 			Kirigami.Action {
 				iconName: "media-playback-start"
-				text: qsTr("Play", "Play this build")
-				tooltip: qsTr("Play this build")
+				text: i18n("Play")
+				tooltip: i18n("Play this build")
 				onTriggered: [Backend.run(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
 				iconName: "run-build-install"
-				text: qsTr("Compile", "Compile this build")
-				tooltip: qsTr("Compile this build")
+				text: i18n("Compile")
+				tooltip: i18n("Compile this build")
 				onTriggered: [Backend.build(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
 				iconName: "update-none"
-				text: qsTr("Pull changes", "Pull changes for this repository off of the internet")
-				tooltip: qsTr("Pull changes for this repository off of the internet")
+				text: i18n("Pull changes")
+				tooltip: i18n("Pull changes for this repository off of the internet")
 				onTriggered: [Backend.pull(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
 				iconName: "configure"
-				text: qsTr("Configure", "Configure this build")
-				tooltip: qsTr("Configure this build")
+				text: i18n("Configure")
+				tooltip: i18n("Configure this build")
 				onTriggered: [selectedBuildSheet.close(), pageStack.layers.push(configureBuildSheet), configureBuildSheet.updateValues()]
 			},
 			Kirigami.Action {
 				iconName: "configure"
-				text: qsTr("Open repo data directory", "View local data (e.g saves)")
-				tooltip: qsTr("Opens a directory within your selected file manager")
+				text: i18n("Open repo data directory")
+				tooltip: i18n("Opens a directory within your selected file manager")
 				onTriggered: [selectedBuildSheet.close(), Backend.openRepoDataDir()]
 			},
 			Kirigami.Action {
 				iconName: "delete"
-				text: qsTr("Delete", "Delete the specified build")
-				tooltip: qsTr("Delete the specified build")
+				text: i18n("Delete")
+				tooltip: i18n("Delete the specified build")
 				onTriggered: [Backend.rmDir(Backend.buildList(Backend.buildSelected)), selectedBuildSheet.close()]
 			}
 		]

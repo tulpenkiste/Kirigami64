@@ -8,6 +8,8 @@
 #include <filesystem>
 #include <string>
 #include <QFile>
+#include <QDir>
+#include <QMessageBox>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
@@ -35,7 +37,9 @@ Backend::Backend(QObject *parent) : QObject(parent) {
 	git_libgit2_init();
 	launcherConfig = KSharedConfig::openConfig("kirigami64rc", KSharedConfig::FullConfig, QStandardPaths::AppDataLocation);
 	launcherRepoDefaults = launcherConfig->group("Defaults");
+	launcherRoms = launcherConfig->group("Roms");
 	useMangoHud = launcherRepoDefaults.readEntry("useMangoHud", false);
+	useGameMode = launcherRepoDefaults.readEntry("useGameMode", false);
 }
 
 Backend::~Backend() {
@@ -100,6 +104,10 @@ bool Backend::usingMangoHud() {
 	return useMangoHud;
 }
 
+bool Backend::usingGameMode() {
+	return useGameMode;
+}
+
 void Backend::buildFind(int additive) {
 	int count = 0 + additive;
 	buildCount = 0;
@@ -113,13 +121,15 @@ void Backend::buildFind(int additive) {
 	std::filesystem::path sources{"sources.conf"};
 	if (!std::filesystem::exists(sources)) {
 		QFile base_sources(":/base_sources.conf");
-		//base_sources.copy("sources.conf");
+		base_sources.copy("sources.conf");
 	}
+
 	std::filesystem::path buildDir{"sm64-builds/"};
 	if (!std::filesystem::exists(buildDir)) std::filesystem::create_directory(buildDir);
 	for (const std::filesystem::directory_entry& dirEntry: std::filesystem::directory_iterator(buildDir)) {
 		if (dirEntry.is_directory()) {
 			std::string pathString = dirEntry.path().filename().string();
+
 			if (pathString[0] != '.' && pathString[0] != ' ') {
 				builds.push_back(QString::fromStdString(pathString));
 				count++;
@@ -139,6 +149,9 @@ void Backend::buildFind(int additive) {
 					buildIcons.push_back("application-x-n64-rom");
 				}
 			}
+		} else {
+			QMessageBox::information(nullptr, "Unexpected File",
+						QString::fromStdString("When scanning the directory sm64-builds, an unexpected file called '" + dirEntry.path().filename().string() + "' was found.\nPlease move the file out of the folder."));
 		}
 	}
 	buildCount = count;
@@ -175,6 +188,13 @@ void Backend::setUseMangoHud(bool usingMangoHud)
 	useMangoHud = usingMangoHud;
 	launcherRepoDefaults.writeEntry("useMangoHud", useMangoHud);
 	Q_EMIT useMangoHudModified();
+}
+
+void Backend::setUseGameMode(bool newGameModeVal)
+{
+	useGameMode = newGameModeVal;
+	launcherRepoDefaults.writeEntry("useGameMode", newGameModeVal);
+	Q_EMIT useGameModeModified();
 }
 
 int Backend::addShortcut(QString folder) {
@@ -269,8 +289,13 @@ int Backend::run(QString folder) {
 	else {
 		std::string execPrefix = "";
 		if (useMangoHud) {
-			if (!system("which mangohud > /dev/null 2>&1")) execPrefix += "mangohud --dlsym";
+			if (!system("which mangohud > /dev/null 2>&1")) execPrefix += "mangohud --dlsym ";
 			else std::cout << "Error: Mangohud isn't installed! Continuing without mangohud..." << std::endl;
+		}
+
+		if (useGameMode) {
+			if (!system("which gamemoderun > /dev/null 2>&1")) execPrefix += "gamemoderun ";
+			else std::cout << "Error: GameMode isn't installed! Continuing without gamemode..." << std::endl;
 		}
 		// Might add more exec prefixes later later
 		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder,region) + " &";
