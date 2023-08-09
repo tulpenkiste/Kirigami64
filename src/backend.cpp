@@ -8,7 +8,6 @@
 #include <filesystem>
 #include <string>
 #include <QFile>
-#include <QDir>
 #include <QMessageBox>
 
 #include <boost/property_tree/ptree.hpp>
@@ -131,6 +130,13 @@ void Backend::buildFind(int additive) {
 			std::string pathString = dirEntry.path().filename().string();
 
 			if (pathString[0] != '.' && pathString[0] != ' ') {
+				std::filesystem::path checkIfIgnore("sm64-builds/" + pathString + "/.k64ignore");
+
+				if (std::filesystem::exists(checkIfIgnore)) {
+					std::cout << "Ignoring dir " << pathString << std::endl;
+					continue;
+				}
+
 				builds.push_back(QString::fromStdString(pathString));
 				count++;
 				std::cout << "Directory found: " << pathString << "\n";
