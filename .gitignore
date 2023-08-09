@@ -11,3 +11,4 @@ sources.conf
 *.kdev4
 .cache/
 src/config.h
+meson.build.qtds
