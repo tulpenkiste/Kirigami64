@@ -44,15 +44,15 @@ Ensure you have the necessary dependencies for compiling and running your desire
 ## 0.3.0
  - [X] Change paths used to `$HOME/.local/share/Kirigami64` rather than the current working directory
  - [X] Meson build system support (as primary build system)
- - [ ] Proper settings menu (with settings being saved into `$HOME/.local/share/Kirigami64/kirigami64rc`)
+ - [X] Proper settings menu (with settings being saved into `$HOME/.local/share/Kirigami64/kirigami64rc`)
  - [X] Update info on www.sm64pc.info to link to Codeberg rather than GitHub.
- - [ ] ROM Region selecting
+ - [X] ROM Region selecting
 ## No Version Target
  - [X] Actually working minimum features (e.g. build and run) (Required)
  - [ ] A way to view progress of running commands (e.g. git clone, git pull, make) (High)
  - [X] Config file containing sources rather than having to type it out each time. (High)
  - [X] Ability to pull changes without needing to delete a specific build (High)
- - [ ] Ability to use non-US roms (jp, eu) (Medium)
+ - [X] Ability to use non-US roms (jp, eu) (Medium)
  - [ ] Option for patches (e.g. Texture Pack, DynOS) (Medium)
  - [X] Option to run games using MangoHud (Low)
  - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)
