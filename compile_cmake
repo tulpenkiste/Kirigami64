@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 clear
+
 cmake -B build_cmake . && cmake --build build_cmake

@@ -1,3 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 clear
-meson build && cd build && meson compile && cd ..
+
+# Avoid running meson build if the build directory exists.
+if [[ ! -d build ]]; then
+	meson build
+fi
+
+meson compile -C build
