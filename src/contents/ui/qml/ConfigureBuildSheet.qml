@@ -15,6 +15,10 @@ Kirigami.ScrollablePage {
 		descInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelected, 1);
 		iconInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelected, 2);
 		iconValidate.source = iconInp.text;
+		romLayout.currentRegion = Backend.buildConfigSpecificDataGet(Backend.buildSelected, 3)*1;
+		romComboBox.currentIndex = romLayout.currentRegion;
+
+		console.log("Region is int " + romLayout.currentRegion);
 	}
 
 	RowLayout {
@@ -92,22 +96,13 @@ Kirigami.ScrollablePage {
 				Kirigami.Label {
 					text: "ROM Region: "
 				}
-				Controls.RadioButton {
-					text: "Default"
-					checked: true
-					onCheckedChanged: romLayout.currentRegion = 0
-				}
-				Controls.RadioButton {
-					text: "US"
-					onCheckedChanged: romLayout.currentRegion = 1
-				}
-				Controls.RadioButton {
-					text: "EU"
-					onCheckedChanged: romLayout.currentRegion = 2
-				}
-				Controls.RadioButton {
-					text: "JP"
-					onCheckedChanged: romLayout.currentRegion = 3
+				
+				Controls.ComboBox {
+					id: romComboBox
+					width: 200
+					model: ["Default", "US", "EU", "JP"]
+
+					onCurrentIndexChanged: romLayout.currentRegion = currentIndex
 				}
 			}
 

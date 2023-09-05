@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
+import QtQuick.Dialogs 1.1
 import QtQuick.Layouts 1.2
 import org.kde.kirigami 2.19 as Kirigami
 
@@ -90,10 +91,113 @@ Kirigami.ScrollablePage {
 				Layout.fillWidth: true
 			}
 
-			Controls.Label {
-				Layout.fillWidth: true
-				wrapMode: Text.WordWrap
-				text: "Configure build settings here (STILL TODO)"
+			RowLayout {
+				Kirigami.Label {
+					text: "Default ROM type:"
+				}
+
+				Controls.ComboBox {
+					width: 200
+					model: ["US", "EU", "JP"]
+					currentIndex: Backend.currentRegion()
+					onCurrentIndexChanged: Backend.setCurrentRegion(currentIndex)
+				}
+			}
+			
+			RowLayout {
+				Kirigami.Label {
+					text: "US Rom Path:"
+				}
+
+				Controls.TextField {
+					id: usRomPath
+					placeholderText: "path..."
+					text: Backend.getROMPath(0)
+					onTextEdited: [console.log("PATHUS: " + usRomPath.text), Backend.setROMPath(0, usRomPath.text)]
+				}
+
+				Controls.Button {
+					text: "Find in filesystem"
+					onClicked: fileDialogUS.open()
+				}
+			}
+			
+			RowLayout {
+				Kirigami.Label {
+					text: "EU Rom Path:"
+				}
+
+				Controls.TextField {
+					id: euRomPath
+					placeholderText: "path..."
+					text: Backend.getROMPath(1)
+					onTextEdited: [console.log("PATHEU: " + euRomPath.text), Backend.setROMPath(1, euRomPath.text)]
+				}
+
+				Controls.Button {
+					text: "Find in filesystem"
+					onClicked: fileDialogEU.open()
+				}
+			}
+			
+			RowLayout {
+				Kirigami.Label {
+					text: "JP Rom Path:"
+				}
+
+				Controls.TextField {
+					id: jpRomPath
+					placeholderText: "path..."
+					text: Backend.getROMPath(2)
+					onTextEdited: [console.log("PATHJP: " + jpRomPath.text), Backend.setROMPath(2, jpRomPath.text)]
+				}
+
+				Controls.Button {
+					text: "Find in filesystem"
+					onClicked: fileDialogJP.open()
+				}
+			}
+
+			FileDialog {
+				id: fileDialogUS
+				folder: shortcuts.home
+				onAccepted: {
+					var path = fileUrl.toString();
+					// remove prefixed "file:///"
+					path = path.replace(/^(file:\/{2})/,"");
+					// unescape html codes like '%23' for '#'
+					var cleanPath = decodeURIComponent(path);
+					usRomPath.text = cleanPath
+					Backend.setROMPath(0, cleanPath)
+				}
+			}
+
+			FileDialog {
+				id: fileDialogEU
+				folder: shortcuts.home
+				onAccepted: {
+					var path = fileUrl.toString();
+					// remove prefixed "file:///"
+					path = path.replace(/^(file:\/{2})/,"");
+					// unescape html codes like '%23' for '#'
+					var cleanPath = decodeURIComponent(path);
+					euRomPath.text = cleanPath
+					Backend.setROMPath(1, cleanPath)
+				}
+			}
+
+			FileDialog {
+				id: fileDialogJP
+				folder: shortcuts.home
+				onAccepted: {
+					var path = fileUrl.toString();
+					// remove prefixed "file:///"
+					path = path.replace(/^(file:\/{2})/,"");
+					// unescape html codes like '%23' for '#'
+					var cleanPath = decodeURIComponent(path);
+					jpRomPath.text = cleanPath
+					Backend.setROMPath(2, cleanPath)
+				}
 			}
 		}
 	}

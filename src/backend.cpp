@@ -1,6 +1,7 @@
 // Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
 // Also I need to go back through this and make it use good C++ more.
 #include "backend.hpp"
+#include "qobjectdefs.h"
 
 #include <git2.h>
 #include <filesystem>
@@ -12,6 +13,9 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
+#include <vector>
+
+const std::vector<std::string> regions = {"us", "eu", "jp"};
 
 char* string_to_char(std::string inp) {
 	// Function to turn an std::string to a char*
@@ -20,9 +24,9 @@ char* string_to_char(std::string inp) {
 	return charOut;
 }
 
-std::string getExecutableName(QString folder, std::string region) {
+std::string getExecutableName(QString folder, int region) {
 	std::string folderString = folder.toStdString();
-	std::filesystem::path buildDir{"sm64-builds/" + folderString + "/build/" + region + "_pc/"};
+	std::filesystem::path buildDir{"sm64-builds/" + folderString + "/build/" + regions[region] + "_pc/"};
 	for (const std::filesystem::directory_entry& dirEntry: std::filesystem::directory_iterator(buildDir)) {
 		std::string filenameExtension = dirEntry.path().extension().string();
 		if (filenameExtension == ".f3dex2e") {
@@ -37,6 +41,14 @@ Backend::Backend(QObject *parent) : QObject(parent) {
 	launcherConfig = KSharedConfig::openConfig("kirigami64rc", KSharedConfig::FullConfig, QStandardPaths::AppDataLocation);
 	launcherRepoDefaults = launcherConfig->group("Defaults");
 	launcherRoms = launcherConfig->group("Roms");
+	
+	// Roms
+	defaultRegion = launcherRoms.readEntry("defaultRegion", 0);
+	romsPerRegion.push_back(launcherRoms.readEntry("usROMPath", ""));
+	romsPerRegion.push_back(launcherRoms.readEntry("euROMPath", ""));
+	romsPerRegion.push_back(launcherRoms.readEntry("jpROMPath", ""));
+
+	// Repo Defaults
 	useMangoHud = launcherRepoDefaults.readEntry("useMangoHud", false);
 	useGameMode = launcherRepoDefaults.readEntry("useGameMode", false);
 }
@@ -61,17 +73,24 @@ std::vector<QString> Backend::buildIconsDataGet() {
 	return buildIcons;
 }
 
+std::vector<QString> Backend::romPathGet() {
+	return romsPerRegion;
+}
+
 QString Backend::buildConfigSpecificDataGet(int build, int type) {
 	if (buildCount == 0) return "";
 	if (type == 0) return buildNames[build];
 	else if (type == 1) return buildDescriptions[build];
-	return buildIcons[build];
+	else if (type == 2) return buildIcons[build];
+	else return QString::number(buildRegions[build]);
 	//return buildConfig[build][type];
 }
 
 QStringList Backend::sourceGroups() {
 	return sources->childGroups();
 }
+
+int Backend::currentRegion() { return defaultRegion; }
 
 int Backend::buildCountValue() {
 	return buildCount;
@@ -148,11 +167,13 @@ void Backend::buildFind(int additive) {
 					buildNames.push_back(my_settings.value("build/name").toString());
 					buildDescriptions.push_back(my_settings.value("build/description").toString());
 					buildIcons.push_back(my_settings.value("build/icon").toString());
+					buildRegions.push_back(my_settings.value("build/region").toInt());
 				}
 				else {
 					buildNames.push_back(QString::fromStdString(pathString));
 					buildDescriptions.push_back("No description has been set for this build.");
 					buildIcons.push_back("application-x-n64-rom");
+					buildRegions.push_back(0);
 				}
 			}
 		} else if (!QString::fromStdString(dirEntry.path().filename().string()).endsWith(".k64.conf")) {
@@ -164,6 +185,12 @@ void Backend::buildFind(int additive) {
 	Q_EMIT buildCountModified();
 	Q_EMIT buildListModified();
 	Q_EMIT buildConfigListModified();
+}
+
+void Backend::setCurrentRegion(int region) {
+	defaultRegion = region;
+	launcherRoms.writeEntry("defaultRegion", defaultRegion);
+	Q_EMIT currentRegionModified();
 }
 
 void Backend::setBuildSelected(int target) {
@@ -203,13 +230,24 @@ void Backend::setUseGameMode(bool newGameModeVal)
 	Q_EMIT useGameModeModified();
 }
 
+void Backend::setROMPath(int region, QString path)
+{
+	romsPerRegion[region] = path;
+	launcherRoms.writeEntry(QString::fromStdString(regions[region] + "ROMPath"), romsPerRegion[region]);
+	Q_EMIT romPathListModified();
+}
+
+QString Backend::getROMPath(int region) {
+	return romsPerRegion[region];
+}
+
 int Backend::addShortcut(QString folder) {
 	// Handle desktop menu shenanigans
 	std::cout << "Writing shortcut file...\n";
 	std::string userDir = getenv("HOME");
 	std::string folderString = folder.toStdString();
 	std::string dir = std::filesystem::current_path();
-	std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder,region) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
+	std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + regions[defaultRegion] + "_pc/ && ./" + getExecutableName(folder, defaultRegion) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
 	std::string desktopFileName = folderString + ".desktop";
 	std::ofstream desktopFile(userDir + "/.local/share/applications/" + desktopFileName);
 	desktopFile << desktopFileContents;
@@ -278,34 +316,51 @@ int Backend::pull(QString folder) {
 }
 
 int Backend::build(QString folder) {
-	std::string cmd0 = "cp baserom." + region + ".z64 sm64-builds/" + folder.toStdString() + "/baserom.us.z64";
-	std::string cmd1 = "cd sm64-builds/" + folder.toStdString() + " && make TARGET_BITS=64 -j $(nproc) && echo \"Completed build.\" &";
+	std::cout << buildRegions[buildSelected] << std::endl;
+
+	int region = buildRegions[buildSelected] == 0 ? defaultRegion : buildRegions[buildSelected] - 1;
+
+	std::cout << romsPerRegion[region].toStdString() << std::endl;
+	std::cout << regions[region] << std::endl;
+	
+	std::filesystem::path romPath { romsPerRegion[region].toStdString() };
+
+	if (!std::filesystem::exists(romPath)) {
+		std::cerr << "Failed to build using rom path " << romPath << ", doesn't exist!" << std::endl;
+		return 1;
+	}
+
+	std::string cmd0 = "rm -f baserom.*.z64 && cp \"" + romsPerRegion[region].toStdString() + "\" sm64-builds/" + folder.toStdString() + "/baserom." + regions[region] + ".z64";
+	std::string cmd1 = "cd sm64-builds/" + folder.toStdString() + " && make TARGET_BITS=64 VERSION=\"" + regions[region] + "\" -j $(nproc) && echo \"Completed build.\" &";
 	std::string fullCmd = cmd0 + " && " + cmd1;
 	system(string_to_char(fullCmd));
 	return 0;
 }
 
 int Backend::run(QString folder) {
-	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build/");
+	char* dir = string_to_char("sm64-builds/" + folder.toStdString() + "/build");
+
 	std::filesystem::path builds{dir};
+
+	int region = buildRegions[buildSelected] == 0 ? defaultRegion : buildRegions[buildSelected] - 1;
+
 	if (!std::filesystem::exists(builds)) {
-		std::cout << "This build has not been compiled. Building it now." << std::endl;
-		build(folder); // The repository hasn't run make yet.
+		std::cerr << "This build has not been compiled." << std::endl;
 		return 1;
 	}
 	else {
 		std::string execPrefix = "";
 		if (useMangoHud) {
 			if (!system("which mangohud > /dev/null 2>&1")) execPrefix += "mangohud --dlsym ";
-			else std::cout << "Error: Mangohud isn't installed! Continuing without mangohud..." << std::endl;
+			else std::cerr << "Error: Mangohud isn't installed! Continuing without mangohud..." << std::endl;
 		}
 
 		if (useGameMode) {
 			if (!system("which gamemoderun > /dev/null 2>&1")) execPrefix += "gamemoderun ";
-			else std::cout << "Error: Feral GameMode isn't installed! Continuing without gamemode..." << std::endl;
+			else std::cerr << "Error: Feral GameMode isn't installed! Continuing without gamemode..." << std::endl;
 		}
 		// Might add more exec prefixes later later
-		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + region + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder,region) + " &";
+		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + regions[region] + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder, region) + " &";
 		system(string_to_char(cmdAsString));
 		return 0;
 	}

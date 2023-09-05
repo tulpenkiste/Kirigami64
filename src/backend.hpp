@@ -1,6 +1,7 @@
 // It may be best to ignore this.
 #pragma once
 
+#include "qobjectdefs.h"
 #include <git2.h>
 #include <QObject>
 #include <QSettings>
@@ -21,6 +22,8 @@ class Backend : public QObject
 	Q_PROPERTY(std::vector<QString> buildNames READ buildNamesDataGet NOTIFY buildConfigListModified)
 	Q_PROPERTY(std::vector<QString> buildDescriptions READ buildDescriptionsDataGet NOTIFY buildConfigListModified)
 	Q_PROPERTY(std::vector<QString> buildIcons READ buildIconsDataGet NOTIFY buildConfigListModified)
+	Q_PROPERTY(std::vector<QString> romsPerRegion READ romPathGet NOTIFY romPathListModified)
+	Q_PROPERTY(int defaultRegion READ currentRegion WRITE setCurrentRegion NOTIFY currentRegionModified)
 	Q_PROPERTY(int buildCount READ buildCountValue WRITE buildFind NOTIFY buildCountModified)
 	Q_PROPERTY(int buildSelected READ buildSelectedValue WRITE setBuildSelected NOTIFY buildSelectModified)
 	Q_PROPERTY(QString curBuild READ buildList NOTIFY buildListModified)
@@ -31,7 +34,8 @@ class Backend : public QObject
 	Q_PROPERTY(bool useMangoHud READ usingMangoHud WRITE setUseMangoHud NOTIFY useMangoHudModified)
 private:
 	QSettings* sources;
-	std::string region = "us";
+	int defaultRegion;
+	std::vector<QString> romsPerRegion;
 	int buildCount = 0;
 	int buildSelected = 0;
 	QString curBuild = "";
@@ -39,6 +43,7 @@ private:
 	std::vector<QString> buildNames;
 	std::vector<QString> buildDescriptions;
 	std::vector<QString> buildIcons;
+	std::vector<int> buildRegions;
 	QString link = "";
 	QString branch = "";
 	bool downloadSizeUnknown = true;
@@ -58,8 +63,10 @@ public:
 	std::vector<QString> buildNamesDataGet();
 	std::vector<QString> buildDescriptionsDataGet();
 	std::vector<QString> buildIconsDataGet();
+	std::vector<QString> romPathGet();
 	Q_INVOKABLE QString buildConfigSpecificDataGet(int build = 0, int type = 0);
 	Q_INVOKABLE QStringList sourceGroups();
+	Q_INVOKABLE int currentRegion();
 	int buildCountValue();
 	int buildSelectedValue();
 	Q_INVOKABLE QString buildList(int pos = 0);
@@ -68,6 +75,7 @@ public:
 	bool downloadSizeUnknownValue();
 	bool usingMangoHud();
 	bool usingGameMode();
+	Q_INVOKABLE void setCurrentRegion(int region);
 	Q_INVOKABLE void buildFind(int additive);
 	Q_INVOKABLE void setBuildSelected(int target);
 	void setRepo(QString repoInp);
@@ -76,11 +84,15 @@ public:
 	void setDownloadSizeUnknownStatus(bool known);
 	void setUseMangoHud(bool usingMangoHud);
 	void setUseGameMode(bool newGameModeVal);
+	Q_INVOKABLE void setROMPath(int region, QString path);
+	Q_INVOKABLE QString getROMPath(int region);
 	Q_SIGNAL void sourceListModified();
 	Q_SIGNAL void buildConfigListModified();
+	Q_SIGNAL void currentRegionModified();
 	Q_SIGNAL void buildCountModified();
 	Q_SIGNAL void buildSelectModified();
 	Q_SIGNAL void buildListModified();
+	Q_SIGNAL void romPathListModified();
 	Q_SIGNAL void repoModified();
 	Q_SIGNAL void branchModified();
 	Q_SIGNAL void downloadSizeUnknownStatus();
