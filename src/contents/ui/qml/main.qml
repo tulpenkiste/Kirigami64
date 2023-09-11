@@ -11,6 +11,13 @@ Kirigami.ApplicationWindow {
 	// ID provides unique identifier to reference this element
 	id: root
 
+	function popCheck() {
+		console.log("laydep: " + pageStack.layers.depth);
+		if (pageStack.layers.depth > 1) {
+			pageStack.layers.pop();
+		}
+	}
+
 	ConfigSheet {
 		id: configSheet
 	}
@@ -53,17 +60,17 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: i18n("Clone")
 				icon.name: "run-build"
-				onTriggered: pageStack.layers.push(cloneSheet)
+				onTriggered: [popCheck(), pageStack.layers.push(cloneSheet)]
 			},
 			Kirigami.Action {
 				text: i18n("Settings")
 				icon.name: "settings-configure"
-				onTriggered: pageStack.layers.push(configSheet)
+				onTriggered: [popCheck(), pageStack.layers.push(configSheet)]
 			},
 			Kirigami.Action {
 				text: i18n("About")
 				icon.name: "help-about"
-				onTriggered: pageStack.layers.push(aboutSheet)
+				onTriggered: [popCheck(), pageStack.layers.push(aboutSheet)]
 			}
 		]
 	}
