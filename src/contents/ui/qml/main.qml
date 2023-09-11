@@ -11,11 +11,19 @@ Kirigami.ApplicationWindow {
 	// ID provides unique identifier to reference this element
 	id: root
 
-	function popCheck() {
-		console.log("laydep: " + pageStack.layers.depth);
+	function popCheck(requestedPage) {
+		if (pageStack.layers.currentItem == requestedPage) {
+			console.log("Requested page is already in use! Returning...")
+			return;
+		}
+		
+		console.log("Current layer depth: " + pageStack.layers.depth);
+
 		if (pageStack.layers.depth > 1) {
 			pageStack.layers.pop();
 		}
+
+		pageStack.layers.push(requestedPage)
 	}
 
 	ConfigSheet {
@@ -60,17 +68,17 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: i18n("Clone")
 				icon.name: "run-build"
-				onTriggered: [popCheck(), pageStack.layers.push(cloneSheet)]
+				onTriggered: popCheck(cloneSheet)
 			},
 			Kirigami.Action {
 				text: i18n("Settings")
 				icon.name: "settings-configure"
-				onTriggered: [popCheck(), pageStack.layers.push(configSheet)]
+				onTriggered: popCheck(configSheet)
 			},
 			Kirigami.Action {
 				text: i18n("About")
 				icon.name: "help-about"
-				onTriggered: [popCheck(), pageStack.layers.push(aboutSheet)]
+				onTriggered: popCheck(aboutSheet)
 			}
 		]
 	}
