@@ -9,28 +9,28 @@ config_dat.set('PROJECT_VERSION_SUBTITLE', 'idk')
 configure_file(input: 'src/config.in.hpp', output: 'config.hpp', configuration: config_dat)
 
 # Setup: library dependencies
-qt5dep = dependency('qt5', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickControls2', 'Widgets'], version : '>=5.14.0')
-kf5dep = dependency('KF5CoreAddons', version : '>=5.68.0')
-kf5kirigamidep = dependency('KF5Kirigami2', version : '>=5.68.0')
-kf5translatedep = dependency('KF5I18n', version : '>=5.68.0')
-kf5configdep = meson.get_compiler('cpp').find_library('KF5ConfigCore') # dependency('KF5ConfigCore', version : '>=5.68.0')
+qt6dep = dependency('qt6', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickControls2', 'Widgets'], version : '>=6.6.0')
+kf6dep = dependency('KF6CoreAddons', version : '>=5.245.0')
+kf6kirigamidep = dependency('KF6Kirigami2', version : '>=5.245.0')
+kf6translatedep = dependency('KF6I18n', version : '>=5.245.0')
+kf6configdep = dependency('KF5Config', modules: ['KF5::ConfigCore', 'KF5::ConfigGui'], version : '>=5.111.0', method: 'cmake')
 lgit2 = dependency('libgit2', version : '>=1.1.0')
 #lgit2 = meson.get_compiler('cpp').find_library('git2')
 
-libs = [qt5dep, kf5dep, kf5kirigamidep, kf5translatedep, kf5configdep, lgit2]
+libs = [qt6dep, kf6dep, kf6kirigamidep, kf6translatedep, kf6configdep, lgit2]
 
 # Setup: Qt Module
-qt5 = import('qt5')
+qt6 = import('qt6')
 
 # Files
 sources = files('src/about.cpp', 'src/backend.cpp', 'src/main.cpp')
 headers = files('src/about.hpp', 'src/backend.hpp')
 
 # Qt shenanigans
-resources = qt5.preprocess(
+resources = qt6.preprocess(
 							qresources : ['src/resources.qrc'],
 							moc_headers : headers,
 							dependencies: libs)
 
 # The application
-launcher = executable('Kirigami64', sources, resources, include_directories: ['/usr/include/KF5/KConfigCore'] , dependencies: libs)
+launcher = executable('Kirigami64', sources, resources, include_directories: ['/usr/include/KF6/KConfigCore'] , dependencies: libs)

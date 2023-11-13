@@ -38,7 +38,6 @@ int main(int argc, char *argv[]) {
 	aboutData.setBugAddress("https://codeberg.org/tulip-sudo/Kirigami64/issues");
 	aboutData.setHomepage("https://codeberg.org/tulip-sudo/Kirigami64");
 
-	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication app(argc, argv);
 	app.setWindowIcon(QIcon(":/icon.png"));
 	KAboutData::setApplicationData(aboutData);
