@@ -13,7 +13,7 @@ qt6dep = dependency('qt6', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickContr
 kf6dep = dependency('KF6CoreAddons', version : '>=5.245.0')
 kf6kirigamidep = dependency('KF6Kirigami2', version : '>=5.245.0')
 kf6translatedep = dependency('KF6I18n', version : '>=5.245.0')
-kf6configdep = dependency('KF5Config', modules: ['KF5::ConfigCore', 'KF5::ConfigGui'], version : '>=5.111.0', method: 'cmake')
+kf6configdep = dependency('KF6Config', modules: ['KF6::ConfigCore', 'KF6::ConfigGui'], version : '>=5.111.0', method: 'cmake')
 lgit2 = dependency('libgit2', version : '>=1.1.0')
 #lgit2 = meson.get_compiler('cpp').find_library('git2')
 

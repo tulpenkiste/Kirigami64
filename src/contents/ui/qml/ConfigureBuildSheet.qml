@@ -53,7 +53,7 @@ Kirigami.ScrollablePage {
 			}
 
 			RowLayout {
-				Kirigami.Label {
+				Controls.Label {
 					text: "Display Name in launcher:"
 				}
 
@@ -64,7 +64,7 @@ Kirigami.ScrollablePage {
 			}
 
 			RowLayout {
-				Kirigami.Label {
+				Controls.Label {
 					text: "Description in launcher:"
 				}
 
@@ -75,7 +75,7 @@ Kirigami.ScrollablePage {
 			}
 
 			RowLayout {
-				Kirigami.Label {
+				Controls.Label {
 					text: "Icon (name or path):"
 				}
 
@@ -93,7 +93,7 @@ Kirigami.ScrollablePage {
 			RowLayout {
 				id: romLayout
 				property int currentRegion: 0
-				Kirigami.Label {
+				Controls.Label {
 					text: "ROM Region: "
 				}
 				

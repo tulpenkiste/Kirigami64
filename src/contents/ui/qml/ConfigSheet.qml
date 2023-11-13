@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
-import QtQuick.Dialogs 1.1
 import QtQuick.Layouts 1.2
+import QtQuick.Dialogs
 import org.kde.kirigami 2.19 as Kirigami
 
 import org.tulip.Kirigami64 0.2
@@ -92,7 +92,7 @@ Kirigami.ScrollablePage {
 			}
 
 			RowLayout {
-				Kirigami.Label {
+				Controls.Label {
 					text: "Default ROM type:"
 				}
 
@@ -105,7 +105,7 @@ Kirigami.ScrollablePage {
 			}
 			
 			RowLayout {
-				Kirigami.Label {
+				Controls.Label {
 					text: "US Rom Path:"
 				}
 
@@ -123,7 +123,7 @@ Kirigami.ScrollablePage {
 			}
 			
 			RowLayout {
-				Kirigami.Label {
+				Controls.Label {
 					text: "EU Rom Path:"
 				}
 
@@ -141,7 +141,7 @@ Kirigami.ScrollablePage {
 			}
 			
 			RowLayout {
-				Kirigami.Label {
+				Controls.Label {
 					text: "JP Rom Path:"
 				}
 
@@ -160,7 +160,7 @@ Kirigami.ScrollablePage {
 
 			FileDialog {
 				id: fileDialogUS
-				folder: shortcuts.home
+				currentFolder: shortcuts.home
 				onAccepted: {
 					var path = fileUrl.toString();
 					// remove prefixed "file:///"
@@ -174,7 +174,7 @@ Kirigami.ScrollablePage {
 
 			FileDialog {
 				id: fileDialogEU
-				folder: shortcuts.home
+				currentFolder: shortcuts.home
 				onAccepted: {
 					var path = fileUrl.toString();
 					// remove prefixed "file:///"
@@ -188,7 +188,7 @@ Kirigami.ScrollablePage {
 
 			FileDialog {
 				id: fileDialogJP
-				folder: shortcuts.home
+				currentFolder: shortcuts.home
 				onAccepted: {
 					var path = fileUrl.toString();
 					// remove prefixed "file:///"

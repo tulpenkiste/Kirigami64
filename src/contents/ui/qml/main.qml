@@ -62,7 +62,7 @@ Kirigami.ApplicationWindow {
 		collapsed: true
 		showHeaderWhenCollapsed: true
 		
-		bannerVisible: true
+		//bannerVisible: true
 
 		actions: [
 			Kirigami.Action {
@@ -117,37 +117,37 @@ Kirigami.ApplicationWindow {
 		
 		actions: [
 			Kirigami.Action {
-				iconName: "media-playback-start"
+				icon.name: "media-playback-start"
 				text: i18n("Play")
 				tooltip: i18n("Play this build")
 				onTriggered: [Backend.run(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
-				iconName: "run-build-install"
+				icon.name: "run-build-install"
 				text: i18n("Compile")
 				tooltip: i18n("Compile this build")
 				onTriggered: [Backend.build(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
-				iconName: "update-none"
+				icon.name: "update-none"
 				text: i18n("Pull changes")
 				tooltip: i18n("Pull changes for this repository off of the internet")
 				onTriggered: [Backend.pull(Backend.buildList(Backend.buildSelected))]
 			},
 			Kirigami.Action {
-				iconName: "configure"
+				icon.name: "configure"
 				text: i18n("Configure")
 				tooltip: i18n("Configure this build")
 				onTriggered: [selectedBuildSheet.close(), pageStack.layers.push(configureBuildSheet), configureBuildSheet.updateValues()]
 			},
 			Kirigami.Action {
-				iconName: "configure"
+				icon.name: "configure"
 				text: i18n("Open repo data directory")
 				tooltip: i18n("Opens a directory within your selected file manager")
 				onTriggered: [selectedBuildSheet.close(), Backend.openRepoDataDir()]
 			},
 			Kirigami.Action {
-				iconName: "delete"
+				icon.name: "delete"
 				text: i18n("Delete")
 				tooltip: i18n("Delete the specified build")
 				onTriggered: [Backend.rmDir(Backend.buildList(Backend.buildSelected)), selectedBuildSheet.close()]
