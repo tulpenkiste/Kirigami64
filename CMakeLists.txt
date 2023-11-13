@@ -3,7 +3,7 @@ project(Kirigami64)
 set(PROJECT_VERSION "0.3.0")
 set(PROJECT_VERSION_SUBTITLE "idk")
 
-configure_file("src/config.hpp.in" "src/config.hpp")
+configure_file("src/config.in.hpp" "src/config.hpp")
 
 set(KF_MIN_VERSION "5.68.0")
 set(QT_MIN_VERSION "5.14.0")

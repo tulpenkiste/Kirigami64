@@ -6,7 +6,7 @@ config_dat.set('PROJECT_NAME', 'Kirigami64')
 config_dat.set('PROJECT_VERSION', meson.project_version())
 config_dat.set('PROJECT_VERSION_SUBTITLE', 'idk')
 
-configure_file(input: 'src/config.hpp.in', output: 'config.hpp', configuration: config_dat)
+configure_file(input: 'src/config.in.hpp', output: 'config.hpp', configuration: config_dat)
 
 # Setup: library dependencies
 qt5dep = dependency('qt5', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickControls2', 'Widgets'], version : '>=5.14.0')

@@ -13,7 +13,7 @@ Kirigami.ApplicationWindow {
 
 	function popCheck(requestedPage) {
 		if (pageStack.layers.currentItem == requestedPage) {
-			console.log("Requested page is already in use! Returning...")
+			console.log("Requested page is already in use! Returning...");
 			return;
 		}
 		
@@ -23,7 +23,7 @@ Kirigami.ApplicationWindow {
 			pageStack.layers.pop();
 		}
 
-		pageStack.layers.push(requestedPage)
+		pageStack.layers.push(requestedPage);
 	}
 
 	ConfigSheet {
