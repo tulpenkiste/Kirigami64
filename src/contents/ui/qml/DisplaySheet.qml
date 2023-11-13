@@ -7,15 +7,16 @@ import org.tulip.Kirigami64 0.2
 
 Kirigami.ScrollablePage {
     id: displaySheet
-	/*
-	actions.main: Kirigami.Action {
-		id: refreshButton
-		iconName: "view-refresh"
-		text: qsTr("Refresh", "Refresh list")
-		tooltip: qsTr("Refresh list")
-		onTriggered: Backend.buildFind(0)
-	}
-	*/
+	
+	actions: [
+		Kirigami.Action {
+			id: refreshButton
+			icon.name: "view-refresh"
+			text: qsTr("Refresh", "Refresh list")
+			tooltip: qsTr("Refresh list")
+			onTriggered: Backend.buildFind(0)
+		}
+	]
 	Kirigami.CardsListView {
 		id: view
 		model: Backend.buildCount
