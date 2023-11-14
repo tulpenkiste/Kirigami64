@@ -6,6 +6,12 @@ config_dat.set('PROJECT_NAME', 'Kirigami64')
 config_dat.set('PROJECT_VERSION', meson.project_version())
 config_dat.set('PROJECT_VERSION_SUBTITLE', 'QT6 Port Build')
 
+if get_option('FLATPAK')
+	config_dat.set('FLATPAK_STATE', '1')
+else
+	config_dat.set('FLATPAK_STATE', '0')
+endif
+
 configure_file(input: 'src/config.in.hpp', output: 'config.hpp', configuration: config_dat)
 
 # Setup: library dependencies

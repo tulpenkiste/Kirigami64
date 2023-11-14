@@ -45,11 +45,9 @@ FormCard.FormCardPage {
 					property int index: 0;
 					property var textInput: null;
 
-					currentFolder: shortcuts.home
-
 					onAccepted: {
 						var path = selectedFile.toString();
-						
+
 						// remove prefixed "file:///"
 						path = path.replace(/^(file:\/{2})/,"");
 

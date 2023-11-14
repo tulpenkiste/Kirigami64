@@ -1,7 +1,6 @@
 // Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
 // Also I need to go back through this and make it use good C++ more.
 #include "backend.hpp"
-#include "qobjectdefs.h"
 
 #include <git2.h>
 #include <filesystem>
@@ -41,8 +40,8 @@ std::string getExecutableName(QString folder, int region) {
 Backend::Backend(QObject *parent) : QObject(parent) {
 	git_libgit2_init();
 	launcherConfig = KSharedConfig::openConfig("kirigami64rc", KSharedConfig::FullConfig, QStandardPaths::AppDataLocation);
-	launcherRepoDefaults = launcherConfig->group("Defaults");
-	launcherRoms = launcherConfig->group("Roms");
+	launcherRepoDefaults = launcherConfig->group((QString)"Defaults");
+	launcherRoms = launcherConfig->group((QString)"Roms");
 	
 	// Roms
 	defaultRegion = launcherRoms.readEntry("defaultRegion", 0);
