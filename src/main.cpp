@@ -19,6 +19,9 @@ int main(int argc, char *argv[]) {
 	std::string versionFull = PROJECT_VER;
 	versionFull.append(" - ");
 	versionFull.append(PROJECT_VER_SUBTITLE);
+
+	KLocalizedString::setApplicationDomain(QByteArrayLiteral("kirigami64"));
+
 	KAboutData aboutData(
 						 // The program name used internally.
 						 QStringLiteral("Kirigami64"),
@@ -33,7 +36,7 @@ int main(int argc, char *argv[]) {
 						 // Copyright Statement.
 						 i18n("(c) 2022"));
 	aboutData.setDesktopFileName("Kirigami64");
-	aboutData.addAuthor(i18nc("@info:credit", "Tulip"), i18nc("@info:credit", "Creator"), QStringLiteral(""), QStringLiteral("https://tulip-sudo.github.io/"));
+	aboutData.addAuthor(i18nc("@info:credit", "Tulip"), i18nc("@info:credit", "Creator"), QStringLiteral(""), QStringLiteral("https://tulpenkiste.codeberg.page/"));
 	aboutData.setBugAddress("https://codeberg.org/tulpenkiste/Kirigami64/issues");
 	aboutData.setHomepage("https://codeberg.org/tulpenkiste/Kirigami64");
 
@@ -55,14 +58,14 @@ int main(int argc, char *argv[]) {
 	backend.buildFind(0);
 	backend.handleSources();
 
-	qmlRegisterSingletonType<AboutType>("org.tulip.Kirigami64", 0, 2, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
+	qmlRegisterSingletonType<AboutType>("org.tulpenkiste.kirigami64", 0, 2, "AboutType", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
 		Q_UNUSED(engine)
 		Q_UNUSED(scriptEngine)
 
 		return new AboutType();
 	});
 
-	qmlRegisterSingletonInstance<Backend>("org.tulip.Kirigami64", 0, 2, "Backend", &backend);
+	qmlRegisterSingletonInstance<Backend>("org.tulpenkiste.kirigami64", 0, 2, "Backend", &backend);
 
 	engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
 	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

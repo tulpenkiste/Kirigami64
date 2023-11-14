@@ -17,6 +17,8 @@
 
 const std::vector<std::string> regions = {"us", "eu", "jp"};
 
+// Wait why did I add this?
+// TODO: Remove this and replace with .c_str()
 char* string_to_char(std::string inp) {
 	// Function to turn an std::string to a char*
 	char* charOut = new char[inp.length() + 1];
@@ -350,6 +352,7 @@ int Backend::run(QString folder) {
 	}
 	else {
 		std::string execPrefix = "";
+		std::string execSuffix = "";
 		if (useMangoHud) {
 			if (!system("which mangohud > /dev/null 2>&1")) execPrefix += "mangohud --dlsym ";
 			else std::cerr << "Error: Mangohud isn't installed! Continuing without mangohud..." << std::endl;
@@ -360,8 +363,8 @@ int Backend::run(QString folder) {
 			else std::cerr << "Error: Feral GameMode isn't installed! Continuing without gamemode..." << std::endl;
 		}
 		// Might add more exec prefixes later later
-		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + regions[region] + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder, region) + " &";
-		system(string_to_char(cmdAsString));
+		std::string cmdAsString = "cd sm64-builds/" + folder.toStdString() + "/build/" + regions[region] + "_pc/ && " +  execPrefix + " ./" + getExecutableName(folder, region) + execSuffix + " &";
+		system(cmdAsString.c_str());
 		return 0;
 	}
 }

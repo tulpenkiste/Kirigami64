@@ -4,7 +4,7 @@ project('Kirigami64', 'cpp', version: '0.3.0' + (not get_option('buildtype').sta
 config_dat = configuration_data()
 config_dat.set('PROJECT_NAME', 'Kirigami64')
 config_dat.set('PROJECT_VERSION', meson.project_version())
-config_dat.set('PROJECT_VERSION_SUBTITLE', 'idk')
+config_dat.set('PROJECT_VERSION_SUBTITLE', 'QT6 Port Build')
 
 configure_file(input: 'src/config.in.hpp', output: 'config.hpp', configuration: config_dat)
 
@@ -33,4 +33,4 @@ resources = qt6.preprocess(
 							dependencies: libs)
 
 # The application
-launcher = executable('Kirigami64', sources, resources, include_directories: ['/usr/include/KF6/KConfigCore'] , dependencies: libs)
+executable('Kirigami64', sources, resources, include_directories: ['/usr/include/KF6/KConfigCore'] , dependencies: libs)

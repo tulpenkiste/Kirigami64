@@ -1,14 +1,16 @@
+# Directories
+.cache/
 .vs/ 
 .vscode/
 .kdev4/
 build/
 build_cmake/
-*.kate-swp
 sm64-builds/
+# Files
 .out
 *.z64
 sources.conf
 *.kdev4
-.cache/
-src/config.h
 meson.build.qtds
+*.kate-swp
+*.pot

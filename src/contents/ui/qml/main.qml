@@ -1,10 +1,10 @@
 // Includes relevant modules used by the QML
-import QtQuick 2.15
-import QtQuick.Controls 2.15 as Controls
-import QtQuick.Layouts 1.2
-import org.kde.kirigami 2.19 as Kirigami
+import QtQuick
+import QtQuick.Controls as Controls
+import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
 
-import org.tulip.Kirigami64 0.2
+import org.tulpenkiste.kirigami64
 
 // Base element, provides basic features needed for all kirigami applications
 Kirigami.ApplicationWindow {
@@ -26,20 +26,12 @@ Kirigami.ApplicationWindow {
 		pageStack.layers.push(requestedPage);
 	}
 
-	ConfigSheet {
-		id: configSheet
-	}
-
 	ConfigureBuildSheet {
 		id: configureBuildSheet
 	}
 
 	DisplaySheet {
 		id: displaySheet
-	}
-
-	AboutSheet {
-		id: aboutSheet
 	}
 
 	CloneSheet {
@@ -73,12 +65,7 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: i18n("Settings")
 				icon.name: "settings-configure"
-				onTriggered: popCheck(configSheet)
-			},
-			Kirigami.Action {
-				text: i18n("About")
-				icon.name: "help-about"
-				onTriggered: popCheck(aboutSheet)
+				onTriggered: pageStack.pushDialogLayer("qrc:/Config.qml", { title: i18n("Configure") })
 			}
 		]
 	}

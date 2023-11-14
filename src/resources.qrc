@@ -1,13 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file alias="main.qml">contents/ui/qml/main.qml</file>
-        <file alias="AboutSheet.qml">contents/ui/qml/AboutSheet.qml</file>
         <file alias="DisplaySheet.qml">contents/ui/qml/DisplaySheet.qml</file>
-        <file alias="ConfigSheet.qml">contents/ui/qml/ConfigSheet.qml</file>
+        <file alias="Config.qml">contents/ui/qml/Config.qml</file>
         <file alias="ConfigureBuildSheet.qml">contents/ui/qml/ConfigureBuildSheet.qml</file>
         <file alias="CloneSheet.qml">contents/ui/qml/CloneSheet.qml</file>
-        <file alias="base_sources.conf">base_sources.conf</file>
-        <file alias="base_build_config.conf">base_build_config.conf</file>
-        <file alias="icon.png">icon.png</file>
+        <file alias="config/General.qml">contents/ui/qml/config/General.qml</file>
+        <file alias="config/About.qml">contents/ui/qml/config/About.qml</file>
+        <file alias="config/BuildOptions.qml">contents/ui/qml/config/BuildOptions.qml</file>
+        <file alias="config/LaunchOptions.qml">contents/ui/qml/config/LaunchOptions.qml</file>
+        <file alias="base_sources.conf">contents/resources/base_sources.conf</file>
+        <file alias="base_build_config.conf">contents/resources/base_build_config.conf</file>
+        <file alias="icon.png">contents/resources/icon.png</file>
     </qresource>
 </RCC>
