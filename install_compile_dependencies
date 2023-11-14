@@ -1,8 +1,10 @@
 #!/bin/bash
 echo "This script will install some required packages to compile Kirigami64 on Linux."
 echo "Package Manager [APT/DNF/PACMAN]: "
+
 read PACMAN
 PACMAN=${PACMAN^^}
+
 if [ "$PACMAN" == "APT" ]; then
     sudo apt install build-essential extra-cmake-modules cmake qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qtquickcontrols2-5-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf5i18n-dev libkf5config-dev gettext libkf5coreaddons-dev qml-module-qtquick-layouts libgit2-dev meson
 elif [ "$PACMAN" == "DNF" ]; then

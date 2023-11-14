@@ -1,6 +1,6 @@
 // Includes relevant modules used by the QML
 import QtQuick
-import QtQuick.Controls as Controls
+import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 
@@ -39,7 +39,6 @@ Kirigami.ApplicationWindow {
 	}
 
 	// Window title
-	// i18nc is useful for adding context for translators, also lets strings be changed for different languages
 	title: i18nc("@title:window", "Kirigami64")
 
 	minimumWidth: Kirigami.Units.gridUnit * 35
@@ -65,9 +64,16 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: i18n("Settings")
 				icon.name: "settings-configure"
-				onTriggered: pageStack.pushDialogLayer("qrc:/Config.qml", { title: i18n("Configure") })
+				onTriggered: pageStack.pushDialogLayer("qrc:/Config.qml", {}, { title: i18n("Configure") })
 			}
 		]
+	}
+
+	Shortcut {
+		sequence: "Ctrl+Shift+,"
+		onActivated: {
+			pageStack.pushDialogLayer("qrc:/Config.qml", {}, { title: i18n("Configure") })
+		}
 	}
 
 	Kirigami.OverlaySheet {
@@ -78,7 +84,7 @@ Kirigami.ApplicationWindow {
 		}
 
 		Kirigami.FormLayout {
-			Controls.Label {
+			QQC2.Label {
 				text: i18n("Cloning...")
 				anchors.horizontalCenter: parent.horizontalCenter
 			}
@@ -89,7 +95,7 @@ Kirigami.ApplicationWindow {
 				anchors.centerIn: parent
 			}
 
-			Controls.ProgressBar {
+			QQC2.ProgressBar {
 				from: 0
 				to: 100
 				value: 0
