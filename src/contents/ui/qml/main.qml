@@ -64,15 +64,15 @@ Kirigami.ApplicationWindow {
 			Kirigami.Action {
 				text: i18n("Settings")
 				icon.name: "settings-configure"
-				onTriggered: pageStack.pushDialogLayer("qrc:/Config.qml", {}, { title: i18n("Configure") })
+				onTriggered: pageStack.pushDialogLayer("qrc:/Config.qml", {}, { title: i18n("Settings") })
 			}
 		]
 	}
 
 	Shortcut {
-		sequence: "Ctrl+Shift+,"
+		sequence: "Ctrl+Shift+."
 		onActivated: {
-			pageStack.pushDialogLayer("qrc:/Config.qml", {}, { title: i18n("Configure") })
+			pageStack.pushDialogLayer("qrc:/Config.qml", {}, { title: i18n("Settings") })
 		}
 	}
 
