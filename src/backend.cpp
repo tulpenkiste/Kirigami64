@@ -10,8 +10,6 @@
 #include <QFile>
 #include <QMessageBox>
 
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/ini_parser.hpp>
 #include <vector>
 
 const std::vector<std::string> regions = {"us", "eu", "jp"};
