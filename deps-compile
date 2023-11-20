@@ -1,0 +1,46 @@
+#!/bin/bash
+echo "This script will install some required packages to compile Kirigami64 on Linux."
+printf "This updated script should automatically detect your package manager for installing dependencies. \e[1;31mIf it doesn't, you will need to find the dependencies yourself.\e[0m\n"
+
+DOAS_CMD=""
+PACMAN_INSTALL=""
+PACMAN_PACKAGES=()
+PACMAN_POST=()
+
+if [ -f "/usr/bin/sudo" ]; then
+	DOAS_CMD="sudo"
+elif [ -f "/usr/bin/doas" ]; then
+	DOAS_CMD="doas"
+else
+	>&2 echo "No valid doas command found, please install either sudo or doas."
+	exit 1
+fi
+
+if [ -f "/usr/bin/apt" ]; then
+	# TODO: Confirm these packages are correct
+	# BONUS TODO: Nala support
+	PACMAN_INSTALL="apt install"
+	PACMAN_PACKAGES=(build-essential extra-cmake-modules cmake qtbase6-dev qttools6-dev-tools qtdeclarative6-dev libqt6svg6-dev qtquickcontrols2-6-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf6i18n-dev libkf6config-dev gettext libkf6coreaddons-dev qml-module-qtquick-layouts libgit2-dev meson)
+elif [ -f "/usr/bin/dnf" ]; then
+	PACMAN_INSTALL="dnf install"
+	PACMAN_POST=(dnf groupinstall "\"Development Tools\"" "\"Development Libraries\"")
+	PACMAN_PACKAGES=(extra-cmake-modules cmake qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtquickcontrols2-devel kf6-kirigami2 kf6-kirigami2-devel kf6-ki18n-devel kf6-kcoreaddons-devel kf6-kconfig-devel gettext libgit2 libgit2-devel meson)
+elif [ -f "/usr/bin/pacman" ]; then
+	# Ensure KDE-Unstable is enabled (until KDE Plasma 6 is officially released)
+	>&2 printf "\e[1;31mUntil February 2024, this script will require the KDE-Unstable repository to be active and above the core & extra repositories\n\e[0m"
+	PACMAN_INSTALL="pacman -S"
+	PACMAN_PACKAGES=(base-devel extra-cmake-modules cmake kirigami2 kconfig ki18n kcoreaddons kde-sdk-meta gettext libgit2 meson)
+else
+	>&2 printf "\e[1;31mFailed to automatically detect your package manager\n\e[0m"
+	exit
+fi
+
+# Splitting is intentional, so I'm disabling this warning
+# shellcheck disable=SC2086
+$DOAS_CMD $PACMAN_INSTALL "${PACMAN_PACKAGES[@]}"
+
+if [[ ! "${#PACMAN_POST[@]}" -eq 0 ]]; then
+	$DOAS_CMD "${PACMAN_POST[@]}"
+fi
+
+exit
