@@ -15,7 +15,7 @@ endif
 configure_file(input: 'src/config.in.hpp', output: 'config.hpp', configuration: config_dat)
 
 # Setup: library dependencies
-qt6dep = dependency('qt6', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickControls2', 'Widgets', 'Xml'], version : '>=6.6.0')
+qt6dep = dependency('qt6', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickControls2', 'Widgets', 'Xml'], version : '>=6.5.0')
 kf6dep = dependency('KF6CoreAddons', version : '>=5.245.0')
 kf6kirigamidep = dependency('KF6Kirigami2', version : '>=5.245.0')
 kf6translatedep = dependency('KF6I18n', version : '>=5.245.0')

@@ -11,16 +11,7 @@ It also currently only supports US roms.
 You can join our community discord server [here](https://discord.gg/Vptbbp59vQ).
 # Compiling
 ## Dependencies
-Kirigami64 requires CMake, Extra CMake Modules, Qt development packages, Kirigami and the base developer package. <br>
-Meson is also recommended as an alternative to CMake (all releases are compiled using Meson).
-### APT
-Run `sudo apt install build-essential extra-cmake-modules cmake qtbase5-dev qtdeclarative5-dev libqt5svg5-dev qtquickcontrols2-5-dev qml-module-org-kde-kirigami2 kirigami2-dev libkf5i18n-dev gettext libkf5coreaddons-dev qml-module-qtquick-layouts libgit2-dev meson` to obtain the dependencies.
-### Pacman
-Run `sudo pacman -S base-devel extra-cmake-modules cmake kirigami2 kde-sdk-meta gettext libgit2 meson` to obtain the dependencies.
-### DNF
-Run `sudo dnf groupinstall "Development Tools" "Development Libraries"`<br>`sudo dnf install extra-cmake-modules cmake qt5-qtbase-devel qt5-qtdeclarative-devel qt5-qtquickcontrols2-devel kf5-kirigami2 kf5-kirigami2-devel kf5-ki18n-devel kf5-kcoreaddons-devel gettext libgit2 libgit2-devel meson` to obtain the dependencies.
-### Other
-// TODO: Add later
+> This section has been removed as it is out of date (and also cannot be updated for Ubuntu and Fedora until February 2024 (release of KDE Plasma 6)), please use the dependency install scripts (`deps-compile` and `deps-runtime`) instead
 ## Instructions
 Install the required dependencies using the commands above, or use the included commands `./install_sm64_dependencies` and `./install_compile_dependencies`<br>
 <br> Run
