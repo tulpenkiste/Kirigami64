@@ -19,21 +19,21 @@ FormCard.FormCardPage {
 		FormCard.FormCheckDelegate {
 			text: i18n("Use MangoHud")
 			description: i18n("Whether to utilise MangoHud, a performance overlay for applications and games")
-			checked: Backend.useMangoHud
+			checked: Backend.usingMangoHud()
 			visible: Qt.platform.os == "linux"
 			onToggled: {
 				console.log(Qt.platform.os)
-				Backend.useMangoHud = checked
+				Backend.setUsingMangoHud(checked)
 			}
 		}
 		FormCard.FormCheckDelegate {
 			text: i18n("Use FeralInteractive GameMode")
 			description: i18n("Whether to utilise GameMode, a daemon/library that requests optimisations")
-			checked: Backend.useGameMode
+			checked: Backend.usingGameMode()
 			visible: Qt.platform.os == "linux"
 			onToggled: {
 				console.log(Qt.platform.os)
-				Backend.useGameMode = checked
+				Backend.setUsingGameMode(checked)
 			}
 		}
 	}

@@ -8,14 +8,15 @@ import org.tulpenkiste.kirigami64
 Kirigami.ScrollablePage {
 	id: configureBuildSheet
 
-	title: i18nc("@title:window", "Configure " + Backend.buildList(Backend.buildSelected))
+	title: i18nc("@title:window", "Configure %1", Backend.buildList(Backend.buildSelectedValue()))
 
 	function updateValues() {
-		nameInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelected, 0);
-		descInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelected, 1);
-		iconInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelected, 2);
+		title = i18nc("@title:window", "Configure %1", Backend.buildList(Backend.buildSelectedValue()))
+		nameInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelectedValue(), 0);
+		descInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelectedValue(), 1);
+		iconInp.text = Backend.buildConfigSpecificDataGet(Backend.buildSelectedValue(), 2);
 		iconValidate.source = iconInp.text;
-		romLayout.currentRegion = Backend.buildConfigSpecificDataGet(Backend.buildSelected, 3)*1;
+		romLayout.currentRegion = Backend.buildConfigSpecificDataGet(Backend.buildSelectedValue(), 3)*1;
 		romComboBox.currentIndex = romLayout.currentRegion;
 
 		console.log("Region is int " + romLayout.currentRegion);

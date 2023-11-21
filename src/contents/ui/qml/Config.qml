@@ -14,25 +14,25 @@ KirigamiSettings.CategorizedSettings {
 	actions: [
 		KirigamiSettings.SettingAction {
 			actionName: "General"
-			text: "General"
+			text: i18n("General")
 			icon.name: "settings-configure"
 			page: Qt.resolvedUrl("config/General.qml")
 		},
 		KirigamiSettings.SettingAction {
 			actionName: "Launch"
-			text: "Launch"
+			text: i18n("Launch Options")
 			icon.name: "system-run-symbolic"
 			page: Qt.resolvedUrl("config/LaunchOptions.qml")
 		},
 		KirigamiSettings.SettingAction {
 			actionName: "Build"
-			text: "Build"
+			text: i18n("Compilation Options")
 			icon.name: "run-build"
 			page: Qt.resolvedUrl("config/BuildOptions.qml")
 		},
 		KirigamiSettings.SettingAction {
 			actionName: "About"
-			text: "About"
+			text: i18n("About Kirigami64")
 			icon.name: "help-about"
 			page: Qt.resolvedUrl("config/About.qml")
 		}

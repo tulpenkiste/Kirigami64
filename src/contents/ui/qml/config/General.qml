@@ -11,7 +11,7 @@ FormCard.FormCardPage {
 	title: i18nc("@title:window", "General Launcher Settings")
 
 	FormCard.FormHeader {
-		title: i18n("General settings")
+		title: i18n("Repository Sources")
 		visible: Qt.platform.os !== "android"
 	}
 
@@ -37,6 +37,41 @@ FormCard.FormCardPage {
 					}
 				}
 			}
+		}
+	}
+
+	FormCard.FormHeader {
+		title: i18n("Shortcut Creation")
+		visible: Qt.platform.os !== "android"
+	}
+
+	FormCard.FormCard {
+		FormCard.FormCheckDelegate {
+			text: i18n("Applicaiton Menu Shortcut")
+			description: i18n("Whether to add shortcuts to the application menu")
+			//checked: Backend.useMangoHud
+			visible: Qt.platform.os == "linux"
+
+			/*
+			onToggled: {
+				console.log(Qt.platform.os)
+				Backend.useMangoHud = checked
+			}
+			*/
+		}
+
+		FormCard.FormCheckDelegate {
+			text: i18n("Desktop Shortcut")
+			description: i18n("Whether to add shortcuts to the desktop")
+			//checked: Backend.useMangoHud
+			visible: Qt.platform.os == "linux"
+
+			/*
+			onToggled: {
+				console.log(Qt.platform.os)
+				Backend.useMangoHud = checked
+			}
+			*/
 		}
 	}
 }

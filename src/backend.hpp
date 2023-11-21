@@ -15,23 +15,62 @@
 
 char* string_to_char(std::string inp);
 
-class Backend : public QObject
-{
+class Backend : public QObject {
 	Q_OBJECT
-	Q_PROPERTY(QSettings* sources READ sourceList NOTIFY sourceListModified)
-	Q_PROPERTY(std::vector<QString> buildNames READ buildNamesDataGet NOTIFY buildConfigListModified)
-	Q_PROPERTY(std::vector<QString> buildDescriptions READ buildDescriptionsDataGet NOTIFY buildConfigListModified)
-	Q_PROPERTY(std::vector<QString> buildIcons READ buildIconsDataGet NOTIFY buildConfigListModified)
-	Q_PROPERTY(std::vector<QString> romsPerRegion READ romPathGet NOTIFY romPathListModified)
-	Q_PROPERTY(int defaultRegion READ currentRegion WRITE setCurrentRegion NOTIFY currentRegionModified)
-	Q_PROPERTY(int buildCount READ buildCountValue WRITE buildFind NOTIFY buildCountModified)
-	Q_PROPERTY(int buildSelected READ buildSelectedValue WRITE setBuildSelected NOTIFY buildSelectModified)
-	Q_PROPERTY(QString curBuild READ buildList NOTIFY buildListModified)
-	Q_PROPERTY(QString repoText READ repoText WRITE setRepo NOTIFY repoModified)
-	Q_PROPERTY(QString branchText READ branchText WRITE setBranch NOTIFY branchModified)
-	Q_PROPERTY(bool downloadSizeUnknown READ downloadSizeUnknownValue WRITE setDownloadSizeUnknownStatus NOTIFY downloadSizeUnknownStatus)
-	Q_PROPERTY(bool useGameMode READ usingGameMode WRITE setUseGameMode NOTIFY useGameModeModified)
-	Q_PROPERTY(bool useMangoHud READ usingMangoHud WRITE setUseMangoHud NOTIFY useMangoHudModified)
+public:
+	explicit Backend(QObject *parent = nullptr);
+	~Backend();
+	Q_INVOKABLE QString buildConfigSpecificDataGet(int build = 0, int type = 0);
+	Q_INVOKABLE QStringList sourceGroups();
+	Q_INVOKABLE int currentRegion();
+	Q_INVOKABLE QString buildList(int pos = 0);
+	Q_INVOKABLE void setCurrentRegion(int region);
+	Q_INVOKABLE void buildFind(int additive);
+	Q_INVOKABLE void setBuildSelected(int target);
+	Q_INVOKABLE void setROMPath(int region, QString path);
+	Q_INVOKABLE QString getROMPath(int region);
+	Q_INVOKABLE int addShortcut(QString folder);
+	Q_INVOKABLE void modifyConfig(QString name, QString description, QString icon, int region);
+	Q_INVOKABLE int clone(QString repoSel);
+	Q_INVOKABLE int pull(QString folder);
+	Q_INVOKABLE int build(QString folder);
+	Q_INVOKABLE int run(QString folder);
+	Q_INVOKABLE int rmDir(QString folder);
+	Q_INVOKABLE int openSources();
+	Q_INVOKABLE int handleSources();
+	Q_INVOKABLE void openRepoDataDir();
+public slots:
+	QSettings* sourceList();
+	std::vector<QString> buildNamesDataGet();
+	std::vector<QString> buildDescriptionsDataGet();
+	std::vector<QString> buildIconsDataGet();
+	std::vector<QString> romPathGet();
+	int buildCountValue();
+	int buildSelectedValue();
+	QString repoText();
+	QString branchText();
+	bool downloadSizeUnknownValue();
+	bool usingMangoHud();
+	bool usingGameMode();
+	void setRepo(QString repoInp);
+	void setBranch(QString branchInp);
+	//void setCloneText(QString newCloneText);
+	void setDownloadSizeUnknownStatus(bool known);
+	void setUseMangoHud(bool usingMangoHud);
+	void setUseGameMode(bool newGameModeVal);
+signals:
+	void sourceListModified();
+	void buildConfigListModified();
+	void currentRegionModified();
+	void buildCountModified();
+	void buildSelectModified();
+	void buildListModified();
+	void romPathListModified();
+	void repoModified();
+	void branchModified();
+	void downloadSizeUnknownStatus();
+	void useMangoHudModified();
+	void useGameModeModified();
 private:
 	QSettings* sources;
 	int defaultRegion;
@@ -56,56 +95,4 @@ private:
 	KSharedConfigPtr launcherConfig;
 	KConfigGroup launcherRepoDefaults;
 	KConfigGroup launcherRoms;
-public:
-	explicit Backend(QObject *parent = nullptr);
-	~Backend();
-	QSettings* sourceList();
-	std::vector<QString> buildNamesDataGet();
-	std::vector<QString> buildDescriptionsDataGet();
-	std::vector<QString> buildIconsDataGet();
-	std::vector<QString> romPathGet();
-	Q_INVOKABLE QString buildConfigSpecificDataGet(int build = 0, int type = 0);
-	Q_INVOKABLE QStringList sourceGroups();
-	Q_INVOKABLE int currentRegion();
-	int buildCountValue();
-	int buildSelectedValue();
-	Q_INVOKABLE QString buildList(int pos = 0);
-	QString repoText();
-	QString branchText();
-	bool downloadSizeUnknownValue();
-	bool usingMangoHud();
-	bool usingGameMode();
-	Q_INVOKABLE void setCurrentRegion(int region);
-	Q_INVOKABLE void buildFind(int additive);
-	Q_INVOKABLE void setBuildSelected(int target);
-	void setRepo(QString repoInp);
-	void setBranch(QString branchInp);
-	void setCloneText(QString newCloneText);
-	void setDownloadSizeUnknownStatus(bool known);
-	void setUseMangoHud(bool usingMangoHud);
-	void setUseGameMode(bool newGameModeVal);
-	Q_INVOKABLE void setROMPath(int region, QString path);
-	Q_INVOKABLE QString getROMPath(int region);
-	Q_SIGNAL void sourceListModified();
-	Q_SIGNAL void buildConfigListModified();
-	Q_SIGNAL void currentRegionModified();
-	Q_SIGNAL void buildCountModified();
-	Q_SIGNAL void buildSelectModified();
-	Q_SIGNAL void buildListModified();
-	Q_SIGNAL void romPathListModified();
-	Q_SIGNAL void repoModified();
-	Q_SIGNAL void branchModified();
-	Q_SIGNAL void downloadSizeUnknownStatus();
-	Q_SIGNAL void useMangoHudModified();
-	Q_SIGNAL void useGameModeModified();
-	Q_INVOKABLE int addShortcut(QString folder);
-	Q_INVOKABLE void modifyConfig(QString name, QString description, QString icon, int region);
-	Q_INVOKABLE int clone(QString repoSel);
-	Q_INVOKABLE int pull(QString folder);
-	Q_INVOKABLE int build(QString folder);
-	Q_INVOKABLE int run(QString folder);
-	Q_INVOKABLE int rmDir(QString folder);
-	Q_INVOKABLE int openSources();
-	Q_INVOKABLE int handleSources();
-	Q_INVOKABLE void openRepoDataDir();
 };

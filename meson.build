@@ -1,4 +1,5 @@
-project('Kirigami64', 'cpp', version: '0.3.0' + (not get_option('buildtype').startswith('release') ? '-' + run_command('git', 'rev-parse',  '--short', 'HEAD', check: true).stdout().strip() : ''), default_options: ['cpp_std=c++17'], meson_version: '>=0.60.3')
+project('Kirigami64', 'cpp', version: '0.3.0' + (not get_option('buildtype').startswith('release') ? '-' + run_command('git', 'rev-parse',  '--short', 'HEAD', check: true).stdout().strip() : ''),
+default_options: ['cpp_std=c++17'], meson_version: '>=1.1.0')
 
 # Setup: configure file
 config_dat = configuration_data()

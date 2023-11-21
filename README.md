@@ -13,7 +13,7 @@ You can join our community discord server [here](https://discord.gg/Vptbbp59vQ).
 ## Dependencies
 > This section has been removed as it is out of date (and also cannot be updated for Ubuntu and Fedora until February 2024 (release of KDE Plasma 6)), please use the dependency install scripts (`deps-compile` and `deps-runtime`) instead
 ## Instructions
-Install the required dependencies using the commands above, or use the included commands `./install_sm64_dependencies` and `./install_compile_dependencies`<br>
+Install the required dependencies using the included scripts `./deps-compile` and `./deps-runtime`<br>
 <br> Run
 ```bash
 git clone https://codeberg.org/tulpenkiste/Kirigami64.git
@@ -29,7 +29,6 @@ If you do not care about the above notice in the slightest, follow the Linux ste
 // TODO: Figure out if this is possible. It should be possible but Apple OSes are a bit quirky.
 ## Linux
 Run `chmod +x Kirigami64` in the /build/bin/ folder (or on your executable somewhere else) then execute the file in the terminal (`./Kirigami64`) or through a desktop file. <br>
-Make sure to put an SM64 rom with the name `baserom.{region}.z64` in `~/.local/share/Kirigami64`. <br>
 Ensure you have the necessary dependencies for compiling and running your desired SM64 repository before using this.
 # Todo
 ## 0.3.0

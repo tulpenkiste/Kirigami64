@@ -99,33 +99,37 @@ Kirigami.ApplicationWindow {
 				from: 0
 				to: 100
 				value: 0
-				indeterminate: Backend.downloadSizeUnknown
+				indeterminate: Backend.downloadSizeUnknownValue
 			}
 		}
 	}
 
 	Kirigami.MenuDialog {
 		id: selectedBuildSheet
-		title: i18n("Options for ") + Backend.buildConfigSpecificDataGet(Backend.buildSelected, "name")
+		title: i18n("Options for %1", Backend.buildConfigSpecificDataGet(Backend.buildSelectedValue(), "name"))
 		
+		function updateTitle() {
+			title = i18n("Options for %1", Backend.buildConfigSpecificDataGet(Backend.buildSelectedValue(), "name"))
+		}
+
 		actions: [
 			Kirigami.Action {
 				icon.name: "media-playback-start"
 				text: i18n("Play")
 				tooltip: i18n("Play this build")
-				onTriggered: [Backend.run(Backend.buildList(Backend.buildSelected))]
+				onTriggered: [Backend.run(Backend.buildList(Backend.buildSelectedValue()))]
 			},
 			Kirigami.Action {
 				icon.name: "run-build-install"
 				text: i18n("Compile")
 				tooltip: i18n("Compile this build")
-				onTriggered: [Backend.build(Backend.buildList(Backend.buildSelected))]
+				onTriggered: [Backend.build(Backend.buildList(Backend.buildSelectedValue()))]
 			},
 			Kirigami.Action {
 				icon.name: "update-none"
 				text: i18n("Pull changes")
 				tooltip: i18n("Pull changes for this repository off of the internet")
-				onTriggered: [Backend.pull(Backend.buildList(Backend.buildSelected))]
+				onTriggered: [Backend.pull(Backend.buildList(Backend.buildSelectedValue()))]
 			},
 			Kirigami.Action {
 				icon.name: "configure"
@@ -143,7 +147,7 @@ Kirigami.ApplicationWindow {
 				icon.name: "delete"
 				text: i18n("Delete")
 				tooltip: i18n("Delete the specified build")
-				onTriggered: [Backend.rmDir(Backend.buildList(Backend.buildSelected)), selectedBuildSheet.close()]
+				onTriggered: [Backend.rmDir(Backend.buildList(Backend.buildSelectedValue())), selectedBuildSheet.close()]
 			}
 		]
 	}

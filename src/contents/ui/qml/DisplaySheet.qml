@@ -14,12 +14,12 @@ Kirigami.ScrollablePage {
 			icon.name: "view-refresh"
 			text: qsTr("Refresh", "Refresh list")
 			tooltip: qsTr("Refresh list")
-			onTriggered: Backend.buildFind(0)
+			onTriggered: [Backend.buildFind(0), view.model = Backend.buildCountValue()]
 		}
 	]
 	Kirigami.CardsListView {
 		id: view
-		model: Backend.buildCount
+		model: Backend.buildCountValue()
 		delegate: Kirigami.AbstractCard {
 			contentItem: Item {
 				implicitWidth: delegateLayout.implicitWidth
@@ -58,11 +58,11 @@ Kirigami.ScrollablePage {
 						Controls.Button{
 							text: qsTr("Add To Start Menu")
 							//icon.name: "desktop"
-							onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(Backend.buildSelected))]// showPassiveNotification("Install for Product " + modelData + " clicked");
+							onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(Backend.buildSelected))]
 						}
 						Controls.Button {
 							text: qsTr("View Repository Options")
-							onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.open()]// showPassiveNotification("Install for Product " + modelData + " clicked");
+							onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.updateTitle(), selectedBuildSheet.open()]
 						}
 					}
 				}
