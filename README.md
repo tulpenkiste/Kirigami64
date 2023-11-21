@@ -57,4 +57,4 @@ Ensure you have the necessary dependencies for compiling and running your desire
  - [X] Option to run games using MangoHud (Low)
  - [ ] Ability to add images for a specific build (e.g. Icon, Header) (Low)
  - [X] Add desktop shortcuts to application launcher list (Low)
- - [ ] Ability to add build as desktop shortcut (Low)
+ - [ ] Ability to add build as desktop shortcut (Very Low)
