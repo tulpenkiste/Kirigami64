@@ -7,7 +7,11 @@ PACMAN_INSTALL=""
 PACMAN_PACKAGES=()
 PACMAN_POST=()
 
-if [ -f "/usr/bin/sudo" ]; then
+WHOIS=$(whoami)
+
+if [ "$WHOIS" == "root" ]; then
+	printf "\e[1;33mRunning as root user. If this is unintended, exit the script then exit the root shell or remove sudo/doas from your previous command.\e[0m\n"
+elif [ -f "/usr/bin/sudo" ]; then
 	DOAS_CMD="sudo"
 elif [ -f "/usr/bin/doas" ]; then
 	DOAS_CMD="doas"
@@ -31,9 +35,26 @@ elif [ -f "/usr/bin/pacman" ]; then
 	PACMAN_INSTALL="pacman -S"
 	PACMAN_PACKAGES=(base-devel extra-cmake-modules cmake kirigami2 kconfig ki18n kcoreaddons kde-sdk-meta gettext libgit2 meson)
 else
-	>&2 printf "\e[1;31mFailed to automatically detect your package manager\n\e[0m"
+	>&2 printf "\e[1;31mFailed to automatically detect your package manager, manual intervention is required\n\e[0m"
 	exit
 fi
+
+printf "\e[1;33mThe following packages will be installed: "
+echo "${PACMAN_PACKAGES[@]}"
+printf "Is this okay [y/n]?\e[0m "
+
+while true
+do
+	# shellcheck disable=SC2162
+	read OKAY
+
+	if [[ "$OKAY" == "N" || "$OKAY" == "n" ]]; then
+		printf "Exiting now...\n\e[0m"
+		exit 1
+	elif [[ "$OKAY" == "Y" || "$OKAY" == "y" ]]; then
+		break
+	fi
+done
 
 # Splitting is intentional, so I'm disabling this warning
 # shellcheck disable=SC2086
