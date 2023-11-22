@@ -1,9 +1,8 @@
 // It may be best to ignore this.
 #pragma once
 
-#include "qfilesystemwatcher.h"
-#include "qobjectdefs.h"
-#include "qtpreprocessorsupport.h"
+#include <qfilesystemwatcher.h>
+#include <qobjectdefs.h>
 #include <git2.h>
 #include <QObject>
 #include <QSettings>
