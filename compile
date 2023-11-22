@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-clear
-
 # Avoid running meson build if the build directory exists.
 if [[ ! -d build ]]; then
 	meson build

@@ -61,7 +61,7 @@ Kirigami.ScrollablePage {
 							Layout.fillWidth: true
 							text: i18n("Add Shortcuts")
 							//icon.name: "desktop"
-							onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(modelData))]
+							onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(Backend.buildSelectedValue()))]
 						}
 						Controls.Button {
 							Layout.fillWidth: true

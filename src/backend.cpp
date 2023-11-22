@@ -1,7 +1,7 @@
 // Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
 // Also I need to go back through this and make it use good C++ more.
-#include "backend.hpp"
-#include "qfilesystemwatcher.h"
+#include <qfilesystemwatcher.h>
+#include <qmessagebox.h>
 
 #include <git2.h>
 #include <filesystem>
@@ -10,8 +10,11 @@
 #include <string>
 #include <QFile>
 #include <QMessageBox>
+#include <klocalizedstring.h>
 
 #include <vector>
+
+#include "backend.hpp"
 
 const std::vector<std::string> regions = {"us", "eu", "jp"};
 
@@ -27,6 +30,9 @@ char* string_to_char(std::string inp) {
 std::string getExecutableName(QString folder, int region) {
 	std::string folderString = folder.toStdString();
 	std::filesystem::path buildDir{"sm64-builds/" + folderString + "/build/" + regions[region] + "_pc/"};
+
+	if (!std::filesystem::exists(buildDir)) return "";
+
 	for (const std::filesystem::directory_entry& dirEntry: std::filesystem::directory_iterator(buildDir)) {
 		std::string filenameExtension = dirEntry.path().extension().string();
 		if (filenameExtension == ".f3dex2e") {
@@ -262,14 +268,24 @@ void Backend::onDirUpdate(const QString& str) {
 	buildFind(0); }
 
 int Backend::addShortcut(QString folder) {
+	std::string region = buildRegions[buildSelected] != 0 ? regions[buildRegions[buildSelected] - 1] : regions[0];
+	std::string folderString = folder.toStdString();
+	std::filesystem::path buildDir{"sm64-builds/" + folderString + "/build/" + region + "_pc/"};
+
+	if (!std::filesystem::exists(buildDir)) {
+		std::string message = "Cannot add shortcut for inexistent file '" + buildDir.string() + "'.";
+		QMessageBox::critical(nullptr, i18n("Shortcut Creation Failure - Missing Build Directory"), i18n("The repository '%1' has not been built yet, preventing shortcut creation.", folderString.c_str()));
+		return 1;
+	}
+
+	std::string userDir = getenv("HOME");
+	std::cout << "Writing shortcut file(s)...\n";
 	// Handle desktop menu shenanigans
 	for (int i = 0; i < shortcuts.size(); i++) {
 		if (!shortcuts[i]) continue;
-		std::cout << "Writing shortcut file...\n";
-		std::string userDir = getenv("HOME");
 		std::string folderString = folder.toStdString();
 		std::string dir = std::filesystem::current_path();
-		std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + regions[defaultRegion] + "_pc/ && ./" + getExecutableName(folder, defaultRegion) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
+		std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder, defaultRegion) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
 		std::string desktopFileName = folderString + ".desktop";
 		std::ofstream desktopFile(userDir + (i == 0 ? "/.local/share/applications/" : "/Desktop/") + desktopFileName);
 		desktopFile << desktopFileContents;
