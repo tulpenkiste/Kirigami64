@@ -31,6 +31,8 @@ std::string getExecutableName(QString folder, int region) {
 	std::string folderString = folder.toStdString();
 	std::filesystem::path buildDir{"sm64-builds/" + folderString + "/build/" + regions[region] + "_pc/"};
 
+	std::cout << std::filesystem::exists(buildDir) << std::endl;
+
 	if (!std::filesystem::exists(buildDir)) return "";
 
 	for (const std::filesystem::directory_entry& dirEntry: std::filesystem::directory_iterator(buildDir)) {
@@ -39,6 +41,8 @@ std::string getExecutableName(QString folder, int region) {
 			return dirEntry.path().filename().string();
 		}
 	}
+
+	std::cout << "No executable found..." << std::endl;
 	return "";
 }
 
@@ -281,11 +285,11 @@ int Backend::addShortcut(QString folder) {
 	std::string userDir = getenv("HOME");
 	std::cout << "Writing shortcut file(s)...\n";
 	// Handle desktop menu shenanigans
-	for (int i = 0; i < shortcuts.size(); i++) {
+	for (std::vector<bool>::size_type i = 0; i < shortcuts.size(); i++) {
 		if (!shortcuts[i]) continue;
 		std::string folderString = folder.toStdString();
 		std::string dir = std::filesystem::current_path();
-		std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder, defaultRegion) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
+		std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + region + "_pc/ && ./" + getExecutableName(folder, buildRegions[buildSelected] != 0 ? buildRegions[buildSelected] - 1 : defaultRegion) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
 		std::string desktopFileName = folderString + ".desktop";
 		std::ofstream desktopFile(userDir + (i == 0 ? "/.local/share/applications/" : "/Desktop/") + desktopFileName);
 		desktopFile << desktopFileContents;
