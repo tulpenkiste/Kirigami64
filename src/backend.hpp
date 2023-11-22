@@ -1,10 +1,13 @@
 // It may be best to ignore this.
 #pragma once
 
+#include "qfilesystemwatcher.h"
 #include "qobjectdefs.h"
+#include "qtpreprocessorsupport.h"
 #include <git2.h>
 #include <QObject>
 #include <QSettings>
+#include <iostream>
 #include <vector>
 #include <map>
 #include <boost/property_tree/ptree.hpp>
@@ -58,6 +61,9 @@ public slots:
 	void setDownloadSizeUnknownStatus(bool known);
 	void setUseMangoHud(bool usingMangoHud);
 	void setUseGameMode(bool newGameModeVal);
+
+private slots:
+	void onDirUpdate(const QString& str);
 signals:
 	void sourceListModified();
 	void buildConfigListModified();
@@ -92,7 +98,11 @@ private:
 	// Key is region (us, eu, jp) and value is system path
 	std::map<std::string, std::string> roms;
 
+	// Configuration
 	KSharedConfigPtr launcherConfig;
 	KConfigGroup launcherRepoDefaults;
 	KConfigGroup launcherRoms;
+
+	// Filesystem Watcher
+	QFileSystemWatcher watcher;
 };

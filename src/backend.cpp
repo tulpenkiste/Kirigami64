@@ -1,6 +1,7 @@
 // Notice: this code is full of uncooked spaghetti. It is probably very unoptimised or does things wrong.
 // Also I need to go back through this and make it use good C++ more.
 #include "backend.hpp"
+#include "qfilesystemwatcher.h"
 
 #include <git2.h>
 #include <filesystem>
@@ -35,7 +36,7 @@ std::string getExecutableName(QString folder, int region) {
 	return "";
 }
 
-Backend::Backend(QObject *parent) : QObject(parent) {
+Backend::Backend(QObject *parent) : QObject(parent), watcher(parent) {
 	git_libgit2_init();
 	launcherConfig = KSharedConfig::openConfig("kirigami64rc", KSharedConfig::FullConfig, QStandardPaths::AppDataLocation);
 	launcherRepoDefaults = launcherConfig->group((QString)"Defaults");
@@ -50,6 +51,10 @@ Backend::Backend(QObject *parent) : QObject(parent) {
 	// Repo Defaults
 	useMangoHud = launcherRepoDefaults.readEntry("useMangoHud", false);
 	useGameMode = launcherRepoDefaults.readEntry("useGameMode", false);
+
+	watcher.addPath(((QString)("$HOME/.local/share/Kirigami64/sm64-builds")).replace("$HOME", getenv("HOME")));
+
+	connect(&watcher, SIGNAL(directoryChanged(QString)), this, SLOT(onDirUpdate(QString)));
 }
 
 Backend::~Backend() {
@@ -240,6 +245,11 @@ void Backend::setROMPath(int region, QString path)
 QString Backend::getROMPath(int region) {
 	return romsPerRegion[region];
 }
+
+void Backend::onDirUpdate(const QString& str) {
+	Q_UNUSED(str);
+	//std::cout << "Directory updated: " << str.toStdString() << std::endl;
+	buildFind(0); }
 
 int Backend::addShortcut(QString folder) {
 	// Handle desktop menu shenanigans
