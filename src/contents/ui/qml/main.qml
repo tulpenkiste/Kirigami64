@@ -131,7 +131,7 @@ Kirigami.ApplicationWindow {
 				icon.name: "configure"
 				text: i18n("Configure")
 				tooltip: i18n("Configure this build")
-				onTriggered: [selectedBuildSheet.close(), pageStack.pushDialogLayer("qrc:/build/Configure.qml", {}, { title: i18n("Repository Configuration") })]
+				onTriggered: [selectedBuildSheet.close(), pageStack.pushDialogLayer("qrc:/repository/Config.qml", {}, { title: i18n("Repository Configuration") })]
 			},
 			Kirigami.Action {
 				icon.name: "configure"
