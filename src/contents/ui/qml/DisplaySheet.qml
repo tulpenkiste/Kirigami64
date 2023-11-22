@@ -17,6 +17,14 @@ Kirigami.ScrollablePage {
 			onTriggered: [Backend.buildFind(0), view.model = Backend.buildCountValue()]
 		}
 	]
+
+	Connections {
+		target: Backend
+		onBuildCountModified: {
+			view.model = Backend.buildCountValue()
+		}
+	}
+
 	Kirigami.CardsListView {
 		id: view
 		model: Backend.buildCountValue()

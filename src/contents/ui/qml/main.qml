@@ -26,10 +26,6 @@ Kirigami.ApplicationWindow {
 		pageStack.layers.push(requestedPage);
 	}
 
-	ConfigureBuildSheet {
-		id: configureBuildSheet
-	}
-
 	DisplaySheet {
 		id: displaySheet
 	}
@@ -135,7 +131,7 @@ Kirigami.ApplicationWindow {
 				icon.name: "configure"
 				text: i18n("Configure")
 				tooltip: i18n("Configure this build")
-				onTriggered: [selectedBuildSheet.close(), pageStack.layers.push(configureBuildSheet), configureBuildSheet.updateValues()]
+				onTriggered: [selectedBuildSheet.close(), pageStack.pushDialogLayer("qrc:/build/Configure.qml", {}, { title: i18n("Repository Configuration") })]
 			},
 			Kirigami.Action {
 				icon.name: "configure"

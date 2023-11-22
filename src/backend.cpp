@@ -132,6 +132,7 @@ void Backend::buildFind(int additive) {
 	buildNames.clear();
 	buildDescriptions.clear();
 	buildIcons.clear();
+	buildRegions.clear();
 	Q_EMIT buildCountModified();
 	Q_EMIT buildListModified();
 	Q_EMIT buildConfigListModified();
