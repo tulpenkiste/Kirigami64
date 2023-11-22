@@ -39,8 +39,13 @@ std::string getExecutableName(QString folder, int region) {
 Backend::Backend(QObject *parent) : QObject(parent), watcher(parent) {
 	git_libgit2_init();
 	launcherConfig = KSharedConfig::openConfig("kirigami64rc", KSharedConfig::FullConfig, QStandardPaths::AppDataLocation);
+	launcherGeneral = launcherConfig->group((QString)"General");
 	launcherRepoDefaults = launcherConfig->group((QString)"Defaults");
 	launcherRoms = launcherConfig->group((QString)"Roms");
+
+	// General config
+	shortcuts[0] = launcherGeneral.readEntry("AppMenuShortcut", true);
+	shortcuts[1] = launcherGeneral.readEntry("DesktopShortcut", DO_DESKTOP_SHORTCUT_DEFAULT);
 	
 	// Roms
 	defaultRegion = launcherRoms.readEntry("defaultRegion", 0);
@@ -130,6 +135,10 @@ bool Backend::usingGameMode() {
 	return useGameMode;
 }
 
+bool Backend::allowingShortcut(int type) {
+	return shortcuts[type];
+}
+
 void Backend::buildFind(int additive) {
 	int count = 0 + additive;
 	buildCount = 0;
@@ -203,36 +212,37 @@ void Backend::setBuildSelected(int target) {
 	Q_EMIT buildSelectModified();
 }
 
-void Backend::setRepo(QString repoInp)
-{
+void Backend::setRepo(QString repoInp) {
 	link = repoInp;
 	Q_EMIT repoModified();
 }
 
-void Backend::setBranch(QString branchInp)
-{
+void Backend::setBranch(QString branchInp) {
 	branch = branchInp;
 	Q_EMIT branchModified();
 }
 
-void Backend::setDownloadSizeUnknownStatus(bool known)
-{
+void Backend::setDownloadSizeUnknownStatus(bool known) {
 	downloadSizeUnknown = known;
 	Q_EMIT downloadSizeUnknownStatus();
 }
 
-void Backend::setUseMangoHud(bool usingMangoHud)
-{
+void Backend::setUseMangoHud(bool usingMangoHud) {
 	useMangoHud = usingMangoHud;
 	launcherRepoDefaults.writeEntry("useMangoHud", useMangoHud);
 	Q_EMIT useMangoHudModified();
 }
 
-void Backend::setUseGameMode(bool newGameModeVal)
-{
+void Backend::setUseGameMode(bool newGameModeVal) {
 	useGameMode = newGameModeVal;
 	launcherRepoDefaults.writeEntry("useGameMode", newGameModeVal);
 	Q_EMIT useGameModeModified();
+}
+
+void Backend::setAllowShortcut(int type, bool newShortcutVal) {
+	QString shortcutType = type == 0 ? "AppMenuShortcut" : "DesktopShortcut";
+	shortcuts[type] = newShortcutVal;
+	launcherGeneral.writeEntry(shortcutType, newShortcutVal);
 }
 
 void Backend::setROMPath(int region, QString path)
@@ -253,19 +263,19 @@ void Backend::onDirUpdate(const QString& str) {
 
 int Backend::addShortcut(QString folder) {
 	// Handle desktop menu shenanigans
-	std::cout << "Writing shortcut file...\n";
-	std::string userDir = getenv("HOME");
-	std::string folderString = folder.toStdString();
-	std::string dir = std::filesystem::current_path();
-	std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + regions[defaultRegion] + "_pc/ && ./" + getExecutableName(folder, defaultRegion) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
-	std::string desktopFileName = folderString + ".desktop";
-	std::ofstream desktopFile(userDir + "/.local/share/applications/" + desktopFileName);
-	desktopFile << desktopFileContents;
-	desktopFile.close();
-	std::cout << "Wrote shortcut file to " + (userDir + "/.local/share/applications/" + desktopFileName) + ".\n";
-
-	// Symlink shortcut to desktop
-	symlink(string_to_char(userDir + "/.local/share/applications/" + desktopFileName), string_to_char(userDir + "/Desktop/" + desktopFileName));
+	for (int i = 0; i < shortcuts.size(); i++) {
+		if (!shortcuts[i]) continue;
+		std::cout << "Writing shortcut file...\n";
+		std::string userDir = getenv("HOME");
+		std::string folderString = folder.toStdString();
+		std::string dir = std::filesystem::current_path();
+		std::string desktopFileContents = "[Desktop Entry]\nName=" + buildConfigSpecificDataGet(buildSelected).toStdString() + "\nComment=" + buildConfigSpecificDataGet(buildSelected, 1).toStdString() + "\nType=Application\nExec=bash -c \"cd " + dir + "/sm64-builds/" + folderString + "/build/" + regions[defaultRegion] + "_pc/ && ./" + getExecutableName(folder, defaultRegion) + "\"\nIcon=" + buildConfigSpecificDataGet(buildSelected, 2).toStdString() + "\nCategories=Game;";
+		std::string desktopFileName = folderString + ".desktop";
+		std::ofstream desktopFile(userDir + (i == 0 ? "/.local/share/applications/" : "/Desktop/") + desktopFileName);
+		desktopFile << desktopFileContents;
+		desktopFile.close();
+		std::cout << "Wrote shortcut file to " + (userDir + (i == 0 ? "/.local/share/applications/" : "/Desktop/") + desktopFileName) + ".\n";
+	}
 
 	return 0;
 }

@@ -17,6 +17,14 @@
 
 char* string_to_char(std::string inp);
 
+const bool DO_DESKTOP_SHORTCUT_DEFAULT =
+#ifdef __WIN32
+true
+#else
+false
+#endif
+;
+
 class Backend : public QObject {
 	Q_OBJECT
 public:
@@ -54,12 +62,14 @@ public slots:
 	bool downloadSizeUnknownValue();
 	bool usingMangoHud();
 	bool usingGameMode();
+	bool allowingShortcut(int type);
 	void setRepo(QString repoInp);
 	void setBranch(QString branchInp);
 	//void setCloneText(QString newCloneText);
 	void setDownloadSizeUnknownStatus(bool known);
 	void setUseMangoHud(bool usingMangoHud);
 	void setUseGameMode(bool newGameModeVal);
+	void setAllowShortcut(int type, bool value);
 
 private slots:
 	void onDirUpdate(const QString& str);
@@ -88,6 +98,7 @@ private:
 	std::vector<QString> buildDescriptions;
 	std::vector<QString> buildIcons;
 	std::vector<int> buildRegions;
+	std::vector<bool> shortcuts {true, DO_DESKTOP_SHORTCUT_DEFAULT};
 	QString link = "";
 	QString branch = "";
 	bool downloadSizeUnknown = true;
@@ -99,6 +110,7 @@ private:
 
 	// Configuration
 	KSharedConfigPtr launcherConfig;
+	KConfigGroup launcherGeneral;
 	KConfigGroup launcherRepoDefaults;
 	KConfigGroup launcherRoms;
 

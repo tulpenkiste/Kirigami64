@@ -49,29 +49,23 @@ FormCard.FormCardPage {
 		FormCard.FormCheckDelegate {
 			text: i18n("Applicaiton Menu Shortcut")
 			description: i18n("Whether to add shortcuts to the application menu")
-			//checked: Backend.useMangoHud
+			checked: Backend.allowingShortcut(0)
 			visible: Qt.platform.os == "linux"
 
-			/*
 			onToggled: {
-				console.log(Qt.platform.os)
-				Backend.useMangoHud = checked
+				Backend.setAllowShortcut(0, checked)
 			}
-			*/
 		}
 
 		FormCard.FormCheckDelegate {
 			text: i18n("Desktop Shortcut")
 			description: i18n("Whether to add shortcuts to the desktop")
-			//checked: Backend.useMangoHud
+			checked: Backend.allowingShortcut(1)
 			visible: Qt.platform.os == "linux"
 
-			/*
 			onToggled: {
-				console.log(Qt.platform.os)
-				Backend.useMangoHud = checked
+				Backend.setAllowShortcut(1, checked)
 			}
-			*/
 		}
 	}
 }

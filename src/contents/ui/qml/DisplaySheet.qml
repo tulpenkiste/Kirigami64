@@ -42,6 +42,7 @@ Kirigami.ScrollablePage {
 					}
 					ColumnLayout {
 						Kirigami.Heading {
+							Layout.fillWidth: true
 							level: 2
                             text: Backend.buildConfigSpecificDataGet(modelData, 0)
 						}
@@ -55,13 +56,16 @@ Kirigami.ScrollablePage {
 						}
 					}
 					ColumnLayout {
+						Layout.maximumWidth: 200
 						Controls.Button{
-							text: qsTr("Add To Start Menu")
+							Layout.fillWidth: true
+							text: i18n("Add Shortcuts")
 							//icon.name: "desktop"
-							onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(Backend.buildSelected))]
+							onClicked: [Backend.setBuildSelected(modelData), Backend.addShortcut(Backend.buildList(modelData))]
 						}
 						Controls.Button {
-							text: qsTr("View Repository Options")
+							Layout.fillWidth: true
+							text: i18n("View Repository Options")
 							onClicked: [Backend.setBuildSelected(modelData), selectedBuildSheet.updateTitle(), selectedBuildSheet.open()]
 						}
 					}
