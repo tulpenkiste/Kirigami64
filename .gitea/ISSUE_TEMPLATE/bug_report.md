@@ -27,8 +27,7 @@ Outputs when running the program
 <!-- -->
 
 System information:
- - OS:
- - Distro:
+ - Operating System (include version if applicable):
  - Desktop Environment and/or Window Manager:
  - Kirigami64 Version:
 
