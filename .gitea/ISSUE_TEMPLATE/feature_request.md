@@ -1,20 +1,19 @@
 ---
 name: Feature request
 about: Suggest an idea for the software
-title: "[ENHANCEMENT]"
+title: "[ENHANCEMENT] "
 labels: enhancement, reviewing
 assignees: ''
-
 ---
 
-# Problem
+## Problem
 What is the reason you are making this feature request?
 
-# Solution
+## Solution
 What do you want added?
 
-# Alternatives
-Include alternatives if applicable.
+## Alternatives
+Include alternatives (if applicable).
 
-# Extra context
+## Extra context
 Add any other context or screenshots about the feature request here
