@@ -15,7 +15,7 @@
 #include "about.hpp"
 #include "config.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char** argv) {
 	std::string versionFull = PROJECT_VER;
 	versionFull.append(" - ");
 	versionFull.append(PROJECT_VER_SUBTITLE);
