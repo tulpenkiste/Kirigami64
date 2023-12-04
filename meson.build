@@ -5,7 +5,7 @@ default_options: ['cpp_std=c++17'], meson_version: '>=1.1.0')
 config_dat = configuration_data()
 config_dat.set('PROJECT_NAME', 'Kirigami64')
 config_dat.set('PROJECT_VERSION', meson.project_version())
-config_dat.set('PROJECT_VERSION_SUBTITLE', 'QT6 Port Build')
+config_dat.set('PROJECT_VERSION_SUBTITLE', 'Jolly Roger Bay')
 
 if get_option('FLATPAK')
 	config_dat.set('FLATPAK_STATE', '1')
@@ -17,10 +17,10 @@ configure_file(input: 'src/config.in.hpp', output: 'config.hpp', configuration: 
 
 # Setup: library dependencies
 qt6dep = dependency('qt6', modules : ['Core', 'Qml', 'Quick', 'Gui', 'QuickControls2', 'Widgets', 'Xml'], version : '>=6.5.0')
-kf6dep = dependency('KF6CoreAddons', version : '>=5.245.0')
-kf6kirigamidep = dependency('KF6Kirigami2', version : '>=5.245.0')
-kf6translatedep = dependency('KF6I18n', version : '>=5.245.0')
-kf6configdep = dependency('KF6Config', modules: ['KF6::ConfigCore', 'KF6::ConfigGui'], version : '>=5.245.0', method: 'cmake')
+kf6dep = dependency('KF6CoreAddons', version : '>=5.246.0')
+kf6kirigamidep = dependency('KF6Kirigami2', version : '>=5.246.0')
+kf6translatedep = dependency('KF6I18n', version : '>=5.246.0')
+kf6configdep = dependency('KF6Config', modules: ['KF6::ConfigCore', 'KF6::ConfigGui'], version : '>=5.246.0', method: 'cmake')
 lgit2 = dependency('libgit2', version : '>=1.1.0')
 #lgit2 = meson.get_compiler('cpp').find_library('git2')
 
